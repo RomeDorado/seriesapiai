@@ -191,7 +191,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				if(obj.name === "series"){
 					let tvshow = obj.parameters['tvshow'];
 					var intent = 'poster';
-					omdb(sender, intent, tvshow);
+					omdb(sender, intent, tvshow);					
 					setTimeout(function(){
 					sendMovieCards(sender, action, responseText, contexts, parameters);
 					},2000);
