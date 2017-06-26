@@ -273,13 +273,11 @@ function createResponse (sender, intent, tvshow){
 				sendMovieCards(sender);
 			break;
 
-    case 'director' : {
-        let str = `${Title} (${Year}) was directed by ${Director} and written by ${Writer}.`;
-        return {
-          text: str,
-          image: null
-        }
-      }
+    	case 'director':
+				let str = `${Title} was directed by ${Director} and writted by ${Writer}.`
+				sendTextMessage(sender, str);
+				sendMovieCards(sender);
+			break;
 
       case 'cast': {
         let str = `The main cast of ${Title} (${Year}) are ${Actors}.`;
