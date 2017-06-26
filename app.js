@@ -192,6 +192,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					let tvshow = obj.parameters['tvshow'];
 					var intent = 'poster';
 					omdb(sender, intent, tvshow);
+					moviequickreply(sender, action, responseText, contexts, parameters);
 					console.log(tvshow + " this is the tv show");
 				}						
 			return contextObj;
@@ -310,7 +311,70 @@ function createResponse (sender, intent, tvshow){
   }
 }
 
+function moviequickreply(sender, action, responseText, contexts, parameter){
+var txtmessage = "";
+request({
+		uri: 'https://graph.facebook.com/v2.7/' + sender,
+		qs: {
+			access_token: config.FB_PAGE_TOKEN
+		}
 
+	}, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+
+			var user = JSON.parse(body);
+
+
+			if (user.first_name) {
+				console.log("FB user: %s %s, %s",
+					user.first_name, user.last_name, user.gender);
+
+				txtmessage = "What do you want to know about?";
+				let replies = [
+		{
+			"content_type": "text",
+			"title": "Plot",
+			"payload":"plot"
+		},
+		{
+			"content_type": "text",
+			"title": "Director",
+			"payload":"director"
+
+		},
+		{
+			"content_type": "text",
+			"title": "Cast",
+			"payload":"cast"
+
+		},
+		{
+			"content_type": "text",
+			"title": "Date of Release",
+			"payload":"releaseyear"
+
+		},
+		{
+			"content_type": "text",
+			"title": "Trailer",
+			"payload":"trailer"
+
+		}
+
+		];
+		sendQuickReply(sender, txtmessage, replies);
+			} else {
+				console.log("Cannot get data for fb user with id",
+					sender);
+			}
+		} else {
+			console.error(response.error);
+		}
+
+	});
+
+
+}
 
 
 function handleMessage(message, sender) {
