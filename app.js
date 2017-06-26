@@ -998,7 +998,7 @@ function receivedPostback(event) {
 		break;
 
 		case "choices":
-		sendMovieCards(senderID);
+		sendToApiAi(senderID, "backchoices");
 		break;
 
 		default:
