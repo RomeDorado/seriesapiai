@@ -441,7 +441,7 @@ function sendMovieCards(sender, elems){
 								}
 							]
 						},
-						elems
+						elems,
 					];
 					sendGenericMessage(sender, elements);
 				}
