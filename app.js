@@ -279,7 +279,7 @@ function createResponse (sender, intent, tvshow){
 			break;
 
       case 'cast':
-				let strCast = `${Title} stars ${Cast}`;
+				let strCast = `${Title} stars ${Actors}`;
 				sendTextMessage(sender, strCast);
 				sendMovieCards(sender);
 			break;
