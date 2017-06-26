@@ -342,6 +342,7 @@ function createResponse (sender, intent, tvshow){
   }
 }
 
+let elementss = [];
 function createTrailer (sender, trailer) {
   if(trailer){
     console.log("Umabot ng trailer");
@@ -358,7 +359,7 @@ function createTrailer (sender, trailer) {
         }]
     } = trailer;
 
-    let elements = [];
+    
     let buttons = [];
     let button;
     button = {
@@ -373,9 +374,8 @@ function createTrailer (sender, trailer) {
 			"subtitle": snippet,
 			"buttons": buttons
 		};
-		elements.push(element);
-      
-    sendMovieCards(sender, elements);
+		elementss.push(element);
+          
   }
   else{
     return{
@@ -385,7 +385,7 @@ function createTrailer (sender, trailer) {
   }
 }
 
-function sendMovieCards(sender, elems){
+function sendMovieCards(sender){
 	
 		request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
@@ -441,7 +441,7 @@ function sendMovieCards(sender, elems){
 								}
 							]
 						},
-						elems,
+						elementss,
 					];
 					sendGenericMessage(sender, elements);
 				}
