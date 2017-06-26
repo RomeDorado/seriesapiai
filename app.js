@@ -340,7 +340,7 @@ function sendMovieCards(sender, action, responseText, contexts, parameter){
 							]
 						}
 					];
-					sendGenericMessage(recipientID, elements);
+					sendGenericMessage(sender, elements);
 				}
 				else{
 					console.log("Cannot get data for fb user with id",
