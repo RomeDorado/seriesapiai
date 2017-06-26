@@ -195,9 +195,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					var intent = 'poster';
 					omdb(sender, intent, tvshow);	
 					if(obj.parameters['tvshow'] != "")	{
-					setTimeout(function(){
-					sendMovieCards(sender, action, responseText, contexts, parameters);
-				},2000);
+//					setTimeout(function(){
+					
+//				},2000);
 					}			
 					console.log(tvshow + " this is the tv show");
 				}
@@ -231,6 +231,7 @@ if(tvshow != null) {
         //console.log(response);
         if(!error && response.statusCode === 200) {
           (createResponse(sender, intent, JSON.parse(body)));
+		  sendMovieCards(sender, action, responseText, contexts, parameters);
         } else {
           (createResponse(sender, intent, "wala"));
         }
