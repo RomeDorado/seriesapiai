@@ -273,8 +273,8 @@ function createResponse (sender, intent, tvshow){
 			break;
 
     	case 'director':
-			let str = `${Title} was directed by ${Director} and written by ${Writer}`;
-			sendTextMessage(sender, str);
+			let strDirector = `${Title} was directed by ${Director} and written by ${Writer}`;
+			sendTextMessage(sender, strDirector);
 			sendMovieCards(sender);
 			break;
 
