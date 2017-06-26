@@ -1000,7 +1000,7 @@ function receivedPostback(event) {
 		break;
 
 		case "plot":
-		intent = "plot";
+		var intent = "plot";
 		omdb(sender, intent, tvshow);
 		break;
 
