@@ -273,11 +273,11 @@ function createResponse (sender, intent, tvshow){
 				sendMovieCards(sender);
 			break;
 
-    	// case 'director':
-			// 	let str = `${Title} was directed by ${Director} and writted by ${Writer}`;
-			// 	sendTextMessage(sender, str);
-			// 	sendMovieCards(sender);
-			// break;
+    	case 'director':
+				let str = `${Title} was directed by ${Director} and written by ${Writer}`;
+				sendTextMessage(sender, str);
+				sendMovieCards(sender);
+			break;
 
       case 'cast': {
         let str = `The main cast of ${Title} (${Year}) are ${Actors}.`;
@@ -982,21 +982,17 @@ function receivedPostback(event) {
 
 	switch (payload) {
 		case "FACEBOOK_WELCOME":
-		sendToApiAi(senderID, "Get Started");
+			sendToApiAi(senderID, "Get Started");
 		break;
 
 		case "aboutplot":
-		var intents = "plot";
-		omdb(senderID, intents, tvshow);
+			var intents = "plot";
+			omdb(senderID, intents, tvshow);
 		break;
 
-		// case "aboutdirector":
-		// var intents = "director";
-		// omdb(senderID, intents, tvshow);
-		// break;
-
-		case "choices":
-		sendMovieCards(senderID);
+		case "aboutdirector":
+			var intents = 'director';
+			omdb(senderID, intents, tvshow);
 		break;
 
 		default:
