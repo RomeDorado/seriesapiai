@@ -338,7 +338,47 @@ function sendMovieCards(sender, action, responseText, contexts, parameter){
 									"payload": "plot"
 								}
 							]
-						}
+						},
+						{
+							"title": "Know the Director",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Director",
+									"payload": "director"
+								}
+							]
+						},
+						{
+							"title": "Know the Cast",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Cast",
+									"payload": "cast"
+								}
+							]
+						},
+						{
+							"title": "Know the Release Year",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Release Year",
+									"payload": "releaseyear"
+								}
+							]
+						},
+						{
+							"title": "Watch the trailer",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Trailer",
+									"payload": "trailer"
+								}
+							]
+						},
 					];
 					sendGenericMessage(sender, elements);
 				}
