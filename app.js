@@ -263,20 +263,19 @@ function createResponse (sender, intent, tvshow){
       }
 
 		  case 'posters':
-			  sendImageMessage(sender, Poster);
+			sendImageMessage(sender, Poster);
 			break;
 
 		  case 'plot':
-				let str = `${Plot}`;
-				// moviequickreply(sender, str);
-				sendTextMessage(sender, str);
-				sendMovieCards(sender);
+			let str = `${Plot}`;
+			sendTextMessage(sender, str);
+			sendMovieCards(sender);
 			break;
 
     	case 'director':
-				let str = `${Title} was directed by ${Director} and written by ${Writer}`;
-				sendTextMessage(sender, str);
-				sendMovieCards(sender);
+			let str = `${Title} was directed by ${Director} and written by ${Writer}`;
+			sendTextMessage(sender, str);
+			sendMovieCards(sender);
 			break;
 
       case 'cast': {
