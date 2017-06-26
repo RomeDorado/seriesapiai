@@ -999,11 +999,6 @@ function receivedPostback(event) {
 		sendToApiAi(senderID, "Get Started");
 		break;
 
-		case "plot":
-		intent = "plot";
-		omdb(sender, intent, tvshow);
-		break;
-
 		default:
 			//unindentified payload
 			sendTextMessage(senderID, "I'm not sure what you want. Can you be more specific?");
