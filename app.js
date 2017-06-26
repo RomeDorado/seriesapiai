@@ -386,7 +386,7 @@ function createTrailer (sender, trailer) {
 }
 
 function sendMovieCards(sender){
-	if(check == true){
+	
 		request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
 			qs: {
@@ -463,10 +463,7 @@ function sendMovieCards(sender){
 				console.error(response.error);
 			}
 		});
-	}
-	else{
-		sendTextMessage(sender, "Try again");
-	}
+	
 }
 
 function moviequickreply(sender, text){
