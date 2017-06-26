@@ -269,7 +269,7 @@ function createResponse (sender, intent, tvshow){
 
 	  case 'plot':
 			let str = `${Plot}`;
-			moviequickreply(sender, str);
+			// moviequickreply(sender, str);
 			sendTextMessage(sender, str);
 			break;
 
