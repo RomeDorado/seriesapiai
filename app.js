@@ -262,6 +262,11 @@ function createResponse (sender, intent, tvshow){
 		  sendImageMessage(sender, Poster);
 	  }
 
+		case 'plot': {
+			let str = `${Plot}`;
+			sendTextMessage(sender, str);
+		}
+
       case 'director' : {
         let str = `${Title} (${Year}) was directed by ${Director} and written by ${Writer}.`;
         return {
@@ -338,9 +343,49 @@ function sendMovieCards(sender, action, responseText, contexts, parameter){
 									"payload": "plot"
 								}
 							]
-						}
+						},
+						{
+							"title": "Know the Director",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Director",
+									"payload": "director"
+								}
+							]
+						},
+						{
+							"title": "Know the Cast",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Cast",
+									"payload": "cast"
+								}
+							]
+						},
+						{
+							"title": "Know the Release Year",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Release Year",
+									"payload": "releaseyear"
+								}
+							]
+						},
+						{
+							"title": "Watch the trailer",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Trailer",
+									"payload": "trailer"
+								}
+							]
+						},
 					];
-					sendGenericMessage(elements);
+					sendGenericMessage(sender, elements);
 				}
 				else{
 					console.log("Cannot get data for fb user with id",
@@ -952,6 +997,11 @@ function receivedPostback(event) {
 	switch (payload) {
 		case "FACEBOOK_WELCOME":
 		sendToApiAi(senderID, "Get Started");
+		break;
+
+		case "plot":
+		intent = "plot";
+		omdb(sender, intent, tvshow);
 		break;
 
 		default:
