@@ -988,8 +988,8 @@ function receivedPostback(event) {
 		break;
 
 		case "plot":
-		var intent = "plot";
-		omdb(senderID, intent, tvshow);
+		var intents = "plot";
+		omdb(senderID, intents, tvshow);
 		break;
 
 		default:
