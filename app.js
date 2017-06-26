@@ -193,8 +193,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				if(obj.name === "series"){
 					tvshow = obj.parameters['tvshow'];
 					let intent = 'posters';
-					if(obj.parameters['tvshow'] != "")	{			
-					omdb(sender, intent, tvshow);					
+					if(obj.parameters['tvshow'] != "")	{
+					omdb(sender, intent, tvshow);
 					}
 					console.log(tvshow + " this is the tv show");
 				}
@@ -252,10 +252,10 @@ if(tvshow != null) {
       }, (error, response, body) => {
         //console.log(response);
         if(!error && response.statusCode === 200) {
-          (createResponse(sender, intent, JSON.parse(body)));	
-		  check = true;	  
+          (createResponse(sender, intent, JSON.parse(body)));
+		  check = true;
         } else {
-         
+
         }
       });
     }
@@ -283,12 +283,12 @@ function createResponse (sender, intent, tvshow){
         let str = `${Title} (${Year}). This film was directed by ${Director} and starred ${Actors}. ${Plot}`;
         sendTextMessage(sender, str);
 				sendImageMessage(sender, Poster);
-				
+
       }
 
 		  case 'posters':
-				sendImageMessage(sender, Poster);	
-				sendMovieCards(sender);			
+				sendImageMessage(sender, Poster);
+				sendMovieCards(sender);
 			break;
 
 		  case 'plot':
@@ -297,7 +297,7 @@ function createResponse (sender, intent, tvshow){
 						setTimeout(function(){
 				sendMovieCards(sender);
 				},2000);
-				
+
 			break;
 
     	case 'director':
@@ -345,7 +345,7 @@ function createResponse (sender, intent, tvshow){
 function createTrailer (sender, trailer) {
   if(trailer){
     console.log("Umabot ng trailer");
-    let{      
+    let{
         items:[{
           title,
           link,
@@ -354,7 +354,7 @@ function createTrailer (sender, trailer) {
             cse_thumbnail: [{
               src
             }]
-          }                    
+          }
         }]
     } = trailer;
 
@@ -367,14 +367,14 @@ function createTrailer (sender, trailer) {
 					"url": link
 				}
     buttons.push(button);
-    let element = {			
+    let element = {
 			"title": title,
 			"image_url": src,
 			"subtitle": snippet,
 			"buttons": buttons
 		};
 		elements.push(element);
-      
+
     sendGenericMessage(sender, elements);
   }
   else{
@@ -386,7 +386,7 @@ function createTrailer (sender, trailer) {
 }
 
 function sendMovieCards(sender){
-	
+
 		request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
 			qs: {
@@ -403,6 +403,7 @@ function sendMovieCards(sender){
 					let elements = [
 						{
 							"title": "Know about the Plot",
+							"image_url": "http://i.imgur.com/DFSanrI.png",
 							"buttons": [
 								{
 									"type": "postback",
@@ -413,6 +414,7 @@ function sendMovieCards(sender){
 						},
 						{
 							"title": "Know the Director",
+							"image_url": "http://i.imgur.com/HWpIyNx.png",
 							"buttons": [
 								{
 									"type": "postback",
@@ -423,6 +425,7 @@ function sendMovieCards(sender){
 						},
 						{
 							"title": "Know the Cast",
+							"image_url": "http://i.imgur.com/2UxrgcT.png",
 							"buttons": [
 								{
 									"type": "postback",
@@ -433,6 +436,7 @@ function sendMovieCards(sender){
 						},
 						{
 							"title": "Know the Release Year",
+							"image_url": "http://i.imgur.com/Gbd4YFV.png",
 							"buttons": [
 								{
 									"type": "postback",
@@ -443,6 +447,7 @@ function sendMovieCards(sender){
 						},
 						{
 							"title": "Watch the trailer",
+							"image_url": "http://i.imgur.com/9pE8MRL.png",
 							"buttons": [
 								{
 									"type": "postback",
@@ -463,7 +468,7 @@ function sendMovieCards(sender){
 				console.error(response.error);
 			}
 		});
-	
+
 }
 
 function moviequickreply(sender, text){
