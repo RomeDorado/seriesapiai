@@ -192,7 +192,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					let tvshow = obj.parameters['tvshow'];
 					var intent = 'poster';
 					omdb(sender, intent, tvshow);
+					setTimeout(function(){
 					moviequickreply(sender, action, responseText, contexts, parameters);
+					},2000);
 					console.log(tvshow + " this is the tv show");
 				}						
 			return contextObj;
