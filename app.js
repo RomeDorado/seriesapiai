@@ -193,12 +193,12 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				if(obj.name === "series"){
 					tvshow = obj.parameters['tvshow'];
 					let intent = 'posters';
-					omdb(sender, intent, tvshow);	
+					omdb(sender, intent, tvshow);
 					if(obj.parameters['tvshow'] != "")	{
 					setTimeout(function(){
 					sendMovieCards(sender);
 				},2000);
-					}			
+					}
 					console.log(tvshow + " this is the tv show");
 				}
 			return contextObj;
@@ -259,27 +259,25 @@ function createResponse (sender, intent, tvshow){
       case 'tvInfo' : {
         let str = `${Title} (${Year}). This film was directed by ${Director} and starred ${Actors}. ${Plot}`;
         sendTextMessage(sender, str);
-		sendImageMessage(sender, Poster);
+				sendImageMessage(sender, Poster);
       }
 
-	  case 'posters': {
-		  sendImageMessage(sender, Poster);
+		  case 'posters':
+			  sendImageMessage(sender, Poster);
+			break;
 
-	  }
+		  case 'plot':
+				let str = `${Plot}`;
+				// moviequickreply(sender, str);
+				sendTextMessage(sender, str);
+				sendMovieCards(sender);
+			break;
 
-	  case 'plot': {
-			let str = `${Plot}`;
-			moviequickreply(sender, str);
-			//sendTextMessage(sender, str);
-		}
-
-      case 'director' : {
-        let str = `${Title} (${Year}) was directed by ${Director} and written by ${Writer}.`;
-        return {
-          text: str,
-          image: null
-        }
-      }
+    	// case 'director':
+			// 	let str = `${Title} was directed by ${Director} and writted by ${Writer}`;
+			// 	sendTextMessage(sender, str);
+			// 	sendMovieCards(sender);
+			// break;
 
       case 'cast': {
         let str = `The main cast of ${Title} (${Year}) are ${Actors}.`;
@@ -433,7 +431,7 @@ request({
 			"content_type": "text",
 			"title": "Back to main menu",
 			"payload":"backmenu"
-		
+
 		}
 
 		];
@@ -992,13 +990,13 @@ function receivedPostback(event) {
 		omdb(senderID, intents, tvshow);
 		break;
 
-		case "aboutdirector":
-		var intents = "director";
-		omdb(senderID, intents, tvshow);
-		break;
+		// case "aboutdirector":
+		// var intents = "director";
+		// omdb(senderID, intents, tvshow);
+		// break;
 
 		case "choices":
-		sendToApiAi(senderID, "backchoices");
+		sendMovieCards(senderID);
 		break;
 
 		default:
