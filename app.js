@@ -267,11 +267,11 @@ function createResponse (sender, intent, tvshow){
 
 	  }
 
-	  // case 'plot': {
-		// 	let str = `${Plot}`;
-		// 	moviequickreply(sender, str);
-		// 	sendTextMessage(sender, str);
-		// }
+	  case 'plot':
+			let str = `${Plot}`;
+			moviequickreply(sender, str);
+			sendTextMessage(sender, str);
+			break;
 
       case 'director' : {
         let str = `${Title} (${Year}) was directed by ${Director} and written by ${Writer}.`;
@@ -987,10 +987,10 @@ function receivedPostback(event) {
 		sendToApiAi(senderID, "Get Started");
 		break;
 
-		// case "aboutplot":
-		// var intents = "plot";
-		// omdb(senderID, intents, tvshow);
-		// break;
+		case "aboutplot":
+		var intents = "plot";
+		omdb(senderID, intents, tvshow);
+		break;
 
 		case "aboutdirector":
 		var intents = "director";
