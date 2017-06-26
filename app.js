@@ -321,7 +321,7 @@ function createResponse (sender, intent, tvshow){
 }
 
 function sendMovieCards(sender){
-	if(check === true){
+	if(check == true){
 		request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
 			qs: {
@@ -400,7 +400,7 @@ function sendMovieCards(sender){
 		});
 	}
 	else{
-
+		sendTextMessage(sender, "Try again");
 	}
 }
 
