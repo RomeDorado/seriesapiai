@@ -226,7 +226,7 @@ if(tvshow != null) {
         },
         method: 'GET'
       }, (error, response, body) => {
-        console.log(response);
+        //console.log(response);
         if(!error && response.statusCode === 200) {
           (createResponse(sender, intent, JSON.parse(body)));
         } else {
