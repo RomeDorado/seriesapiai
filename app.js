@@ -259,21 +259,20 @@ function createResponse (sender, intent, tvshow){
       case 'tvInfo' : {
         let str = `${Title} (${Year}). This film was directed by ${Director} and starred ${Actors}. ${Plot}`;
         sendTextMessage(sender, str);
-		sendImageMessage(sender, Poster);
+				sendImageMessage(sender, Poster);
       }
 
-	  case 'posters': {
-		  sendImageMessage(sender, Poster);
-
-	  }
-
-	  case 'plot':
-			let str = `${Plot}`;
-			// moviequickreply(sender, str);
-			sendTextMessage(sender, str);
+		  case 'posters':
+			  sendImageMessage(sender, Poster);
 			break;
 
-      case 'director' : {
+		  case 'plot':
+				let str = `${Plot}`;
+				// moviequickreply(sender, str);
+				sendTextMessage(sender, str);
+			break;
+
+    case 'director' : {
         let str = `${Title} (${Year}) was directed by ${Director} and written by ${Writer}.`;
         return {
           text: str,
