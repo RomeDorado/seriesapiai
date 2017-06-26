@@ -196,6 +196,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				}						
 			return contextObj;
 		});
+		sendTextMessage(sender, responseText);
 
 		break;
 		default:
