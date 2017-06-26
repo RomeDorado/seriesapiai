@@ -216,7 +216,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 function omdb(sender, intent, tvshow){
 
-if(tvshow != "" || tvshow != null) {
+if(tvshow != "") {
       // Fetch data from OMDB
       request({
         uri: "https://www.omdbapi.com",
