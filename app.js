@@ -342,7 +342,6 @@ function createResponse (sender, intent, tvshow){
   }
 }
 
-let elementss = [];
 function createTrailer (sender, trailer) {
   if(trailer){
     console.log("Umabot ng trailer");
@@ -359,7 +358,7 @@ function createTrailer (sender, trailer) {
         }]
     } = trailer;
 
-    
+    let elements = [];
     let buttons = [];
     let button;
     button = {
@@ -374,8 +373,9 @@ function createTrailer (sender, trailer) {
 			"subtitle": snippet,
 			"buttons": buttons
 		};
-		elementss.push(element);
-          
+		elements.push(element);
+      
+    sendGenericMessage(sender, elements);
   }
   else{
     return{
@@ -441,7 +441,16 @@ function sendMovieCards(sender){
 								}
 							]
 						},
-						elementss,
+						{
+							"title": "Watch the trailer",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Trailer",
+									"payload": "abouttrailer"
+								}
+							]
+						},
 					];
 					sendGenericMessage(sender, elements);
 				}
