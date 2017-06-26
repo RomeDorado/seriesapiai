@@ -193,8 +193,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				if(obj.name === "series"){
 					tvshow = obj.parameters['tvshow'];
 					let intent = 'posters';
-					omdb(sender, intent, tvshow);
 					if(obj.parameters['tvshow'] != "")	{			
+					omdb(sender, intent, tvshow);					
 					}
 					console.log(tvshow + " this is the tv show");
 				}
