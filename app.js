@@ -195,9 +195,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					var intent = 'poster';
 					omdb(sender, intent, tvshow);	
 					if(obj.parameters['tvshow'] != "")	{
-//					setTimeout(function(){
-					
-//				},2000);
+					setTimeout(function(){
+					sendMovieCards(sender, action, responseText, contexts, parameters);
+				},2000);
 					}			
 					console.log(tvshow + " this is the tv show");
 				}
@@ -216,7 +216,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 function omdb(sender, intent, tvshow){
 
-if(tvshow != "") {
+if(tvshow != null) {
       // Fetch data from OMDB
       request({
         uri: "https://www.omdbapi.com",
@@ -231,7 +231,6 @@ if(tvshow != "") {
         //console.log(response);
         if(!error && response.statusCode === 200) {
           (createResponse(sender, intent, JSON.parse(body)));
-		  sendMovieCards(sender);
         } else {
           (createResponse(sender, intent, "wala"));
         }
@@ -268,7 +267,7 @@ function createResponse (sender, intent, tvshow){
 
 	  }
 
-		case 'plot': {
+	  case 'plot': {
 			let str = `${Plot}`;
 			moviequickreply(sender, str);
 			//sendTextMessage(sender, str);
@@ -326,7 +325,7 @@ function createResponse (sender, intent, tvshow){
   }
 }
 
-function sendMovieCards(sender){
+function sendMovieCards(sender, action, responseText, contexts, parameter){
 		request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
 			qs: {
