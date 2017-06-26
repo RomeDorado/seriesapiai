@@ -996,7 +996,7 @@ function receivedPostback(event) {
 		break;
 
 		case "aboutreleaseyear":
-			var intents = "releaseyear":
+			var intents = "releaseyear";
 			omdb(senderID, intents, tvshow);
 		break;
 
