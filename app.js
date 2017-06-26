@@ -213,7 +213,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	}
 }
 
-var check = true;
+var check = false;
 
 function omdb(sender, intent, tvshow){
 
@@ -231,9 +231,10 @@ if(tvshow != null) {
       }, (error, response, body) => {
         //console.log(response);
         if(!error && response.statusCode === 200) {
-          (createResponse(sender, intent, JSON.parse(body)));		  
+          (createResponse(sender, intent, JSON.parse(body)));	
+		  check = true;	  
         } else {
-         check = false;
+         
         }
       });
     }
