@@ -231,7 +231,7 @@ if(tvshow != null) {
         //console.log(response);
         if(!error && response.statusCode === 200) {
           (createResponse(sender, intent, JSON.parse(body)));
-		  sendMovieCards(sender, action, responseText, contexts, parameters);
+		  sendMovieCards(sender);
         } else {
           (createResponse(sender, intent, "wala"));
         }
@@ -326,7 +326,7 @@ function createResponse (sender, intent, tvshow){
   }
 }
 
-function sendMovieCards(sender, action, responseText, contexts, parameter){
+function sendMovieCards(sender){
 		request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
 			qs: {
