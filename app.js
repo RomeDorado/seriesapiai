@@ -182,6 +182,8 @@ function handleEcho(messageId, appId, metadata) {
 	console.log("Received echo for message %s and app %d with metadata %s", messageId, appId, metadata);
 }
 
+let tvshow = "";
+
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "know-a-series" :
@@ -189,7 +191,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		var cont = contexts.map(function(obj) {
 				var contextObj = {};
 				if(obj.name === "series"){
-					let tvshow = obj.parameters['tvshow'];
+					tvshow = obj.parameters['tvshow'];
 					var intent = 'poster';
 					omdb(sender, intent, tvshow);					
 					setTimeout(function(){
@@ -1001,7 +1003,7 @@ function receivedPostback(event) {
 
 		case "plot":
 		var intent = "plot";
-		omdb(sender, intent, tvshow);
+		omdb(senderID, intent, tvshow);
 		break;
 
 		default:
