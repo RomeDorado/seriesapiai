@@ -195,9 +195,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					let intent = 'posters';
 					omdb(sender, intent, tvshow);
 					if(obj.parameters['tvshow'] != "")	{
-					setTimeout(function(){
-					sendMovieCards(sender);
-				},2000);
+			//		setTimeout(function(){
+			
+			//	},2000);
 					}
 					console.log(tvshow + " this is the tv show");
 				}
@@ -265,8 +265,8 @@ function createResponse (sender, intent, tvshow){
       }
 
 		  case 'posters':
-				sendImageMessage(sender, Poster);
-				console.log(check + "value of check");
+				sendImageMessage(sender, Poster);	
+				sendMovieCards(sender);			
 			break;
 
 		  case 'plot':
