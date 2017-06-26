@@ -328,7 +328,7 @@ function sendToApiAi(sender, text) {
 
 	sendTypingOn(sender);
 	let apiaiRequest = apiAiService.textRequest(text, {
-		sessionId: sessionIds.get(sender)
+		sessionId: sender
 	});
 
 	apiaiRequest.on('response', (response) => {
@@ -724,7 +724,7 @@ function receivedPostback(event) {
 		case "getStarted":
 		sendToApiAi(senderID, "Get Started");
 		break;
-		
+
 		default:
 			//unindentified payload
 			sendTextMessage(senderID, "I'm not sure what you want. Can you be more specific?");
