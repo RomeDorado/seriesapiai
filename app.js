@@ -194,10 +194,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					tvshow = obj.parameters['tvshow'];
 					let intent = 'posters';
 					omdb(sender, intent, tvshow);
-					if(obj.parameters['tvshow'] != "")	{
-			//		setTimeout(function(){
-			
-			//	},2000);
+					if(obj.parameters['tvshow'] != "")	{			
 					}
 					console.log(tvshow + " this is the tv show");
 				}
@@ -262,6 +259,7 @@ function createResponse (sender, intent, tvshow){
         let str = `${Title} (${Year}). This film was directed by ${Director} and starred ${Actors}. ${Plot}`;
         sendTextMessage(sender, str);
 				sendImageMessage(sender, Poster);
+				
       }
 
 		  case 'posters':
@@ -272,7 +270,10 @@ function createResponse (sender, intent, tvshow){
 		  case 'plot':
 				let strPlot = `${Plot}`;
 				sendTextMessage(sender, strPlot);
+						setTimeout(function(){
 				sendMovieCards(sender);
+				},2000);
+				
 			break;
 
     	case 'director':
@@ -313,11 +314,7 @@ function createResponse (sender, intent, tvshow){
     }
   }else{
     let str = `I'm still learning, please re-type if you have a typo`;
-          return{
-            text: str,
-            image: null
-          }
-
+          sendTextMessage(sender, str);
   }
 }
 
