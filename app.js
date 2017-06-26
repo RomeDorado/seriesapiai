@@ -214,6 +214,30 @@ var check = false;
 
 function omdb(sender, intent, tvshow){
 
+if(intent == 'trailerInfo'){
+      request({
+        uri: "https://www.googleapis.com/customsearch/v1?",
+        qs: {
+          q: tvshow + " trailer",
+          cx: `011868887043149504159:-5-5cnusvca`,
+          siteSearch: `https://www.youtube.com/`,
+          fields: 'items',
+          key: `AIzaSyCOdpES79O2cqWNdxNaLs_6g68cNdWBsWw`,
+        },
+        method: 'GET'
+      }, (error, response, body) => {
+        //console.log(response);
+        //console.log(JSON.parse(body));
+        var items = JSON.parse(body);
+        //console.log(JSON.parse(items.pagemap[0]));
+        if(!error && response.statusCode === 200){
+          resolve(createTrailer(sender, items));
+        } else{
+          reject(error);
+        }
+      });
+    }
+
 if(tvshow != null) {
       // Fetch data from OMDB
       request({
@@ -318,6 +342,49 @@ function createResponse (sender, intent, tvshow){
   }
 }
 
+function createTrailer (sender, trailer) {
+  if(trailer){
+    console.log("Umabot ng trailer");
+    let{      
+        items:[{
+          title,
+          link,
+          snippet,
+          pagemap: {
+            cse_thumbnail: [{
+              src
+            }]
+          }                    
+        }]
+    } = trailer;
+
+    let elements = [];
+    let buttons = [];
+    let button;
+    button = {
+					"type": "web_url",
+					"title": "Watch trailer",
+					"url": link
+				}
+    buttons.push(button);
+    let element = {			
+			"title": title,
+			"image_url": src,
+			"subtitle": snippet,
+			"buttons": buttons
+		};
+		elements.push(element);
+      
+    sendGenericMessage(sender, elements);
+  }
+  else{
+    return{
+      text: "I'm sorry, there must be an error. Please try again.",
+      image: null
+    }
+  }
+}
+
 function sendMovieCards(sender){
 	if(check == true){
 		request({
@@ -380,7 +447,7 @@ function sendMovieCards(sender){
 								{
 									"type": "postback",
 									"title": "Trailer",
-									"payload": "trailer"
+									"payload": "abouttrailer"
 								}
 							]
 						},
@@ -1002,6 +1069,11 @@ function receivedPostback(event) {
 
 		case "aboutreleaseyear":
 			var intents = "releaseyear";
+			omdb(senderID, intents, tvshow);
+		break;
+
+		case "abouttrailer" :
+			var intents = "trailerInfo";
 			omdb(senderID, intents, tvshow);
 		break;
 
