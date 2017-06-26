@@ -196,7 +196,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					omdb(sender, intent, tvshow);	
 					if(obj.parameters['tvshow'] != "")	{
 					setTimeout(function(){
-					sendMovieCards(sender, action, responseText, contexts, parameters);
+					sendMovieCards(sender);
 				},2000);
 					}			
 					console.log(tvshow + " this is the tv show");
@@ -325,7 +325,7 @@ function createResponse (sender, intent, tvshow){
   }
 }
 
-function sendMovieCards(sender, action, responseText, contexts, parameter){
+function sendMovieCards(sender){
 		request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
 			qs: {
@@ -356,7 +356,7 @@ function sendMovieCards(sender, action, responseText, contexts, parameter){
 								{
 									"type": "postback",
 									"title": "Director",
-									"payload": "director"
+									"payload": "aboutdirector"
 								}
 							]
 						},
@@ -990,6 +990,15 @@ function receivedPostback(event) {
 		case "aboutplot":
 		var intents = "plot";
 		omdb(senderID, intents, tvshow);
+		break;
+
+		case "aboutdirector":
+		var intents = "director";
+		omdb(senderID, intents, tvshow);
+		break;
+
+		case "choices":
+		sendMovieCards(senderID);
 		break;
 
 		default:
