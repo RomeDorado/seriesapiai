@@ -190,7 +190,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				var contextObj = {};
 				if(obj.name === "series"){
 					let tvshow = obj.parameters['tvshow'];
-					var intent = 'tvInfo';
+					var intent = 'poster';
 					omdb(sender, intent, tvshow);
 					console.log(tvshow + " this is the tv show");
 				}						
@@ -253,6 +253,10 @@ function createResponse (sender, intent, tvshow){
         sendTextMessage(sender, str);
 		sendImageMessage(sender, Poster);
       }
+
+	  case 'poster': {
+		  sendImageMessage(sender, Poster);
+	  }
 
       case 'director' : {
         let str = `${Title} (${Year}) was directed by ${Director} and written by ${Writer}.`;
