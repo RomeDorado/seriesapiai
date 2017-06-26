@@ -183,7 +183,7 @@ function handleEcho(messageId, appId, metadata) {
 }
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
-	switch (action) {
+	switch (action) {		
 		default:
 			//unhandled action, just send back the text
 			sendTextMessage(sender, responseText);
@@ -721,6 +721,10 @@ function receivedPostback(event) {
 	var payload = event.postback.payload;
 
 	switch (payload) {
+		case "getStarted":
+		sendToApiAi(senderID, "Get Started");
+		break;
+		
 		default:
 			//unindentified payload
 			sendTextMessage(senderID, "I'm not sure what you want. Can you be more specific?");
