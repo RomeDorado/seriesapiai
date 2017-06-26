@@ -250,6 +250,7 @@ function createResponse (sender, intent, tvshow){
       case 'tvInfo' : {
         let str = `${Title} (${Year}). This film was directed by ${Director} and starred ${Actors}. ${Plot}`;
         sendTextMessage(sender, str);
+		sendImageMessage(sender, Poster);
       }
 
       case 'director' : {
