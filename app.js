@@ -192,11 +192,13 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				var contextObj = {};
 				if(obj.name === "series"){
 					tvshow = obj.parameters['tvshow'];
-					var intent = 'poster';
+					let intent = 'posters';
 					omdb(sender, intent, tvshow);
+					if(obj.parameters['tvshow'] != "")	{
 					setTimeout(function(){
-					sendMovieCards(sender, action, responseText, contexts, parameters);
-					},2000);
+					sendMovieCards(sender);
+				},2000);
+					}
 					console.log(tvshow + " this is the tv show");
 				}
 			return contextObj;
@@ -230,7 +232,7 @@ if(tvshow != null) {
         if(!error && response.statusCode === 200) {
           (createResponse(sender, intent, JSON.parse(body)));
         } else {
-          (createResponse(sender, intent, "wala"));
+       //   (createResponse(sender, intent, "wala"));
         }
       });
     }
@@ -260,13 +262,15 @@ function createResponse (sender, intent, tvshow){
 		sendImageMessage(sender, Poster);
       }
 
-	  case 'poster': {
+	  case 'posters': {
 		  sendImageMessage(sender, Poster);
+
 	  }
 
-		case 'plot': {
+	  case 'plot': {
 			let str = `${Plot}`;
-			sendTextMessage(sender, str);
+			moviequickreply(sender, str);
+			//sendTextMessage(sender, str);
 		}
 
       case 'director' : {
@@ -321,7 +325,7 @@ function createResponse (sender, intent, tvshow){
   }
 }
 
-function sendMovieCards(sender, action, responseText, contexts, parameter){
+function sendMovieCards(sender){
 		request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
 			qs: {
@@ -342,7 +346,7 @@ function sendMovieCards(sender, action, responseText, contexts, parameter){
 								{
 									"type": "postback",
 									"title": "Plot",
-									"payload": "plot"
+									"payload": "aboutplot"
 								}
 							]
 						},
@@ -352,7 +356,7 @@ function sendMovieCards(sender, action, responseText, contexts, parameter){
 								{
 									"type": "postback",
 									"title": "Director",
-									"payload": "director"
+									"payload": "aboutdirector"
 								}
 							]
 						},
@@ -400,7 +404,7 @@ function sendMovieCards(sender, action, responseText, contexts, parameter){
 		});
 }
 
-function moviequickreply(sender, action, responseText, contexts, parameter){
+function moviequickreply(sender, text){
 var txtmessage = "";
 request({
 		uri: 'https://graph.facebook.com/v2.7/' + sender,
@@ -418,35 +422,17 @@ request({
 				console.log("FB user: %s %s, %s",
 					user.first_name, user.last_name, user.gender);
 
-				txtmessage = "What do you want to know about?";
+				txtmessage = text;
 				let replies = [
 		{
 			"content_type": "text",
-			"title": "Plot",
-			"payload":"plot"
+			"title": "Show choices",
+			"payload":"choices"
 		},
 		{
 			"content_type": "text",
-			"title": "Director",
-			"payload":"director"
-
-		},
-		{
-			"content_type": "text",
-			"title": "Cast",
-			"payload":"cast"
-
-		},
-		{
-			"content_type": "text",
-			"title": "Date of Release",
-			"payload":"releaseyear"
-
-		},
-		{
-			"content_type": "text",
-			"title": "Trailer",
-			"payload":"trailer"
+			"title": "Back to main menu",
+			"payload":"backmenu"
 
 		}
 
@@ -1001,9 +987,18 @@ function receivedPostback(event) {
 		sendToApiAi(senderID, "Get Started");
 		break;
 
-		case "plot":
-		var intent = "plot";
-		omdb(senderID, intent, tvshow);
+		case "aboutplot":
+		var intents = "plot";
+		omdb(senderID, intents, tvshow);
+		break;
+
+		case "aboutdirector":
+		var intents = "director";
+		omdb(senderID, intents, tvshow);
+		break;
+
+		case "choices":
+		sendMovieCards(senderID);
 		break;
 
 		default:
