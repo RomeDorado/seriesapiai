@@ -231,9 +231,9 @@ if(intent == 'trailerInfo'){
         var items = JSON.parse(body);
         //console.log(JSON.parse(items.pagemap[0]));
         if(!error && response.statusCode === 200){
-          resolve(createTrailer(sender, items));
+          (createTrailer(sender, items));
         } else{
-          reject(error);
+          //reject(error);
         }
       });
     }
