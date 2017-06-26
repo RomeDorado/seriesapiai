@@ -192,7 +192,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				var contextObj = {};
 				if(obj.name === "series"){
 					tvshow = obj.parameters['tvshow'];
-					var intent = 'poster';
+					let intent = 'posters';
 					omdb(sender, intent, tvshow);	
 					if(obj.parameters['tvshow'] != "")	{
 					setTimeout(function(){
@@ -232,7 +232,7 @@ if(tvshow != null) {
         if(!error && response.statusCode === 200) {
           (createResponse(sender, intent, JSON.parse(body)));
         } else {
-          (createResponse(sender, intent, "wala"));
+       //   (createResponse(sender, intent, "wala"));
         }
       });
     }
@@ -262,7 +262,7 @@ function createResponse (sender, intent, tvshow){
 		sendImageMessage(sender, Poster);
       }
 
-	  case 'poster': {
+	  case 'posters': {
 		  sendImageMessage(sender, Poster);
 
 	  }
@@ -346,7 +346,7 @@ function sendMovieCards(sender, action, responseText, contexts, parameter){
 								{
 									"type": "postback",
 									"title": "Plot",
-									"payload": "plot"
+									"payload": "aboutplot"
 								}
 							]
 						},
@@ -987,7 +987,7 @@ function receivedPostback(event) {
 		sendToApiAi(senderID, "Get Started");
 		break;
 
-		case "plot":
+		case "aboutplot":
 		var intents = "plot";
 		omdb(senderID, intents, tvshow);
 		break;
