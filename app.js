@@ -193,7 +193,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					var intent = 'poster';
 					omdb(sender, intent, tvshow);
 					setTimeout(function(){
-					moviequickreply(sender, action, responseText, contexts, parameters);
+					sendMovieCards(sender, action, responseText, contexts, parameters);
 					},2000);
 					console.log(tvshow + " this is the tv show");
 				}
@@ -201,7 +201,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		});
 		sendTextMessage(sender, responseText);
 		break;
-		
+
 
 		default:
 			//unhandled action, just send back the text
@@ -312,6 +312,45 @@ function createResponse (sender, intent, tvshow){
           }
 
   }
+}
+
+function sendMovieCards(sender, action, responseText, contexts, parameter){
+		request({
+			uri: 'https://graph.facebook.com/v2.7/' + sender,
+			qs: {
+				access_token: config.FB_PAGE_TOKEN
+			}
+		}, function(error, response, body) {
+			if(!error && response.statusCode == 200){
+				var user = JSON.parse(body);
+
+				if(user.first_name){
+					console.log("FB user: %s %s, %s",
+						user.first_name, user.last_name, user.gender);
+
+					let elements = [
+						{
+							"title": "Know about the Plot",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Plot",
+									"payload": "plot"
+								}
+							]
+						}
+					];
+					sendGenericMessage(elements);
+				}
+				else{
+					console.log("Cannot get data for fb user with id",
+						sender);
+				}
+			}
+			else{
+				console.error(response.error);
+			}
+		});
 }
 
 function moviequickreply(sender, action, responseText, contexts, parameter){
