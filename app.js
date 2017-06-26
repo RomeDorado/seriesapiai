@@ -214,6 +214,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 }
 
 var check = 0;
+
 function omdb(sender, intent, tvshow){
 
 if(tvshow != null) {
@@ -231,8 +232,9 @@ if(tvshow != null) {
         //console.log(response);
         if(!error && response.statusCode === 200) {
           (createResponse(sender, intent, JSON.parse(body)));
+		  check++;
         } else {
-       	check = 1;
+       //   (createResponse(sender, intent, "wala"));
         }
       });
     }
@@ -264,6 +266,7 @@ function createResponse (sender, intent, tvshow){
 
 		  case 'posters':
 				sendImageMessage(sender, Poster);
+				console.log(check + "value of check");
 			break;
 
 		  case 'plot':
@@ -319,7 +322,6 @@ function createResponse (sender, intent, tvshow){
 }
 
 function sendMovieCards(sender){
-	if(check === 1){
 		request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
 			qs: {
@@ -396,9 +398,6 @@ function sendMovieCards(sender){
 				console.error(response.error);
 			}
 		});
-		}else{
-			sendTextMessage(sender, "Try again");
-		}
 }
 
 function moviequickreply(sender, text){
