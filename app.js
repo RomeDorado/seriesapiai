@@ -182,6 +182,8 @@ function handleEcho(messageId, appId, metadata) {
 	console.log("Received echo for message %s and app %d with metadata %s", messageId, appId, metadata);
 }
 
+let tvshow = "";
+
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "know-a-series" :
@@ -189,7 +191,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		var cont = contexts.map(function(obj) {
 				var contextObj = {};
 				if(obj.name === "series"){
-					let tvshow = obj.parameters['tvshow'];
+					tvshow = obj.parameters['tvshow'];
 					var intent = 'poster';
 					omdb(sender, intent, tvshow);
 					setTimeout(function(){
@@ -224,7 +226,7 @@ if(tvshow != null) {
         },
         method: 'GET'
       }, (error, response, body) => {
-        console.log(response);
+        //console.log(response);
         if(!error && response.statusCode === 200) {
           (createResponse(sender, intent, JSON.parse(body)));
         } else {
@@ -997,6 +999,11 @@ function receivedPostback(event) {
 	switch (payload) {
 		case "FACEBOOK_WELCOME":
 		sendToApiAi(senderID, "Get Started");
+		break;
+
+		case "plot":
+		var intent = "plot";
+		omdb(senderID, intent, tvshow);
 		break;
 
 		default:
