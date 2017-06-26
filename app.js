@@ -213,7 +213,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	}
 }
 
-
+var check = 0;
 function omdb(sender, intent, tvshow){
 
 if(tvshow != null) {
@@ -232,7 +232,7 @@ if(tvshow != null) {
         if(!error && response.statusCode === 200) {
           (createResponse(sender, intent, JSON.parse(body)));
         } else {
-       //   (createResponse(sender, intent, "wala"));
+       	check = 1;
         }
       });
     }
@@ -319,6 +319,7 @@ function createResponse (sender, intent, tvshow){
 }
 
 function sendMovieCards(sender){
+	if(check === 1){
 		request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
 			qs: {
@@ -395,6 +396,9 @@ function sendMovieCards(sender){
 				console.error(response.error);
 			}
 		});
+		}else{
+			sendTextMessage(sender, "Try again");
+		}
 }
 
 function moviequickreply(sender, text){
