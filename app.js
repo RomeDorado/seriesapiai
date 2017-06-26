@@ -183,12 +183,129 @@ function handleEcho(messageId, appId, metadata) {
 }
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
-	switch (action) {		
+	switch (action) {	
+		case "know-a-series" :
+
+		var cont = contexts.map(function(obj) { 
+				var contextObj = {};
+				if(obj.name === "series"){
+					let tvshow = obj.parameters['tvshow'];
+					var intent = 'tvInfo';
+					omdb(sender, intent, tvshow);
+					console.log(tvshow + " this is the tv show");
+				}						
+			return contextObj;
+		});
+
+		break;
 		default:
 			//unhandled action, just send back the text
 			sendTextMessage(sender, responseText);
 	}
 }
+
+
+function omdb(sender, intent, tvshow){
+
+if(tvshow != null) {
+      // Fetch data from OMDB
+      request({
+        uri: "https://www.omdbapi.com",
+        qs: {
+          t: tvshow,
+          plot: 'short',
+          r: 'json',
+          apiKey: "270b7488"
+        },
+        method: 'GET'
+      }, (error, response, body) => {
+        console.log(response);
+        if(!error && response.statusCode === 200) {
+          (createResponse(sender, intent, JSON.parse(body)));
+        } else {
+          (createResponse(sender, intent, "wala"));
+        }
+      });
+    }
+
+}
+
+function createResponse (sender, intent, tvshow){
+
+	if(tvshow.Response === 'True') {
+    let {
+      Title,
+      Type,
+      Year,
+      Plot,
+      Director,
+      Actors,
+      Poster,
+      Released,
+      Writer,
+      totalSeasons
+    } = tvshow;
+
+    switch(intent) {
+      case 'tvInfo' : {
+        let str = `${Title} (${Year}). This film was directed by ${Director} and starred ${Actors}. ${Plot}`;
+        sendTextMessage(sender, str);
+      }
+
+      case 'director' : {
+        let str = `${Title} (${Year}) was directed by ${Director} and written by ${Writer}.`;
+        return {
+          text: str,
+          image: null
+        }
+      }
+
+      case 'cast': {
+        let str = `The main cast of ${Title} (${Year}) are ${Actors}.`;
+        return{
+          text: str,
+          image: null
+        }
+      }
+
+      case 'releaseYear': {
+        let str = `${Title} was released on ${Released}.`;
+        return{
+          text: str,
+          image: null
+        }
+      }
+
+      case 'numberOfSeasons': {
+        if(Type == 'movie'){
+          let str = `${Title} is not a TV Series. Please try again.`;
+          return{
+            text: str,
+            image: null
+          }
+        }
+        else if(Type == 'series'){
+          let str = `${Title} currently has ${totalSeasons} season(s).`;
+          return{
+            text: str,
+            image: null
+          }
+        }
+      }
+
+    }
+  }else{
+    let str = `I'm still learning, please re-type if you have a typo`;
+          return{
+            text: str,
+            image: null
+          }
+
+  }
+}
+}
+
+
 
 function handleMessage(message, sender) {
 	switch (message.type) {
