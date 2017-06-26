@@ -270,6 +270,7 @@ function createResponse (sender, intent, tvshow){
 				let str = `${Plot}`;
 				// moviequickreply(sender, str);
 				sendTextMessage(sender, str);
+				sendMovieCards(sender);
 			break;
 
     case 'director' : {
