@@ -263,37 +263,32 @@ function createResponse (sender, intent, tvshow){
       }
 
 		  case 'posters':
-			  sendImageMessage(sender, Poster);
+				sendImageMessage(sender, Poster);
 			break;
 
 		  case 'plot':
-				let str = `${Plot}`;
-				// moviequickreply(sender, str);
-				sendTextMessage(sender, str);
+				let strPlot = `${Plot}`;
+				sendTextMessage(sender, strPlot);
 				sendMovieCards(sender);
 			break;
 
-    	// case 'director':
-			// 	let str = `${Title} was directed by ${Director} and writted by ${Writer}`;
-			// 	sendTextMessage(sender, str);
-			// 	sendMovieCards(sender);
-			// break;
+    	case 'director':
+				let strDirector = `${Title} was directed by ${Director} and written by ${Writer}`;
+				sendTextMessage(sender, strDirector);
+				sendMovieCards(sender);
+			break;
 
-      case 'cast': {
-        let str = `The main cast of ${Title} (${Year}) are ${Actors}.`;
-        return{
-          text: str,
-          image: null
-        }
-      }
+      case 'cast':
+				let strCast = `${Title} stars ${Actors}`;
+				sendTextMessage(sender, strCast);
+				sendMovieCards(sender);
+			break;
 
-      case 'releaseYear': {
-        let str = `${Title} was released on ${Released}.`;
-        return{
-          text: str,
-          image: null
-        }
-      }
+      case 'releaseyear':
+				let strRelease = `${Title} was released on ${Released}`;
+				sendTextMessage(sender, strRelease);
+				sendMovieCards(sender);
+			break;
 
       case 'numberOfSeasons': {
         if(Type == 'movie'){
@@ -364,7 +359,7 @@ function sendMovieCards(sender){
 								{
 									"type": "postback",
 									"title": "Cast",
-									"payload": "cast"
+									"payload": "aboutcast"
 								}
 							]
 						},
@@ -374,7 +369,7 @@ function sendMovieCards(sender){
 								{
 									"type": "postback",
 									"title": "Release Year",
-									"payload": "releaseyear"
+									"payload": "aboutreleaseyear"
 								}
 							]
 						},
@@ -982,21 +977,27 @@ function receivedPostback(event) {
 
 	switch (payload) {
 		case "FACEBOOK_WELCOME":
-		sendToApiAi(senderID, "Get Started");
+			sendToApiAi(senderID, "Get Started");
 		break;
 
 		case "aboutplot":
-		var intents = "plot";
-		omdb(senderID, intents, tvshow);
+			var intents = "plot";
+			omdb(senderID, intents, tvshow);
 		break;
 
-		// case "aboutdirector":
-		// var intents = "director";
-		// omdb(senderID, intents, tvshow);
-		// break;
+		case "aboutdirector":
+			var intents = 'director';
+			omdb(senderID, intents, tvshow);
+		break;
 
-		case "choices":
-		sendMovieCards(senderID);
+		case "aboutcast":
+			var intents = 'cast';
+			omdb(senderID, intents, tvshow);
+		break;
+
+		case "aboutreleaseyear":
+			var intents = "releaseyear";
+			omdb(senderID, intents, tvshow);
 		break;
 
 		default:
