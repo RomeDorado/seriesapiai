@@ -322,6 +322,7 @@ function createResponse (sender, intent, tvshow){
 }
 
 function sendMovieCards(sender){
+	if(check > 0){
 		request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
 			qs: {
@@ -398,6 +399,10 @@ function sendMovieCards(sender){
 				console.error(response.error);
 			}
 		});
+	}
+	else{
+		
+	}
 }
 
 function moviequickreply(sender, text){
