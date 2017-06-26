@@ -264,11 +264,13 @@ function createResponse (sender, intent, tvshow){
 
 	  case 'poster': {
 		  sendImageMessage(sender, Poster);
+
 	  }
 
 		case 'plot': {
 			let str = `${Plot}`;
-			sendTextMessage(sender, str);
+			moviequickreply(sender, str);
+			//sendTextMessage(sender, str);
 		}
 
       case 'director' : {
@@ -402,7 +404,7 @@ function sendMovieCards(sender, action, responseText, contexts, parameter){
 		});
 }
 
-function moviequickreply(sender, action, responseText, contexts, parameter){
+function moviequickreply(sender, text){
 var txtmessage = "";
 request({
 		uri: 'https://graph.facebook.com/v2.7/' + sender,
@@ -420,36 +422,18 @@ request({
 				console.log("FB user: %s %s, %s",
 					user.first_name, user.last_name, user.gender);
 
-				txtmessage = "What do you want to know about?";
+				txtmessage = text;
 				let replies = [
 		{
 			"content_type": "text",
-			"title": "Plot",
-			"payload":"plot"
+			"title": "Show choices",
+			"payload":"choices"
 		},
 		{
 			"content_type": "text",
-			"title": "Director",
-			"payload":"director"
-
-		},
-		{
-			"content_type": "text",
-			"title": "Cast",
-			"payload":"cast"
-
-		},
-		{
-			"content_type": "text",
-			"title": "Date of Release",
-			"payload":"releaseyear"
-
-		},
-		{
-			"content_type": "text",
-			"title": "Trailer",
-			"payload":"trailer"
-
+			"title": "Back to main menu",
+			"payload":"backmenu"
+		
 		}
 
 		];
