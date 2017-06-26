@@ -375,7 +375,7 @@ function createTrailer (sender, trailer) {
 		};
 		elements.push(element);
       
-    sendGenericMessage(sender, elements);
+    sendMovieCards(sender, elements);
   }
   else{
     return{
@@ -385,7 +385,7 @@ function createTrailer (sender, trailer) {
   }
 }
 
-function sendMovieCards(sender){
+function sendMovieCards(sender, elems){
 	
 		request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
@@ -441,16 +441,7 @@ function sendMovieCards(sender){
 								}
 							]
 						},
-						{
-							"title": "Watch the trailer",
-							"buttons": [
-								{
-									"type": "postback",
-									"title": "Trailer",
-									"payload": "abouttrailer"
-								}
-							]
-						},
+						elems
 					];
 					sendGenericMessage(sender, elements);
 				}
