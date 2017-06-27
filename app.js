@@ -197,19 +197,36 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "know-a-series" :
 
-		var cont = contexts.map(function(obj) {
-				var contextObj = {};
-				if(obj.name === "series"){
-					tvshow = obj.parameters['tvshow'];
-					let intent = 'posters';
-					if(obj.parameters['tvshow'] != "")	{			
-					omdb(sender, intent, tvshow);					
+			var cont = contexts.map(function(obj) {
+					var contextObj = {};
+					if(obj.name === "series"){
+						tvshow = obj.parameters['tvshow'];
+						let intent = 'posters';
+						if(obj.parameters['tvshow'] != "")	{
+						omdb(sender, intent, tvshow);
+						}
+						console.log(tvshow + " this is the tv show");
 					}
-					console.log(tvshow + " this is the tv show");
+				return contextObj;
+			});
+			sendTextMessage(sender, responseText);
+		break;
+
+		case "recommend-show":
+
+			var cont = contexts.map(function(obj) {
+				var contextObj = {};
+				var genre = "";
+				if(obj.name === 'recommendation'){
+					genre = obj.parameters['showGenre'];
+					if(obj.parameters['showGenre'] != ""){
+						tmdbDiscover(sender, genre);
+					}
+					console.log(genre + " is the genre chosen");
 				}
-			return contextObj;
-		});
-		sendTextMessage(sender, responseText);
+				return contextObj;
+			});
+			sendTextMessage(sender, responseText);
 		break;
 		
 		case "create-reminder":
@@ -287,14 +304,86 @@ if(tvshow != null) {
       }, (error, response, body) => {
         //console.log(response);
         if(!error && response.statusCode === 200) {
-          (createResponse(sender, intent, JSON.parse(body)));	
-		  check = true;	  
+          (createResponse(sender, intent, JSON.parse(body)));
+		  check = true;
         } else {
-         
+
         }
       });
     }
+}
 
+function tmdbDiscover (sender, genre){
+	//Check genre and assign genreID
+	var genreID = "";
+	switch(genre){
+		case "action":
+      genreID = "28";
+      break;
+
+      case "adventure":
+      genreID = "12";
+      break;
+
+      case "animation":
+      genreID = "16";
+      break;
+
+      case "comedy":
+      genreID = "35";
+      break;
+
+      case "drama":
+      genreID = "18";
+      break;
+
+      case "horror":
+      genreID = "27";
+      break;
+
+      case "fantasy":
+      genreID = "14";
+      break;
+
+      case "music":
+      genreID = "10402";
+      break;
+
+      case "romance":
+      genreID = "10749";
+      break;
+
+      case "science fiction":
+      genreID = "878";
+      break;
+	}
+	request({
+		uri: "https://api.themoviedb.org/3/discover/movie?api_key=92b2df3080b91d92b31eacb015fc5497",
+		qs: {
+			language: "en-US",
+			sort_by: "popularity.desc",
+			page: "1",
+			with_genres: genreID
+		},
+		method: "GET",
+	}, (error, response, body) => {
+		if(!error && response.statusCode === 200) {
+			createMovieList(sender, JSON.parse(body));
+		}
+	});
+}
+
+function createMovieList(sender, movieList){
+	let{
+		title
+	} = movieList;
+
+	let strMovieList = `Try asking me about these movies: \n`;
+	for(var i= 0; i < 5; i++){
+      var movieTitle = movieList.results[i].title;
+      strMovieList += movieTitle + '\n';
+  }
+	sendTextMessage(sender, strMovieList);
 }
 
 function createResponse (sender, intent, tvshow){
@@ -318,12 +407,12 @@ function createResponse (sender, intent, tvshow){
         let str = `${Title} (${Year}). This film was directed by ${Director} and starred ${Actors}. ${Plot}`;
         sendTextMessage(sender, str);
 				sendImageMessage(sender, Poster);
-				
+
       }
 
 		  case 'posters':
-				sendImageMessage(sender, Poster);	
-				sendMovieCards(sender);			
+				sendImageMessage(sender, Poster);
+				sendMovieCards(sender);
 			break;
 
 		  case 'plot':
@@ -332,7 +421,7 @@ function createResponse (sender, intent, tvshow){
 						setTimeout(function(){
 				sendMovieCards(sender);
 				},2000);
-				
+
 			break;
 
     	case 'director':
@@ -380,7 +469,7 @@ function createResponse (sender, intent, tvshow){
 function createTrailer (sender, trailer) {
   if(trailer){
     console.log("Umabot ng trailer");
-    let{      
+    let{
         items:[{
           title,
           link,
@@ -389,7 +478,7 @@ function createTrailer (sender, trailer) {
             cse_thumbnail: [{
               src
             }]
-          }                    
+          }
         }]
     } = trailer;
 
@@ -402,14 +491,14 @@ function createTrailer (sender, trailer) {
 					"url": link
 				}
     buttons.push(button);
-    let element = {			
+    let element = {
 			"title": title,
 			"image_url": src,
 			"subtitle": snippet,
 			"buttons": buttons
 		};
 		elements.push(element);
-      
+
     sendGenericMessage(sender, elements);
   }
   else{
@@ -421,7 +510,7 @@ function createTrailer (sender, trailer) {
 }
 
 function sendMovieCards(sender){
-	
+
 		request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
 			qs: {
@@ -438,6 +527,7 @@ function sendMovieCards(sender){
 					let elements = [
 						{
 							"title": "Know about the Plot",
+							"image_url": "http://i.imgur.com/DFSanrI.png",
 							"buttons": [
 								{
 									"type": "postback",
@@ -448,6 +538,7 @@ function sendMovieCards(sender){
 						},
 						{
 							"title": "Know the Director",
+							"image_url": "http://i.imgur.com/HWpIyNx.png",
 							"buttons": [
 								{
 									"type": "postback",
@@ -458,6 +549,7 @@ function sendMovieCards(sender){
 						},
 						{
 							"title": "Know the Cast",
+							"image_url": "http://i.imgur.com/2UxrgcT.png",
 							"buttons": [
 								{
 									"type": "postback",
@@ -468,6 +560,7 @@ function sendMovieCards(sender){
 						},
 						{
 							"title": "Know the Release Year",
+							"image_url": "http://i.imgur.com/Gbd4YFV.png",
 							"buttons": [
 								{
 									"type": "postback",
@@ -478,6 +571,7 @@ function sendMovieCards(sender){
 						},
 						{
 							"title": "Watch the trailer",
+							"image_url": "http://i.imgur.com/9pE8MRL.png",
 							"buttons": [
 								{
 									"type": "postback",
@@ -498,7 +592,7 @@ function sendMovieCards(sender){
 				console.error(response.error);
 			}
 		});
-	
+
 }
 
 
@@ -1084,6 +1178,10 @@ function receivedPostback(event) {
 
 	switch (payload) {
 		case "FACEBOOK_WELCOME":
+			sendToApiAi(senderID, "Get Started");
+		break;
+
+		case "getStarted":
 			sendToApiAi(senderID, "Get Started");
 		break;
 
