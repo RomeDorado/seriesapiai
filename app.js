@@ -429,14 +429,14 @@ function createMovieList(sender, movieList){
 	} = movieList;
 	let imagePath = "https://image.tmdb.org/t/p/w500";
 	let strMovieList = `Try asking me about these movies: \n`;
+	let elements = [];
+	let buttons = [];
+	let button;
 	for(var i= 0; i < 5; i++){
       var movieTitle = movieList.results[i].title;
 			var poster = movieList.results[i].poster_path;
       // strMovieList += movieTitle + '\n';
 			imagePath += poster;
-			let elements = [];
-	    let buttons = [];
-	    let button;
 	    button = {
 						"type": "postback",
 						"title": movieTitle,
