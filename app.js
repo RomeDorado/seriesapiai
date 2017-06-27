@@ -437,16 +437,22 @@ function createMovieList(sender, movieList){
 			var poster = movieList.results[i].poster_path;
       // strMovieList += movieTitle + '\n';
 			imagePath += poster;
-	    button = {
+	    // button = {
+			// 			"type": "postback",
+			// 			"title": movieTitle,
+			// 			"payload": movieTitle
+			// 		}
+	    // buttons.push(button);
+			let element = {
+				"title": movieTitle,
+				"image_url": imagePath,
+				"buttons": [
+					{
 						"type": "postback",
 						"title": movieTitle,
 						"payload": movieTitle
 					}
-	    buttons.push(button);
-			let element = {
-				"title": movieTitle,
-				"image_url": imagePath,
-				"buttons": buttons
+				]
 			};
 			elements.push(element);
   }
