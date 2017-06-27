@@ -344,7 +344,7 @@ function createMovieList(sender, movieList){
 	} = movieList;
 
 	let strMovieList = `Try asking me about these movies: \n`;
-	for(var i= 0; i < movieList.results.length; i++){
+	for(var i= 0; i < 5; i++){
       var movieTitle = movieList.results[i].title;
       strMovieList += movieTitle + '\n';
   }
