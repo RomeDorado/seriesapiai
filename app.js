@@ -1286,52 +1286,52 @@ function receivedPostback(event) {
 
 		case "genreAction":
 			var genre = "action";
-			tmdbDiscover(sender, genre);
+			tmdbDiscover(senderID, genre);
 		break;
 
 		case "genreAdventure":
 			var genre = "adventure";
-			tmdbDiscover(sender, genre);
+			tmdbDiscover(senderID, genre);
 		break;
 
 		case "genreAnimation":
 			var genre = "animation";
-			tmdbDiscover(sender, genre);
+			tmdbDiscover(senderID, genre);
 		break;
 
 		case "genreComedy":
 			var genre = "comedy";
-			tmdbDiscover(sender, genre);
+			tmdbDiscover(senderID, genre);
 		break;
 
 		case "genreDrama":
 			var genre = "drama";
-			tmdbDiscover(sender, genre);
+			tmdbDiscover(senderID, genre);
 		break;
 
 		case "genreFantasy":
 			var genre = "fantasy";
-			tmdbDiscover(sender, genre);
+			tmdbDiscover(senderID, genre);
 		break;
 
 		case "genreHorror":
 			var genre = "horror";
-			tmdbDiscover(sender, genre);
+			tmdbDiscover(senderID, genre);
 		break;
 
 		case "genreMusical":
 			var genre = "music";
-			tmdbDiscover(sender, genre);
+			tmdbDiscover(senderID, genre);
 		break;
 
 		case "genreRomance":
 			var genre = "romance";
-			tmdbDiscover(sender, genre);
+			tmdbDiscover(senderID, genre);
 		break;
 
 		case "genreSciFi":
 			var genre = "science fiction";
-			tmdbDiscover(sender, genre);
+			tmdbDiscover(senderID, genre);
 		break;
 
 		default:
