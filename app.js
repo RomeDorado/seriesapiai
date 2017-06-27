@@ -341,14 +341,32 @@ function tmdbDiscover (sender, genre){
 function createMovieList(sender, movieList){
 	let{
 		title
+		poster_path
 	} = movieList;
-
+	let imagePath = "https://image.tmdb.org/t/p/w500";
 	let strMovieList = `Try asking me about these movies: \n`;
 	for(var i= 0; i < 5; i++){
       var movieTitle = movieList.results[i].title;
-      strMovieList += movieTitle + '\n';
+			var poster = movieList.results[i].poster_path;
+      // strMovieList += movieTitle + '\n';
+			imagePath += poster;
+			let elements = [];
+	    let buttons = [];
+	    let button;
+	    button = {
+						"type": "postback",
+						"title": movieTitle,
+						"payload": movieTitle
+					}
+	    buttons.push(button);
+			let element = {
+				"title": movieTitle,
+				"image_url": imagePath,
+				"buttons": buttons
+			};
+			elements.push(element);
   }
-	sendTextMessage(sender, strMovieList);
+	sendGenericMessage(sender, elements);
 }
 
 function createResponse (sender, intent, tvshow){
