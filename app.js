@@ -242,13 +242,13 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				}
 				
 				agenda.now('createReminder', {
-				fbid,
+				sender,
 				datetime: datetime,
 				task: "watch movie"
 				});
-				
+				console.log(datetime + " this is the datetime");
 				createReminderAgenda(sender);
-					console.log(tvshow + " this is the tv show");
+					
 				}
 			return contextObj;
 		});
@@ -265,10 +265,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 function createReminderAgenda(sender){
 	return agenda.define('createReminder', job => {
     // Extract fbid, datetime and task from job
-    const {fbid, datetime, task} = job.attrs.data;
+    const {sender, datetime, task} = job.attrs.data;
 
     // Get the FB User's timezone
-    getProfile(fbid)
+    getProfile(sender)
       .then(profile => {
         const {first_name, timezone} = profile;
         // Calculating the timezone offset datetime
@@ -280,7 +280,7 @@ function createReminderAgenda(sender){
         const scheduleTime = (timeDiff <= 0 ? moment.utc(datetime) : UTC_Offset).toDate();
         // Setup the job
         agenda.schedule(scheduleTime, 'reminder', {
-          fbid,
+          sender,
           first_name,
           task
         });
@@ -294,9 +294,9 @@ function createReminderAgenda(sender){
 function getProfile(id) {
 		return new Promise((resolve, reject) => {
 			request({
-				uri: `https://graph.facebook.com/v2.7/${id}`,
+				uri: `https://graph.facebook.com/v2.7/` + id,
 				qs: {
-					access_token: this.PAGE_ACCESS_TOKEN
+					access_token: config.FB_PAGE_TOKEN
 				},
 				method: 'GET'
 			}, (error, response, body) => {
