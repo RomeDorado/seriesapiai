@@ -230,6 +230,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		break;
 		
 		case "create-reminder":
+		console.log("create reminder log");
 		var datetime = '';	
 		var cont = contexts.map(function(obj) {
 				var contextObj = {};
@@ -241,7 +242,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					datetime = obj.parameters['time'];
 				}
 				console.log(datetime + " this is the datetime");
-				
+
 				agenda.now('createReminder', {
 				sender,
 				datetime: datetime,
