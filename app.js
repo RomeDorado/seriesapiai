@@ -8,6 +8,13 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const app = express();
 const uuid = require('uuid');
+const Agenda = require('agenda');
+const {MONGO_URI} = require('../config');
+const agenda = new Agenda({
+  db: {
+    address: MONGO_URI
+  }
+});
 
 
 // Messenger API parameters
@@ -79,6 +86,8 @@ app.get('/webhook/', function (req, res) {
  * https://developers.facebook.com/docs/messenger-platform/product-overview/setup#subscribe_app
  *
  */
+agenda.on('ready', () => {
+
 app.post('/webhook/', function (req, res) {
 	var data = req.body;
 	console.log(JSON.stringify(data));
@@ -202,7 +211,33 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		});
 		sendTextMessage(sender, responseText);
 		break;
-
+		
+		case "create-reminder":
+		var datetime = '';	
+		var cont = contexts.map(function(obj) {
+				var contextObj = {};
+				if(obj.name === "series"){
+					
+					if (obj.parameters['datetime'] != "") {								
+					datetime = obj.parameters['datetime'];					
+					} else {
+					datetime = obj.parameters['time'];
+				}
+				
+				agenda.now('createReminder', {
+				sender,
+				datetime: datetime,
+				task: context.task
+				});
+				
+				createReminderAgenda();
+					console.log(tvshow + " this is the tv show");
+				}
+			return contextObj;
+		});
+		sendTextMessage(sender, responseText);
+		
+		break;
 
 		default:
 			//unhandled action, just send back the text
@@ -466,6 +501,8 @@ function sendMovieCards(sender){
 	
 }
 
+
+
 function moviequickreply(sender, text){
 var txtmessage = "";
 request({
@@ -512,6 +549,7 @@ request({
 
 
 }
+
 
 
 function handleMessage(message, sender) {
@@ -1219,7 +1257,10 @@ function isDefined(obj) {
 	return obj != null;
 }
 
+});
+
 // Spin up the server
 app.listen(app.get('port'), function () {
 	console.log('running on port', app.get('port'))
 })
+
