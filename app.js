@@ -432,7 +432,7 @@ function createMovieList(sender, movieList){
 	let elements = [];
 	let buttons = [];
 	let button;
-	for(var i= 0; i < 5; i++){
+	for(var i= 0; i < 3; i++){
       var movieTitle = movieList.results[i].title;
 			var poster = movieList.results[i].poster_path;
       // strMovieList += movieTitle + '\n';
