@@ -188,19 +188,35 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "know-a-series" :
 
-		var cont = contexts.map(function(obj) {
-				var contextObj = {};
-				if(obj.name === "series"){
-					tvshow = obj.parameters['tvshow'];
-					let intent = 'posters';
-					if(obj.parameters['tvshow'] != "")	{
-					omdb(sender, intent, tvshow);
+			var cont = contexts.map(function(obj) {
+					var contextObj = {};
+					if(obj.name === "series"){
+						tvshow = obj.parameters['tvshow'];
+						let intent = 'posters';
+						if(obj.parameters['tvshow'] != "")	{
+						omdb(sender, intent, tvshow);
+						}
+						console.log(tvshow + " this is the tv show");
 					}
-					console.log(tvshow + " this is the tv show");
+				return contextObj;
+			});
+			sendTextMessage(sender, responseText);
+		break;
+
+		case "recommend-show":
+
+			var cont = contexts.map(function(obj) {
+				var contextObj = {};
+				if(obj.name === 'recommendation'){
+					genre = obj.parameters['showGenre'];
+					if(obj.parameters['showGenre'] != ""){
+						tmdbDiscover(sender, genre);
+					}
+					console.log(genre + " is the genre chosen");
 				}
-			return contextObj;
-		});
-		sendTextMessage(sender, responseText);
+				return contextObj;
+			});
+			sendTextMessage(sender, responseText);
 		break;
 
 
@@ -259,7 +275,79 @@ if(tvshow != null) {
         }
       });
     }
+}
 
+function tmdbDiscover (sender, genre){
+	//Check genre and assign genreID
+	var genreID = "";
+	switch(genre){
+		case "action":
+      genreID = "28";
+      break;
+
+      case "adventure":
+      genreID = "12";
+      break;
+
+      case "animation":
+      genreID = "16";
+      break;
+
+      case "comedy":
+      genreID = "35";
+      break;
+
+      case "drama":
+      genreID = "18";
+      break;
+
+      case "horror":
+      genreID = "27";
+      break;
+
+      case "fantasy":
+      genreID = "14";
+      break;
+
+      case "music":
+      genreID = "10402";
+      break;
+
+      case "romance":
+      genreID = "10749";
+      break;
+
+      case "science fiction":
+      genreID = "878";
+      break;
+	}
+	request({
+		uri: "https://api.themoviedb.org/3/discover/movie?api_key=92b2df3080b91d92b31eacb015fc5497",
+		qs: {
+			language: "en-US",
+			sort_by: "popularity.desc",
+			page: "1",
+			with_genres: genreID
+		},
+		method: "GET",
+	}, (error, response, body) => {
+		if(!error && response.statusCode === 200) {
+			createMovieList(sender, JSON.parse(body));
+		}
+	});
+}
+
+function createMovieList(sender, movieList){
+	let{
+		title
+	} = movieList;
+
+	let strMovieList = `Try asking me about these movies: \n`;
+	for(var i= 0; i < movieList.results.length; i++){
+      var movieTitle = movieList.results[i].title;
+      str += movieTitle + '\n';
+  }
+	sendTextMessage(sender, strMovieList);
 }
 
 function createResponse (sender, intent, tvshow){
