@@ -8,6 +8,13 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const app = express();
 const uuid = require('uuid');
+const Agenda = require('agenda');
+const {MONGO_URI} = require('./config');
+const agenda = new Agenda({
+  db: {
+    address: MONGO_URI
+  }
+});
 
 
 // Messenger API parameters
@@ -79,6 +86,8 @@ app.get('/webhook/', function (req, res) {
  * https://developers.facebook.com/docs/messenger-platform/product-overview/setup#subscribe_app
  *
  */
+agenda.on('ready', () => {
+
 app.post('/webhook/', function (req, res) {
 	var data = req.body;
 	console.log(JSON.stringify(data));
@@ -219,13 +228,88 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			});
 			sendTextMessage(sender, responseText);
 		break;
+		
+		case "create-reminder":
+		console.log("create reminder log");
+		var datetime = '';	
+		var cont = contexts.map(function(obj) {
+				var contextObj = {};
+				if(obj.name === "remind"){
+					
+					if (obj.parameters['datetime'] != "") {								
+					datetime = obj.parameters['datetime'];					
+					} else {
+					datetime = obj.parameters['time'];
+				}
+				console.log(datetime + " this is the datetime");
 
+				agenda.now('createReminder', {
+				sender,
+				datetime: datetime,
+				task: "watch movie"
+				});
+				
+				createReminderAgenda(sender);
+					
+				}
+			return contextObj;
+		});
+		sendTextMessage(sender, responseText);
+		
+		break;
 
 		default:
 			//unhandled action, just send back the text
 			sendTextMessage(sender, responseText);
 	}
 }
+
+function createReminderAgenda(sender){
+	return agenda.define('createReminder', job => {
+    // Extract fbid, datetime and task from job
+    const {sender, datetime, task} = job.attrs.data;
+
+    // Get the FB User's timezone
+    getProfile(sender)
+      .then(profile => {
+        const {first_name, timezone} = profile;
+        // Calculating the timezone offset datetime
+        const UTC_Offset = moment.utc(datetime).subtract(timezone, 'hours');
+        // Calculating the difference between now and the UTC_Offset datetime. If this is
+        // 0 or below then we can use the UTC_datetime directly OR else use UTC_Offset
+        const timeDiff = UTC_Offset.diff(moment.utc());
+        // If timeDiff is 0 or below, then use UTC_datetime or else use UTC_Offset. also convert to date.
+        const scheduleTime = (timeDiff <= 0 ? moment.utc(datetime) : UTC_Offset).toDate();
+        // Setup the job
+        agenda.schedule(scheduleTime, 'reminder', {
+          sender,
+          first_name,
+          task
+        });
+      })
+      .catch(error => console.log(error));
+    // Compute an offset from UTC before scheduling the task
+  });
+
+}
+
+function getProfile(id) {
+		return new Promise((resolve, reject) => {
+			request({
+				uri: `https://graph.facebook.com/v2.7/` + id,
+				qs: {
+					access_token: config.FB_PAGE_TOKEN
+				},
+				method: 'GET'
+			}, (error, response, body) => {
+				if(!error & response.statusCode === 200) {
+					resolve(JSON.parse(body));
+				} else {
+					reject(error);
+				}
+			});
+		});
+	}
 
 var check = false;
 
@@ -578,6 +662,8 @@ function sendMovieCards(sender){
 
 }
 
+
+
 function moviequickreply(sender, text){
 var txtmessage = "";
 request({
@@ -624,6 +710,7 @@ request({
 
 
 }
+
 
 
 function handleMessage(message, sender) {
@@ -1303,6 +1390,7 @@ function receivedAuthentication(event) {
  * https://developers.facebook.com/docs/graph-api/webhooks#setup
  *
  */
+});
 function verifyRequestSignature(req, res, buf) {
 	var signature = req.headers["x-hub-signature"];
 
@@ -1335,7 +1423,10 @@ function isDefined(obj) {
 	return obj != null;
 }
 
+
+
 // Spin up the server
 app.listen(app.get('port'), function () {
 	console.log('running on port', app.get('port'))
 })
+
