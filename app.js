@@ -207,6 +207,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 			var cont = contexts.map(function(obj) {
 				var contextObj = {};
+				var genre = "";
 				if(obj.name === 'recommendation'){
 					genre = obj.parameters['showGenre'];
 					if(obj.parameters['showGenre'] != ""){
