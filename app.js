@@ -212,22 +212,22 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			sendTextMessage(sender, responseText);
 		break;
 
-		case "recommend-show":
-
-			var cont = contexts.map(function(obj) {
-				var contextObj = {};
-				var genre = "";
-				if(obj.name === 'recommendation'){
-					genre = obj.parameters['showGenre'];
-					if(obj.parameters['showGenre'] != ""){
-						tmdbDiscover(sender, genre);
-					}
-					console.log(genre + " is the genre chosen");
-				}
-				return contextObj;
-			});
-			sendTextMessage(sender, responseText);
-		break;
+		// case "recommend-show":
+		//
+		// 	var cont = contexts.map(function(obj) {
+		// 		var contextObj = {};
+		// 		var genre = "";
+		// 		if(obj.name === 'recommendation'){
+		// 			genre = obj.parameters['showGenre'];
+		// 			if(obj.parameters['showGenre'] != ""){
+		// 				tmdbDiscover(sender, genre);
+		// 			}
+		// 			console.log(genre + " is the genre chosen");
+		// 		}
+		// 		return contextObj;
+		// 	});
+		// 	sendTextMessage(sender, responseText);
+		// break;
 
 		case "create-reminder":
 		console.log("create reminder log");
@@ -1282,6 +1282,56 @@ function receivedPostback(event) {
 		case "abouttrailer" :
 			var intents = "trailerInfo";
 			omdb(senderID, intents, tvshow);
+		break;
+
+		case "genreAction":
+			var genre = "action";
+			tmdbDiscover(sender, genre);
+		break;
+
+		case "genreAdventure":
+			var genre = "adventure";
+			tmdbDiscover(sender, genre);
+		break;
+
+		case "genreAnimation":
+			var genre = "animation";
+			tmdbDiscover(sender, genre);
+		break;
+
+		case "genreComedy":
+			var genre = "comedy";
+			tmdbDiscover(sender, genre);
+		break;
+
+		case "genreDrama":
+			var genre = "drama";
+			tmdbDiscover(sender, genre);
+		break;
+
+		case "genreFantasy":
+			var genre = "fantasy";
+			tmdbDiscover(sender, genre);
+		break;
+
+		case "genreHorror":
+			var genre = "horror";
+			tmdbDiscover(sender, genre);
+		break;
+
+		case "genreMusical":
+			var genre = "music";
+			tmdbDiscover(sender, genre);
+		break;
+
+		case "genreRomance":
+			var genre = "romance";
+			tmdbDiscover(sender, genre);
+		break;
+
+		case "genreSciFi":
+			var genre = "science fiction";
+			tmdbDiscover(sender, genre);
 		break;
 
 		default:
