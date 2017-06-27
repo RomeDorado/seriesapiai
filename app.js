@@ -417,18 +417,18 @@ function tmdbDiscover (sender, genre){
 		method: "GET",
 	}, (error, response, body) => {
 		if(!error && response.statusCode === 200) {
-			createMovieList(sender, JSON.parse(body));
+			createMovieList(sender, JSON.parse(body), genre);
 		}
 	});
 }
 
-function createMovieList(sender, movieList){
+function createMovieList(sender, movieList, genre){
 	let{
 		title,
 		poster_path
 	} = movieList;
-	let imagePath = "https://image.tmdb.org/t/p/w154";
-	let strMovieList = `Try asking me about these movies: \n`;
+	let imagePath = "https://image.tmdb.org/t/p/w342";
+	let strMovieList = `Here is a list of ${genre} movies`;
 	let elements = [];
 	let buttons = [];
 	let button;
@@ -454,8 +454,9 @@ function createMovieList(sender, movieList){
 				]
 			};
 			elements.push(element);
-			imagePath = "https://image.tmdb.org/t/p/w154";
+			imagePath = "https://image.tmdb.org/t/p/w342";
   }
+	sendTextMessage(sender, strMovieList);
 	sendGenericMessage(sender, elements);
 }
 
