@@ -9,7 +9,7 @@ const request = require('request');
 const app = express();
 const uuid = require('uuid');
 const Agenda = require('agenda');
-const {MONGO_URI} = require('../config');
+const {MONGO_URI} = require('./config');
 const agenda = new Agenda({
   db: {
     address: MONGO_URI
