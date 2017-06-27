@@ -427,7 +427,7 @@ function createMovieList(sender, movieList, genre){
 		title,
 		poster_path
 	} = movieList;
-	let imagePath = "https://image.tmdb.org/t/p/w342";
+	let imagePath = "https://image.tmdb.org/t/p/w500";
 	let strMovieList = `Here is a list of ${genre} movies`;
 	let elements = [];
 	let buttons = [];
@@ -454,7 +454,7 @@ function createMovieList(sender, movieList, genre){
 				]
 			};
 			elements.push(element);
-			imagePath = "https://image.tmdb.org/t/p/w342";
+			imagePath = "https://image.tmdb.org/t/p/w500";
   }
 	sendTextMessage(sender, strMovieList);
 	sendGenericMessage(sender, elements);
