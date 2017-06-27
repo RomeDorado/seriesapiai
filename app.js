@@ -1370,6 +1370,7 @@ function receivedAuthentication(event) {
  * https://developers.facebook.com/docs/graph-api/webhooks#setup
  *
  */
+});
 function verifyRequestSignature(req, res, buf) {
 	var signature = req.headers["x-hub-signature"];
 
@@ -1402,7 +1403,7 @@ function isDefined(obj) {
 	return obj != null;
 }
 
-});
+
 
 // Spin up the server
 app.listen(app.get('port'), function () {
