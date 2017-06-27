@@ -228,16 +228,16 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			});
 			sendTextMessage(sender, responseText);
 		break;
-		
+
 		case "create-reminder":
 		console.log("create reminder log");
-		var datetime = '';	
+		var datetime = '';
 		var cont = contexts.map(function(obj) {
 				var contextObj = {};
 				if(obj.name === "remind"){
-					
-					if (obj.parameters['datetime'] != "") {								
-					datetime = obj.parameters['datetime'];					
+
+					if (obj.parameters['datetime'] != "") {
+					datetime = obj.parameters['datetime'];
 					} else {
 					datetime = obj.parameters['time'];
 				}
@@ -248,14 +248,14 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				datetime: datetime,
 				task: "watch movie"
 				});
-				
+
 				createReminderAgenda(sender);
-					
+
 				}
 			return contextObj;
 		});
 		sendTextMessage(sender, responseText);
-		
+
 		break;
 
 		default:
@@ -424,7 +424,7 @@ function tmdbDiscover (sender, genre){
 
 function createMovieList(sender, movieList){
 	let{
-		title
+		title,
 		poster_path
 	} = movieList;
 	let imagePath = "https://image.tmdb.org/t/p/w500";
@@ -1429,4 +1429,3 @@ function isDefined(obj) {
 app.listen(app.get('port'), function () {
 	console.log('running on port', app.get('port'))
 })
-
