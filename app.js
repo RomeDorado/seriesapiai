@@ -240,13 +240,14 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					} else {
 					datetime = obj.parameters['time'];
 				}
+				console.log(datetime + " this is the datetime");
 				
 				agenda.now('createReminder', {
 				sender,
 				datetime: datetime,
 				task: "watch movie"
 				});
-				console.log(datetime + " this is the datetime");
+				
 				createReminderAgenda(sender);
 					
 				}
