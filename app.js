@@ -233,7 +233,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		var datetime = '';	
 		var cont = contexts.map(function(obj) {
 				var contextObj = {};
-				if(obj.name === "series"){
+				if(obj.name === "remind"){
 					
 					if (obj.parameters['datetime'] != "") {								
 					datetime = obj.parameters['datetime'];					
