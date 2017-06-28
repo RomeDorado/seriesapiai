@@ -1384,6 +1384,17 @@ function receivedPostback(event) {
 			sendToApiAi(senderID, "Get Started");
 		break;
 
+    case "showSearch":
+      sendToApiAi(senderID, "Know About A Series");
+    break;
+
+    case "recommend":
+      sendToApiAi(senderID, "Recommend Me");
+    break;
+
+    case "actorSearch":
+      sendToApiAi(senderID, "Actor");
+    break;
 		case "aboutplot":
 			var intents = "plot";
 			omdb(senderID, intents, tvshow);
