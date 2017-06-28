@@ -1424,7 +1424,7 @@ function receivedPostback(event) {
               }`
             }]
           }
-
+		  console.log(JSON.stringify(data) + "This is the data");
           btn(senderID, data);
 
         });
