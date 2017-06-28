@@ -1314,7 +1314,7 @@ function receivedPostback(event) {
 
 		let sender = senderID;
       	agenda.now('showReminders', {
-        sender
+        sender: sender
       	});
 		  
 		showReminders(senderID);  
