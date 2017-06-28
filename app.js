@@ -1304,7 +1304,7 @@ function receivedPostback(event) {
 		case "abouttrailer" :
 			var intents = "trailerInfo";
 			omdb(senderID, intents, tvshow);
-		break
+		break;
 
 		case "watchlist" :
 
@@ -1312,9 +1312,11 @@ function receivedPostback(event) {
       	agenda.now('showReminders', {
         sender
       	});
+		  
 
 		showReminders(senderID);  
-
+		break;
+		
 		case "genreAction":
 			var genre = "action";
 			tmdbDiscover(senderID, genre);
