@@ -482,7 +482,7 @@ function tmdbMovieDiscover (sender, genre){
 	});
 }
 
-function createTvList(sender tvList, genre){
+function createTvList(sender, tvList, genre){
   let{
 		title,
 		poster_path
