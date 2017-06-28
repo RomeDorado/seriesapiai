@@ -1321,6 +1321,14 @@ function receivedPostback(event) {
 
 		break;
 
+    case "recommendMovie":
+      sendToApiAi(senderID, "recommendMovie");
+    break;
+
+    case "recommendTV":
+      sendToApiAi(senderID, "recommendTV");
+    break;
+
 		case "genreAction":
 			var genre = "action";
 			tmdbDiscover(senderID, genre);
