@@ -1007,6 +1007,17 @@ function sendMovieCards(sender){
 								}
 							]
 						},
+            {
+							"title": "Search Again",
+							"image_url": "",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Search Again",
+									"payload": "Get Started"
+								}
+							]
+						}
 					];
 					sendGenericMessage(sender, elements);
 				}
