@@ -485,7 +485,7 @@ function tmdbMovieDiscover (sender, genre){
 
 function createTvList(sender, tvList, genre){
   let{
-		title,
+		original_name,
 		poster_path
 	} = tvList;
 	let imagePath = "https://image.tmdb.org/t/p/w500";
@@ -494,7 +494,7 @@ function createTvList(sender, tvList, genre){
 	let buttons = [];
 	let button;
 	for(var i= 0; i < 3; i++){
-      var tvTitle = tvList.results[i].title;
+      var tvTitle = tvList.results[i].original_name;
 			var poster = tvList.results[i].poster_path;
       // strMovieList += movieTitle + '\n';
 			imagePath += poster;
