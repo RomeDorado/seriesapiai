@@ -218,7 +218,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       var cont = contexts.map(function(obj) {
         var contextObj = {};
         if(obj.name === "actors"){
-          person = obj.parameters['actor'];
+          var person = obj.parameters['actor'];
           if(obj.parameters['actors'] != "") {
             personSearch(sender, person);
           }
