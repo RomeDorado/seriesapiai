@@ -214,12 +214,17 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			sendTextMessage(sender, responseText);
 		break;
 
-		// case "actor-search":
-    //   var cont = contexts.map(function(obj) {
-    //     var contextObj = {};
-    //     if(obj.name)
-    //   });
-    // break;
+		case "actor-search":
+      var cont = contexts.map(function(obj) {
+        var contextObj = {};
+        if(obj.name === "actors"){
+          person = obj.parameters['actor'];
+          if(obj.parameters['actors'] != "") {
+            personSearch(sender, person);
+          }
+        }
+      });
+    break;
 
 		case "create-reminder":
 		console.log("create reminder log");
@@ -304,6 +309,63 @@ function getProfile(id) {
 	}
 
 var check = false;
+
+function personSearch(sender, person){
+  request({
+    uri: "https://api.themoviedb.org/3/search/person?api_key=92b2df3080b91d92b31eacb015fc5497",
+    qs:{
+      query: person,
+      page: '1'
+    },
+    method: "GET"
+  }, (error, response, body) => {
+    if(!error && response.statusCode === 200){
+      createPerson(sender, JSON.parse(body));
+    }
+  });
+}
+
+function createPerson(sender, resultPerson){
+  let{
+    results: [{
+      id
+    }]
+  } = resultPerson;
+
+  request({
+    uri: "https://api.themoviedb.org/3/person/" + id,
+    qs:{
+      api_key: "92b2df3080b91d92b31eacb015fc5497",
+    },
+    method: "GET"
+  }, (error, response, body) => {
+    if(!error && response.statusCode === 200){
+      createBiography(sender, JSON.parse(body));
+    }
+  })
+}
+
+function createBiography(sender, bio){
+  let{
+    name,
+    biography,
+    profile_path
+  } = bio;
+  var s = "";
+  var imageURL = "http://image.tmdb.org/t/p/w185" + profile_path;
+  var biog[] = biography.split(".");
+
+  let strBiography = `${name},`;
+  for(var i = 1; i <= 3; i++){
+    s += biog[i] + ".";
+  }
+  if(s.length > 500){
+    s = biog[2] + ".";
+  }
+
+  sendImageMessage(sender, imageURL);
+  sendTextMessage(sender, strBiography + s);
+}
 
 function omdb(sender, intent, tvshow){
 
