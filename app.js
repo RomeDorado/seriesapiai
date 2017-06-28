@@ -841,32 +841,32 @@ function createResponse (sender, intent, tvshow){
 				let strPlot = `${Plot}`;
 				sendTextMessage(sender, strPlot);
 				setTimeout(function(){
-				      sendMovieCards(sender);
-        },3000);
+				      moviequickreply(sender);
+        },2000);
 			break;
 
     	case 'director':
 				let strDirector = `${Title} was directed by ${Director} and written by ${Writer}`;
 				sendTextMessage(sender, strDirector);
         setTimeout(function(){
-				      sendMovieCards(sender);
-        },3000);
+				      moviequickreply(sender);
+        },2000);
 			break;
 
       case 'cast':
 				let strCast = `${Title} stars ${Actors}`;
 				sendTextMessage(sender, strCast);
         setTimeout(function(){
-				      sendMovieCards(sender);
-        },3000);
+				      moviequickreply(sender);
+        },2000);
 			break;
 
       case 'releaseyear':
 				let strRelease = `${Title} was released on ${Released}`;
 				sendTextMessage(sender, strRelease);
         setTimeout(function(){
-				      sendMovieCards(sender);
-        },3000);
+				      moviequickreply(sender);
+        },2000);
 			break;
 
       case 'numberOfSeasons': {
@@ -1057,13 +1057,13 @@ request({
 				let replies = [
 		{
 			"content_type": "text",
-			"title": "Show choices",
-			"payload":"choices"
+			"title": "Show Choices",
+			"payload":"showChoices"
 		},
 		{
 			"content_type": "text",
-			"title": "Back to main menu",
-			"payload":"backmenu"
+			"title": "Search Again",
+			"payload":"searchAgain"
 
 		}
 
@@ -1651,6 +1651,14 @@ function receivedPostback(event) {
 		case "FACEBOOK_WELCOME":
 			sendToApiAi(senderID, "Get Started");
 		break;
+
+    case "showChoices":
+      sendMovieCards(senderID);
+    break;
+
+    case "searchAgain":
+      sendToApiAi(senderID, "Know About A Series");
+    break;
 
 		case "getStarted":
 			sendToApiAi(senderID, "Get Started");
