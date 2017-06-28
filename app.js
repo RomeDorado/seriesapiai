@@ -581,28 +581,33 @@ function createResponse (sender, intent, tvshow){
 		  case 'plot':
 				let strPlot = `${Plot}`;
 				sendTextMessage(sender, strPlot);
-						setTimeout(function(){
-				sendMovieCards(sender);
-				},2000);
-
+				setTimeout(function(){
+				      sendMovieCards(sender);
+        },5000);
 			break;
 
     	case 'director':
 				let strDirector = `${Title} was directed by ${Director} and written by ${Writer}`;
 				sendTextMessage(sender, strDirector);
-				sendMovieCards(sender);
+        setTimeout(function(){
+				      sendMovieCards(sender);
+        },5000);
 			break;
 
       case 'cast':
 				let strCast = `${Title} stars ${Actors}`;
 				sendTextMessage(sender, strCast);
-				sendMovieCards(sender);
+        setTimeout(function(){
+				      sendMovieCards(sender);
+        },5000);
 			break;
 
       case 'releaseyear':
 				let strRelease = `${Title} was released on ${Released}`;
 				sendTextMessage(sender, strRelease);
-				sendMovieCards(sender);
+        setTimeout(function(){
+				      sendMovieCards(sender);
+        },5000);
 			break;
 
       case 'numberOfSeasons': {
