@@ -227,6 +227,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	  sendTextMessage(sender, responseText);
     break;
 
+    case "show-choices":
+      sendMovieCards(sender);
+    break;
+
 		case "create-reminder":
 		console.log("create reminder log");
 		var datetime = '';
@@ -1654,7 +1658,7 @@ function receivedPostback(event) {
 		break;
 
     case "showChoices":
-      sendMovieCards(senderID);
+      sendToApiAi(senderID, "Show Choices");
     break;
 
     case "searchAgain":
