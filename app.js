@@ -1009,7 +1009,7 @@ function sendMovieCards(sender){
 						},
             {
 							"title": "Search Again",
-							"image_url": "",
+							"image_url": "http://i.imgur.com/FEmuU4p.png",
 							"buttons": [
 								{
 									"type": "postback",
