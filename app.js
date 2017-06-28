@@ -364,7 +364,66 @@ if(tvshow != null) {
     }
 }
 
-function tmdbDiscover (sender, genre){
+function tmdbTVDiscover (sender, genre){
+  var genreID = "";
+  switch(genre){
+    case "action":
+      genreID = "10759";
+    break;
+
+    case "animation":
+      genreID = "16";
+    break;
+
+    case "comedy":
+      genreID = "35";
+    break;
+
+    case "documentary":
+      genreID = "99";
+    break;
+
+    case "drama":
+      genreID = "18";
+    break;
+
+    case "family":
+      genreID = "10751";
+    break;
+
+    case "kids":
+      genreID = "10762";
+    break;
+
+    case "mystery":
+      genreID = "9648"
+    break;
+
+    case "reality":
+      genreID = "10764";
+    break;
+
+    case "science fiction":
+      genreID = "10765";
+    break;
+  }
+  request({
+    uri: "https://api.themoviedb.org/3/discover/tv?api_key=92b2df3080b91d92b31eacb015fc5497",
+    qs: {
+      language: "en-US",
+      sort_by: "popularity.desc",
+      page: "1",
+      with_genres: genreID
+    },
+    method: "GET",
+  }, (error, response, body) => {
+    if(!error && response.statusCode === 200) {
+      createTvList(sender, JSON.parse(body), genre);
+    }
+  });
+}
+
+function tmdbMovieDiscover (sender, genre){
 	//Check genre and assign genreID
 	var genreID = "";
 	switch(genre){
@@ -422,6 +481,39 @@ function tmdbDiscover (sender, genre){
 			createMovieList(sender, JSON.parse(body), genre);
 		}
 	});
+}
+
+function createTvList(sender, tvList, genre){
+  let{
+		title,
+		poster_path
+	} = tvList;
+	let imagePath = "https://image.tmdb.org/t/p/w500";
+	let strTvList = `Here is a list of ${genre} tv shows`;
+	let elements = [];
+	let buttons = [];
+	let button;
+	for(var i= 0; i < 3; i++){
+      var tvTitle = tvList.results[i].title;
+			var poster = tvList.results[i].poster_path;
+      // strMovieList += movieTitle + '\n';
+			imagePath += poster;
+			let element = {
+				"title": tvTitle,
+				"image_url": imagePath,
+				"buttons": [
+					{
+						"type": "postback",
+						"title": "Learn More",
+						"payload": "card:" + tvTitle
+					}
+				]
+			};
+			elements.push(element);
+			imagePath = "https://image.tmdb.org/t/p/w500";
+  }
+	sendTextMessage(sender, strTvList);
+	sendGenericMessage(sender, elements);
 }
 
 function createMovieList(sender, movieList, genre){
@@ -1322,7 +1414,7 @@ function receivedPostback(event) {
       	});
 
 		showReminders(senderID);
-    
+
 		break;
 
     case "recommendMovie":
@@ -1333,55 +1425,105 @@ function receivedPostback(event) {
       sendToApiAi(senderID, "recommendTV");
     break;
 
-		case "genreAction":
+		case "movieAction":
 			var genre = "action";
-			tmdbDiscover(senderID, genre);
+			tmdbMovieDiscover(senderID, genre);
 		break;
 
-		case "genreAdventure":
+		case "movieAdventure":
 			var genre = "adventure";
-			tmdbDiscover(senderID, genre);
+			tmdbMovieDiscover(senderID, genre);
 		break;
 
-		case "genreAnimation":
+		case "movieAnimation":
 			var genre = "animation";
-			tmdbDiscover(senderID, genre);
+			tmdbMovieDiscover(senderID, genre);
 		break;
 
-		case "genreComedy":
+		case "movieComedy":
 			var genre = "comedy";
-			tmdbDiscover(senderID, genre);
+			tmdbMovieDiscover(senderID, genre);
 		break;
 
-		case "genreDrama":
+		case "movieDrama":
 			var genre = "drama";
-			tmdbDiscover(senderID, genre);
+			tmdbMovieDiscover(senderID, genre);
 		break;
 
-		case "genreFantasy":
+		case "movieFantasy":
 			var genre = "fantasy";
-			tmdbDiscover(senderID, genre);
+			tmdbMovieDiscover(senderID, genre);
 		break;
 
-		case "genreHorror":
+		case "movieHorror":
 			var genre = "horror";
-			tmdbDiscover(senderID, genre);
+			tmdbMovieDiscover(senderID, genre);
 		break;
 
-		case "genreMusical":
+		case "movieMusical":
 			var genre = "music";
-			tmdbDiscover(senderID, genre);
+			tmdbMovieDiscover(senderID, genre);
 		break;
 
-		case "genreRomance":
+		case "movieRomance":
 			var genre = "romance";
-			tmdbDiscover(senderID, genre);
+			tmdbMovieDiscover(senderID, genre);
 		break;
 
-		case "genreSciFi":
+		case "movieSciFi":
 			var genre = "science fiction";
-			tmdbDiscover(senderID, genre);
+			tmdbMovieDiscover(senderID, genre);
 		break;
+
+    case "tvAction":
+      var genre = "action";
+      tmdbTVDiscover(senderID, genre);
+    break;
+
+    case "tvAnimation":
+      var genre = "animation";
+      tmdbTVDiscover(senderID, genre);
+    break;
+
+    case "tvComedy":
+      var genre = "comedy";
+      tmdbTVDiscover(senderID, genre);
+    break;
+
+    case "tvDocumentary":
+      var genre = "documentary";
+      tmdbTVDiscover(senderID, genre);
+    break;
+
+    case "tvDrama":
+      var genre = "drama";
+      tmdbTVDiscover(senderID, genre);
+    break;
+
+    case "tvFamily":
+      var genre = "family";
+      tmdbTVDiscover(senderID, genre);
+    break;
+
+    case "tvKids":
+      var genre = "kids";
+      tmdbTVDiscover(senderID, genre);
+    break;
+
+    case "tvMystery":
+      var genre = "mystery";
+      tmdbTVDiscover(senderID, genre);
+    break;
+
+    case "tvReality":
+      var genre = "reality";
+      tmdbTVDiscover(senderID, genre);
+    break;
+
+    case "tvSciFi":
+      var genre = "science fiction";
+      tmdbTVDiscover(senderID, genre);
+    break;
 
     case "card":
       console.log("pumasok ng card case");
