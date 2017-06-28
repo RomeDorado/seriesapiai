@@ -467,12 +467,15 @@ function tmdbMovieDiscover (sender, genre){
       genreID = "878";
       break;
 	}
+
+	var pagenumber = Math.floor(Math.random() * (10 - 1) + 1);
+
 	request({
 		uri: "https://api.themoviedb.org/3/discover/movie?api_key=92b2df3080b91d92b31eacb015fc5497",
 		qs: {
 			language: "en-US",
 			sort_by: "popularity.desc",
-			page: "1",
+			page: `${pagenumber}`,
 			with_genres: genreID
 		},
 		method: "GET",
@@ -526,7 +529,9 @@ function createMovieList(sender, movieList, genre){
 	let elements = [];
 	let buttons = [];
 	let button;
-	for(var i= 0; i < 3; i++){
+	var pagenumber = Math.floor(Math.random() * (5 - 1) + 1);
+	if(pagenumber == 1){
+	for(var i= 0; i < 4; i++){
       var movieTitle = movieList.results[i].title;
 			var poster = movieList.results[i].poster_path;
       // strMovieList += movieTitle + '\n';
@@ -545,8 +550,108 @@ function createMovieList(sender, movieList, genre){
 			elements.push(element);
 			imagePath = "https://image.tmdb.org/t/p/w500";
   }
+
 	sendTextMessage(sender, strMovieList);
 	sendGenericMessage(sender, elements);
+}//random 1
+
+else if(pagenumber == 2){
+	for(var i= 4; i < 8; i++){
+      var movieTitle = movieList.results[i].title;
+			var poster = movieList.results[i].poster_path;
+      // strMovieList += movieTitle + '\n';
+			imagePath += poster;
+			let element = {
+				"title": movieTitle,
+				"image_url": imagePath,
+				"buttons": [
+					{
+						"type": "postback",
+						"title": "Learn More",
+						"payload": "card:" + movieTitle
+					}
+				]
+			};
+			elements.push(element);
+			imagePath = "https://image.tmdb.org/t/p/w500";
+  }
+
+	sendTextMessage(sender, strMovieList);
+	sendGenericMessage(sender, elements);
+}//random 2
+
+else if(pagenumber == 3){
+	for(var i= 8; i < 12; i++){
+      var movieTitle = movieList.results[i].title;
+			var poster = movieList.results[i].poster_path;
+      // strMovieList += movieTitle + '\n';
+			imagePath += poster;
+			let element = {
+				"title": movieTitle,
+				"image_url": imagePath,
+				"buttons": [
+					{
+						"type": "postback",
+						"title": "Learn More",
+						"payload": "card:" + movieTitle
+					}
+				]
+			};
+			elements.push(element);
+			imagePath = "https://image.tmdb.org/t/p/w500";
+  }
+
+	sendTextMessage(sender, strMovieList);
+	sendGenericMessage(sender, elements);
+}//random 3
+else if(pagenumber == 4){
+	for(var i= 12; i < 16; i++){
+      var movieTitle = movieList.results[i].title;
+			var poster = movieList.results[i].poster_path;
+      // strMovieList += movieTitle + '\n';
+			imagePath += poster;
+			let element = {
+				"title": movieTitle,
+				"image_url": imagePath,
+				"buttons": [
+					{
+						"type": "postback",
+						"title": "Learn More",
+						"payload": "card:" + movieTitle
+					}
+				]
+			};
+			elements.push(element);
+			imagePath = "https://image.tmdb.org/t/p/w500";
+  }
+
+	sendTextMessage(sender, strMovieList);
+	sendGenericMessage(sender, elements);
+}//random 4
+else if(pagenumber == 5){
+	for(var i= 16; i < 20; i++){
+      var movieTitle = movieList.results[i].title;
+			var poster = movieList.results[i].poster_path;
+      // strMovieList += movieTitle + '\n';
+			imagePath += poster;
+			let element = {
+				"title": movieTitle,
+				"image_url": imagePath,
+				"buttons": [
+					{
+						"type": "postback",
+						"title": "Learn More",
+						"payload": "card:" + movieTitle
+					}
+				]
+			};
+			elements.push(element);
+			imagePath = "https://image.tmdb.org/t/p/w500";
+  }
+
+	sendTextMessage(sender, strMovieList);
+	sendGenericMessage(sender, elements);
+}//random 1
 }
 
 function createResponse (sender, intent, tvshow){
