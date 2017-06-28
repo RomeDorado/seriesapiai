@@ -10,6 +10,7 @@ const request = require('request');
 const app = express();
 const uuid = require('uuid');
 const Agenda = require('agenda');
+const ObjectID = require('mongodb').ObjectID;
 const {MONGO_URI} = require('./config');
 const agenda = new Agenda({
   db: {
@@ -1449,6 +1450,23 @@ function receivedPostback(event) {
     const {senderd, first_name, task} = job.attrs.data;
     sendTextMessage(senderd, `Hey ${first_name}! Reminding you to ${task}!`);
   });
+
+  function cancelReminder(sender){
+
+  return agenda.define('cancelReminder', job => {
+    const {sender, id} = job.attrs.data;
+    agenda.cancel({
+      name: 'reminder',
+      _id: new ObjectID(id)
+    }, (error, numRemoved) => {
+      if(!error) {
+        sendTextMessage(sender, (numRemoved > 0 ? "Alright. I've canceled the reminder." : "I've already canceled this reminder. Don't worry, it won't bother you. :)"));
+      } else {
+        sendTextMessage(sender, "Uh Oh! Something's not right with our servers. Could you try again after a while?");
+      }
+    });
+  });
+  }
 
 /*
  * Message Read Event
