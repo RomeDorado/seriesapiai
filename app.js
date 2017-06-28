@@ -1316,7 +1316,6 @@ function receivedPostback(event) {
         sender
       	});
 		  
-
 		showReminders(senderID);  
 
 		break;
@@ -1388,7 +1387,7 @@ function receivedPostback(event) {
 }
 
 
- function showReminders(sender){
+ function showReminders(senderID){
 	console.log("Im at show reminders");
 	return agenda.define('showReminders', job => {
     let {sender} = job.attrs.data;
@@ -1425,7 +1424,7 @@ function receivedPostback(event) {
             }]
           }
 
-          btn(sender, data);
+          btn(senderID, data);
 
         });
       }
