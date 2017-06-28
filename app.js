@@ -216,7 +216,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 		// case "actor-search":
     //   var cont = contexts.map(function(obj) {
-    //     var contextObj
+    //     var contextObj = {};
+    //     if(obj.name)
     //   });
     // break;
 
