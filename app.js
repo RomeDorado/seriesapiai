@@ -1269,7 +1269,9 @@ function receivedPostback(event) {
 
   if(payload.includes("card")){
     let recTitle = payload.split(":")[1];
-    console.log(recTitle);
+    tvshow = recTitle;
+    let intents = "posters";
+    omdb(senderID, intents, tvshow);
   }
 
 	switch (payload) {
@@ -1308,15 +1310,13 @@ function receivedPostback(event) {
 
 		case "watchlist" :
 
-		let {sender} = senderID;
-      	agenda.now('showReminders', {
-        sender
-      	});
-		  
-
-		showReminders(senderID);  
+  		let {sender} = senderID;
+        	agenda.now('showReminders', {
+          sender
+        	});
+  		showReminders(senderID);
 		break;
-		
+
 		case "genreAction":
 			var genre = "action";
 			tmdbDiscover(senderID, genre);
@@ -1366,8 +1366,6 @@ function receivedPostback(event) {
 			var genre = "science fiction";
 			tmdbDiscover(senderID, genre);
 		break;
-
-
 
 		default:
 			//unindentified payload
