@@ -1316,9 +1316,9 @@ function receivedPostback(event) {
       	agenda.now('showReminders', {
         sender: sender
       	});
-		  
-		showReminders(senderID);  
 
+		showReminders(senderID);
+    
 		break;
 
     case "recommendMovie":
