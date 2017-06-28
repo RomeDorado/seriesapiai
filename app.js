@@ -2,6 +2,7 @@
 
 const apiai = require('apiai');
 const config = require('./config');
+const moment = require('moment');
 const express = require('express');
 const crypto = require('crypto');
 const bodyParser = require('body-parser');
@@ -212,32 +213,32 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			sendTextMessage(sender, responseText);
 		break;
 
-		case "recommend-show":
+		// case "recommend-show":
+		//
+		// 	var cont = contexts.map(function(obj) {
+		// 		var contextObj = {};
+		// 		var genre = "";
+		// 		if(obj.name === 'recommendation'){
+		// 			genre = obj.parameters['showGenre'];
+		// 			if(obj.parameters['showGenre'] != ""){
+		// 				tmdbDiscover(sender, genre);
+		// 			}
+		// 			console.log(genre + " is the genre chosen");
+		// 		}
+		// 		return contextObj;
+		// 	});
+		// 	sendTextMessage(sender, responseText);
+		// break;
 
-			var cont = contexts.map(function(obj) {
-				var contextObj = {};
-				var genre = "";
-				if(obj.name === 'recommendation'){
-					genre = obj.parameters['showGenre'];
-					if(obj.parameters['showGenre'] != ""){
-						tmdbDiscover(sender, genre);
-					}
-					console.log(genre + " is the genre chosen");
-				}
-				return contextObj;
-			});
-			sendTextMessage(sender, responseText);
-		break;
-		
 		case "create-reminder":
 		console.log("create reminder log");
-		var datetime = '';	
+		var datetime = '';
 		var cont = contexts.map(function(obj) {
 				var contextObj = {};
 				if(obj.name === "remind"){
-					
-					if (obj.parameters['datetime'] != "") {								
-					datetime = obj.parameters['datetime'];					
+
+					if (obj.parameters['datetime'] != "") {
+					datetime = obj.parameters['datetime'];
 					} else {
 					datetime = obj.parameters['time'];
 				}
@@ -248,14 +249,14 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				datetime: datetime,
 				task: "watch movie"
 				});
-				
+
 				createReminderAgenda(sender);
-					
+
 				}
 			return contextObj;
 		});
 		sendTextMessage(sender, responseText);
-		
+
 		break;
 
 		default:
@@ -417,22 +418,47 @@ function tmdbDiscover (sender, genre){
 		method: "GET",
 	}, (error, response, body) => {
 		if(!error && response.statusCode === 200) {
-			createMovieList(sender, JSON.parse(body));
+			createMovieList(sender, JSON.parse(body), genre);
 		}
 	});
 }
 
-function createMovieList(sender, movieList){
+function createMovieList(sender, movieList, genre){
 	let{
-		title
+		title,
+		poster_path
 	} = movieList;
-
-	let strMovieList = `Try asking me about these movies: \n`;
-	for(var i= 0; i < 5; i++){
+	let imagePath = "https://image.tmdb.org/t/p/w500";
+	let strMovieList = `Here is a list of ${genre} movies`;
+	let elements = [];
+	let buttons = [];
+	let button;
+	for(var i= 0; i < 3; i++){
       var movieTitle = movieList.results[i].title;
-      strMovieList += movieTitle + '\n';
+			var poster = movieList.results[i].poster_path;
+      // strMovieList += movieTitle + '\n';
+			imagePath += poster;
+			let element = {
+				"title": movieTitle,
+				"image_url": imagePath,
+				"buttons": [
+					{
+						"type": "postback",
+						"title": "Plot",
+						"payload": movieTitle
+					},
+					{
+						"type": "postback",
+						"title": "Trailer",
+						"payload": "Trailer"
+					}
+				]
+			};
+			elements.push(element);
+			imagePath = "https://image.tmdb.org/t/p/w500";
   }
 	sendTextMessage(sender, strMovieList);
+	sendGenericMessage(sender, elements);
 }
 
 function createResponse (sender, intent, tvshow){
@@ -1278,7 +1304,7 @@ function receivedPostback(event) {
 		case "abouttrailer" :
 			var intents = "trailerInfo";
 			omdb(senderID, intents, tvshow);
-		break;
+		break
 
 		case "watchlist" :
 
@@ -1289,8 +1315,54 @@ function receivedPostback(event) {
 
 		showReminders(senderID);  
 
+		case "genreAction":
+			var genre = "action";
+			tmdbDiscover(senderID, genre);
+		break;
 
+		case "genreAdventure":
+			var genre = "adventure";
+			tmdbDiscover(senderID, genre);
+		break;
 
+		case "genreAnimation":
+			var genre = "animation";
+			tmdbDiscover(senderID, genre);
+		break;
+
+		case "genreComedy":
+			var genre = "comedy";
+			tmdbDiscover(senderID, genre);
+		break;
+
+		case "genreDrama":
+			var genre = "drama";
+			tmdbDiscover(senderID, genre);
+		break;
+
+		case "genreFantasy":
+			var genre = "fantasy";
+			tmdbDiscover(senderID, genre);
+		break;
+
+		case "genreHorror":
+			var genre = "horror";
+			tmdbDiscover(senderID, genre);
+		break;
+
+		case "genreMusical":
+			var genre = "music";
+			tmdbDiscover(senderID, genre);
+		break;
+
+		case "genreRomance":
+			var genre = "romance";
+			tmdbDiscover(senderID, genre);
+		break;
+
+		case "genreSciFi":
+			var genre = "science fiction";
+			tmdbDiscover(senderID, genre);
 		break;
 
 		default:
@@ -1491,4 +1563,3 @@ function isDefined(obj) {
 app.listen(app.get('port'), function () {
 	console.log('running on port', app.get('port'))
 })
-
