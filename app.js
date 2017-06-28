@@ -1273,6 +1273,7 @@ function receivedPostback(event) {
     tvshow = recTitle;
     let intents = "posters";
     payload = "card";
+    omdb(senderID, intents, tvshow);
   }
 
 	switch (payload) {
@@ -1371,7 +1372,7 @@ function receivedPostback(event) {
 		break;
 
     case "card":
-      omdb(senderID, intents, tvshow);
+      console.log("pumasok ng card case");
     break;
 
 		default:
