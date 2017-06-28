@@ -1308,7 +1308,7 @@ function receivedPostback(event) {
 
 		case "watchlist" :
 
-		let {sender} = session.get(senderID);
+		let {sender} = senderID;
       	agenda.now('showReminders', {
         sender
       	});
