@@ -309,6 +309,7 @@ function getProfile(id) {
 		});
 	}
 
+var check = false;
 
 function personSearch(sender, person){
   request({
@@ -320,12 +321,12 @@ function personSearch(sender, person){
     method: "GET"
   }, (error, response, body) => {
     if(!error && response.statusCode === 200){
-      createResponsePerson(sender, JSON.parse(body));
+      createPerson(sender, JSON.parse(body));
     }
   });
 }
 
-function createResponsePerson(sender, resultPerson){
+function createPerson(sender, resultPerson){
   let{
     results: [{
       id
@@ -408,6 +409,7 @@ if(tvshow != null) {
         //console.log(response);
         if(!error && response.statusCode === 200) {
           (createResponse(sender, intent, JSON.parse(body)));
+		  check = true;
         } else {
 
         }
@@ -1056,8 +1058,8 @@ request({
 				let replies = [
 		{
 			"content_type": "text",
-			"title": "Back to Choices",
-			"payload":"menuChoices"
+			"title": "Show Choices",
+			"payload":"showChoices"
 		},
 		{
 			"content_type": "text",
@@ -1651,7 +1653,7 @@ function receivedPostback(event) {
 			sendToApiAi(senderID, "Get Started");
 		break;
 
-    case "menuChoices":
+    case "showChoices":
       sendMovieCards(senderID);
     break;
 
