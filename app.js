@@ -444,13 +444,8 @@ function createMovieList(sender, movieList, genre){
 				"buttons": [
 					{
 						"type": "postback",
-						"title": "Plot",
-						"payload": movieTitle
-					},
-					{
-						"type": "postback",
-						"title": "Trailer",
-						"payload": "Trailer"
+						"title": "Learn More",
+						"payload": "card:" + movieTitle
 					}
 				]
 			};
@@ -1272,6 +1267,11 @@ function receivedPostback(event) {
 	// button for Structured Messages.
 	var payload = event.postback.payload;
 
+  if(payload.includes("card")){
+    let recTitle = payload.split(":")[1];
+    console.log(recTitle);
+  }
+
 	switch (payload) {
 		case "FACEBOOK_WELCOME":
 			sendToApiAi(senderID, "Get Started");
@@ -1366,6 +1366,8 @@ function receivedPostback(event) {
 			var genre = "science fiction";
 			tmdbDiscover(senderID, genre);
 		break;
+
+
 
 		default:
 			//unindentified payload
