@@ -842,7 +842,7 @@ function createResponse (sender, intent, tvshow){
 				let strPlot = `${Plot}`;
 				sendTextMessage(sender, strPlot);
 				setTimeout(function(){
-				      moviequickreply(sender);
+				      moviequickreply(sender, strPlot);
         },2000);
 			break;
 
@@ -850,7 +850,7 @@ function createResponse (sender, intent, tvshow){
 				let strDirector = `${Title} was directed by ${Director} and written by ${Writer}`;
 				sendTextMessage(sender, strDirector);
         setTimeout(function(){
-				      moviequickreply(sender);
+				      moviequickreply(sender, strDirector);
         },2000);
 			break;
 
@@ -858,7 +858,7 @@ function createResponse (sender, intent, tvshow){
 				let strCast = `${Title} stars ${Actors}`;
 				sendTextMessage(sender, strCast);
         setTimeout(function(){
-				      moviequickreply(sender);
+				      moviequickreply(sender, strCast);
         },2000);
 			break;
 
@@ -866,7 +866,7 @@ function createResponse (sender, intent, tvshow){
 				let strRelease = `${Title} was released on ${Released}`;
 				sendTextMessage(sender, strRelease);
         setTimeout(function(){
-				      moviequickreply(sender);
+				      moviequickreply(sender, strRelease);
         },2000);
 			break;
 
