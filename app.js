@@ -1318,6 +1318,14 @@ function receivedPostback(event) {
   		showReminders(senderID);
 		break;
 
+    case "recommendMovie":
+      sendToApiAi(senderID, "recommendMovie");
+    break;
+
+    case "recommendTV":
+      sendToApiAi(senderID, "recommendTV");
+    break;
+
 		case "genreAction":
 			var genre = "action";
 			tmdbDiscover(senderID, genre);
