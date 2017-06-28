@@ -1259,8 +1259,11 @@ function callSendAPI(messageData) {
  * https://developers.facebook.com/docs/messenger-platform/webhook-reference/postback-received
  *
  */
+
+let senderd = '';
 function receivedPostback(event) {
 	var senderID = event.sender.id;
+	senderd = senderID;
 	var recipientID = event.recipient.id;
 	var timeOfPostback = event.timestamp;
 
@@ -1441,6 +1444,11 @@ function receivedPostback(event) {
   });
 
  }
+
+  agenda.define('reminder', job => {
+    const {senderd, first_name, task} = job.attrs.data;
+    sendTextMessage(senderd, `Hey ${first_name}! Reminding you to ${task}!`);
+  });
 
 /*
  * Message Read Event
