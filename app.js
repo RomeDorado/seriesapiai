@@ -214,22 +214,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			sendTextMessage(sender, responseText);
 		break;
 
-		// case "recommend-show":
-		//
-		// 	var cont = contexts.map(function(obj) {
-		// 		var contextObj = {};
-		// 		var genre = "";
-		// 		if(obj.name === 'recommendation'){
-		// 			genre = obj.parameters['showGenre'];
-		// 			if(obj.parameters['showGenre'] != ""){
-		// 				tmdbDiscover(sender, genre);
-		// 			}
-		// 			console.log(genre + " is the genre chosen");
-		// 		}
-		// 		return contextObj;
-		// 	});
-		// 	sendTextMessage(sender, responseText);
-		// break;
+		// case "actor-search":
+    //   var cont = contexts.map(function(obj) {
+    //     var contextObj
+    //   });
+    // break;
 
 		case "create-reminder":
 		console.log("create reminder log");
@@ -430,7 +419,8 @@ function tmdbMovieDiscover (sender, genre){
 	//Check genre and assign genreID
 	var genreID = "";
 	switch(genre){
-		case "action":
+
+      case "action":
       genreID = "28";
       break;
 
@@ -498,7 +488,7 @@ function createTvList(sender, tvList, genre){
 	let strTvList = `Here is a list of ${genre} tv shows`;
 	let elements = [];
 	let buttons = [];
-	let button;	
+	let button;
 	var pagenumber = Math.floor(Math.random() * (5 - 1) + 1);
 
 	if(pagenumber == 1){
@@ -1682,7 +1672,7 @@ function receivedPostback(event) {
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
-		case "movieMusical":
+		case "movieMusic":
 			var genre = "music";
 			tmdbMovieDiscover(senderID, genre);
 		break;
