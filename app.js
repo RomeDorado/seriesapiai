@@ -575,7 +575,9 @@ function createResponse (sender, intent, tvshow){
 
 		  case 'posters':
 				sendImageMessage(sender, Poster);
-				sendMovieCards(sender);
+        setTimeout(function(){
+				      sendMovieCards(sender);
+        },3000);
 			break;
 
 		  case 'plot':
@@ -583,7 +585,7 @@ function createResponse (sender, intent, tvshow){
 				sendTextMessage(sender, strPlot);
 				setTimeout(function(){
 				      sendMovieCards(sender);
-        },5000);
+        },3000);
 			break;
 
     	case 'director':
@@ -591,7 +593,7 @@ function createResponse (sender, intent, tvshow){
 				sendTextMessage(sender, strDirector);
         setTimeout(function(){
 				      sendMovieCards(sender);
-        },5000);
+        },3000);
 			break;
 
       case 'cast':
@@ -599,7 +601,7 @@ function createResponse (sender, intent, tvshow){
 				sendTextMessage(sender, strCast);
         setTimeout(function(){
 				      sendMovieCards(sender);
-        },5000);
+        },3000);
 			break;
 
       case 'releaseyear':
@@ -607,7 +609,7 @@ function createResponse (sender, intent, tvshow){
 				sendTextMessage(sender, strRelease);
         setTimeout(function(){
 				      sendMovieCards(sender);
-        },5000);
+        },3000);
 			break;
 
       case 'numberOfSeasons': {
