@@ -417,7 +417,7 @@ function tmdbTVDiscover (sender, genre){
     method: "GET",
   }, (error, response, body) => {
     if(!error && response.statusCode === 200) {
-      createMovieList(sender, JSON.parse(body), genre);
+      createTvList(sender, JSON.parse(body), genre);
     }
   });
 }
