@@ -1271,7 +1271,7 @@ function receivedPostback(event) {
     let recTitle = payload.split(":")[1];
     tvshow = recTitle;
     let intents = "posters";
-    omdb(senderID, intents, tvshow);
+    let payload = "card";
   }
 
 	switch (payload) {
@@ -1366,6 +1366,10 @@ function receivedPostback(event) {
 			var genre = "science fiction";
 			tmdbDiscover(senderID, genre);
 		break;
+
+    case "card":
+      omdb(senderID, intents, tvshow);
+    break;
 
 		default:
 			//unindentified payload
