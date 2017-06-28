@@ -343,7 +343,7 @@ function createPerson(sender, resultPerson){
     if(!error && response.statusCode === 200){
       createBiography(sender, JSON.parse(body));
     }
-  })
+  });
 }
 
 function createBiography(sender, bio){
