@@ -2,6 +2,7 @@
 
 const apiai = require('apiai');
 const config = require('./config');
+const moment = require('moment');
 const express = require('express');
 const crypto = require('crypto');
 const bodyParser = require('body-parser');
@@ -1017,6 +1018,27 @@ function sendButtonMessage(recipientId, text, buttons) {
 	callSendAPI(messageData);
 }
 
+function btn(id, data) {
+		let obj = {
+			recipient: {
+				id
+			},
+			message: {
+				attachment: {
+					type: 'template',
+					payload: {
+						template_type: 'button',
+						text: data.text,
+						buttons: data.buttons
+					}
+				}
+			}
+		}
+
+		this.sendMessage(obj)
+			.catch(error => console.log(error));
+	}
+
 
 function sendGenericMessage(recipientId, elements) {
 	var messageData = {
@@ -1284,6 +1306,17 @@ function receivedPostback(event) {
 			omdb(senderID, intents, tvshow);
 		break;
 
+		case "watchlist" :
+
+		let {sender} = senderID;
+      	agenda.now('showReminders', {
+        sender
+      	});
+		  
+
+		showReminders(senderID);  
+		break;
+		
 		case "genreAction":
 			var genre = "action";
 			tmdbDiscover(senderID, genre);
@@ -1348,6 +1381,52 @@ function receivedPostback(event) {
 
 }
 
+
+ function showReminders(sender){
+
+	return agenda.define('showReminders', job => {
+    let {sender} = job.attrs.data;
+    agenda.jobs({
+      name: 'reminder',
+      'data.sender': sender,
+      'nextRunAt': {
+        $exists: true,
+        $ne: null
+      }
+    }, (error, data) => {
+      if(data.length === 0) {
+        sendTextMessage(sender, "You've got no reminders set! Yay! :)");
+      } else {
+        data.forEach(item => {
+          // Loop over and display each reminder
+          let {_id, nextRunAt} = item.attrs;
+          let {task} = item.attrs.data;
+
+          let rightNowUTC = moment.utc();
+          let runDate = moment.utc(nextRunAt);
+          let timeToEvent = rightNowUTC.to(runDate);
+
+          let data = {
+            text: `${task ? task.charAt(0).toUpperCase() + task.slice(1) : 'Something'} is due ${timeToEvent}`,
+            buttons: [{
+              type: 'postback',
+              title: 'Cancel Reminder',
+              payload: `{
+                "schedule": "cancelReminder",
+                "sender": "${sender}",
+                "id": "${_id}"
+              }`
+            }]
+          }
+
+          btn(sender, data);
+
+        });
+      }
+    });
+  });
+
+ }
 
 /*
  * Message Read Event
