@@ -224,6 +224,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
           }
         }
       });
+	  sendTextMessage(sender, responseText);
     break;
 
 		case "create-reminder":
