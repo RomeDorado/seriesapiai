@@ -1271,7 +1271,7 @@ function receivedPostback(event) {
     let recTitle = payload.split(":")[1];
     tvshow = recTitle;
     let intents = "posters";
-    let payload = "card";
+    payload = "card";
   }
 
 	switch (payload) {
