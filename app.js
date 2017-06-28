@@ -1368,6 +1368,7 @@ function receivedPostback(event) {
 		break;
 
     case "card":
+      console.log("pumasok ng card case");
       omdb(senderID, intents, tvshow);
     break;
 
