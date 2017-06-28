@@ -1308,7 +1308,7 @@ function receivedPostback(event) {
 
 		case "watchlist" :
 
-		let {sender} = senderID;
+		let sender = senderID;
       	agenda.now('showReminders', {
         sender
       	});
@@ -1316,7 +1316,7 @@ function receivedPostback(event) {
 
 		showReminders(senderID);  
 		break;
-		
+
 		case "genreAction":
 			var genre = "action";
 			tmdbDiscover(senderID, genre);
@@ -1381,7 +1381,7 @@ function receivedPostback(event) {
 
 
  function showReminders(sender){
-
+	console.log("Im at show reminders");
 	return agenda.define('showReminders', job => {
     let {sender} = job.attrs.data;
     agenda.jobs({
