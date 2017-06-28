@@ -353,7 +353,7 @@ function createBiography(sender, bio){
   } = bio;
   var s = "";
   var imageURL = "http://image.tmdb.org/t/p/w185" + profile_path;
-  var biog[] = biography.split(".");
+  var biog = [] = biography.split(".");
 
   let strBiography = `${name},`;
   for(var i = 1; i <= 3; i++){
