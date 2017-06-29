@@ -911,19 +911,41 @@ function knowDirector(sender, Director){
 
 function createResponseDirector(sender, director){
 	if(director){
-    console.log("Umabot ng director"+ JSON.stringify(director));
+    console.log("Umabot ng director");
     let{
         items:[{          
-          pagemap: {
-            metatags: [{
-			og:description
-            }]
-          }
+			link,
+			pagemap: {				
+				person: [{
+					image,
+					name,
+					description,
+					awards
+				}]
+			}
+          
         }]
     } = director;
 
-    console.log(director.items.pagemap.metatags['og:description'] + " this is the desc");
-  }//
+   	let elements = [];
+    let buttons = [];
+    let button;
+    button = {
+					"type": "web_url",
+					"title": "View profile",
+					"url": link
+				}
+    buttons.push(button);
+    let element = {
+			"title": name,
+			"image_url": image,
+			"subtitle": desription,
+			"buttons": buttons
+		};
+		elements.push(element);
+
+    sendGenericMessage(sender, elements);
+  }
   else{
     return{
       text: "I'm sorry, there must be an error. Please try again.",
