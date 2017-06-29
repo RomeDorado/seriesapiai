@@ -330,6 +330,8 @@ function getProfile(id) {
 var check = false;
 
 function yearSearch(sender, year){
+  console.log("Pumasok sa yearSearch");
+  var pagenumber = Math.floor(Math.random() * (10 - 1) + 1);
   request({
     uri: "https://api.themoviedb.org/3/discover/tv?api_key=92b2df3080b91d92b31eacb015fc5497",
     qs: {
