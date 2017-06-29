@@ -887,7 +887,7 @@ function sendMovieCards(sender){
 
 
 function knowDirector(sender, Director){
-
+console.log("i was at director know");
 	request({
         uri: "https://www.googleapis.com/customsearch/v1?",
         qs: {
