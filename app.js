@@ -600,6 +600,7 @@ if(pagenumber == 1){
 	sendTextMessage(sender, strTvList);
 	sendGenericMessage(sender, elements);
 
+}
 
 function createMovieList(sender, movieList, genre){
 	let{
@@ -656,7 +657,7 @@ function createMovieList(sender, movieList, genre){
 
 	sendTextMessage(sender, strMovieList);
 	sendGenericMessage(sender, elements);
-
+}
 function createResponse (sender, intent, tvshow){
 
 	if(tvshow.Response === 'True') {
