@@ -789,7 +789,7 @@ function createResponse (sender, intent, tvshow){
 				for (var i=0; i <= 2; i++){
 				s1 += longPlot[i] + ".";
 			}
-				if(longPlot.length > 4){
+				if(longPlot.length > 3){
 				for (var i=3; i <= 6; i++){
 				s2 += longPlot[i] + ".";
 				checker = false;
