@@ -909,6 +909,8 @@ function createTrailer (sender, trailer) {
 		elements.push(element);
 
     sendGenericMessage(sender, elements);
+	let option = "Select an option";
+	moviequickreply(sender, option);
   }
   else{
     return{
