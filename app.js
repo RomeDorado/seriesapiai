@@ -669,8 +669,8 @@ function createYearList(sender, yearList, year){
   }
 
   for(var i= min; i < max; i++){
-      var movieTitle = movieList.results[i].title;
-			var poster = movieList.results[i].poster_path;
+      var movieTitle = yearList.results[i].title;
+			var poster = yearList.results[i].poster_path;
       // strMovieList += movieTitle + '\n';
 			imagePath += poster;
 			let element = {
