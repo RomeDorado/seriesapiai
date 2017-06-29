@@ -922,8 +922,8 @@ function createResponseDirector(sender, director){
         }]
     } = director;
 
-    console.log(metatags['og:description'] + " this is the desc");
-  }
+    console.log(director.items.pagemap.metatags['og:description'] + " this is the desc");
+  }//
   else{
     return{
       text: "I'm sorry, there must be an error. Please try again.",
