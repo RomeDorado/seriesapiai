@@ -1121,6 +1121,11 @@ request({
 			"content_type": "text",
 			"title": "Back to Main Menu",
 			"payload":"Back to Main Menu"
+		},
+		{
+			"content_type": "text",
+			"title": "Re-type title",
+			"payload":"Re-type title"
 		}
 		];
 		sendQuickReply(sender, txtmessage, replies);
