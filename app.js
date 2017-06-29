@@ -793,7 +793,10 @@ function createResponse (sender, intent, tvshow){
 				s1 += longPlot[i] + ".";
 			}
 				if(longPlot.length > 3){
-				for (var i=3; i <= 6; i++){
+				for (var i=3; i <= 8; i++){
+				if (longPlot[i] == undefined){
+					longPlot[i] = "";
+				}				
 				s2 += longPlot[i] + ".";
 				checker = false;
 			}	
