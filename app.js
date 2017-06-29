@@ -228,6 +228,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     break;
 
     case "show-choices":
+      console.log("Napunta sa show-choices");
       sendMovieCards(sender);
     break;
 
