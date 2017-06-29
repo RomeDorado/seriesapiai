@@ -637,7 +637,7 @@ if(pagenumber == 1){
 
 }
 
-function createYearList(sender, year, yearList){
+function createYearList(sender, yearList){
   let{
       title,
       poster_path
