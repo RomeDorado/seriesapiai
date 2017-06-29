@@ -346,7 +346,7 @@ function yearSearch(sender, year){
     method: "GET"
   }, (error, response, body) => {
     if(!error && response.statusCode === 200){
-      createYearList(sender, year);
+      createYearList(sender, JSON.parse(body), year);
     }
   });
 }
@@ -637,7 +637,7 @@ if(pagenumber == 1){
 
 }
 
-function createYearList(sender, yearList){
+function createYearList(sender, yearList, year){
   let{
       title,
       poster_path
