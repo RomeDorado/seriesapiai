@@ -909,7 +909,7 @@ function createTrailer (sender, trailer) {
 		elements.push(element);
 
     sendGenericMessage(sender, elements);
-	let option = "Select an option";
+	let option = "Select other options";
 	setTimeout(function(){
 	moviequickreply(sender, option);			
         },2500);
