@@ -911,8 +911,8 @@ request({
 		},
 		{
 			"content_type": "text",
-			"title": "Search Again",
-			"payload":"Search Again"
+			"title": "Find Another",
+			"payload":"Find Another"
 
 		}
 
