@@ -844,8 +844,8 @@ function createResponse (sender, intent, tvshow){
 
     	case 'director':
 				if(Director == "N/A"){
-				let strDirector1 = `Sorry we couldn't identify who directed ${Title}, but it is written by ${Writer}`;				
-				    moviequickreply(sender, strDirector1);        		
+				let strDirector1 = `Sorry we couldn't identify who directed ${Title}, but it is written by ${Writer}`;
+				    moviequickreply(sender, strDirector1);
 				} else {
 			    let strDirector2 = `${Title} was directed by ${Director} and written by ${Writer}`;
 				 knowDirector(sender, Director);
@@ -853,7 +853,7 @@ function createResponse (sender, intent, tvshow){
 				      moviequickreply(sender, strDirector2);
         	},2000);
 				}
-				
+
 			break;
 
       case 'cast':
@@ -930,9 +930,9 @@ function createTrailer (sender, trailer) {
     sendGenericMessage(sender, elements);
 	let option = "Select other options";
 	setTimeout(function(){
-	moviequickreply(sender, option);			
+	moviequickreply(sender, option);
         },2500);
-	
+
   }
   else{
     return{
@@ -1784,7 +1784,7 @@ function receivedPostback(event) {
     omdb(senderID, intents, tvshow);
   }
 
-  else if(payload.includes("favorites")){
+  if(payload.includes("favorites")){
     let favTitle = payload.split(":")[1];
     tvshow = favTitle;
     addToFavorites(senderID, tvshow);
