@@ -864,7 +864,7 @@ function sendMovieCards(sender){
 								{
 									"type": "postback",
 									"title": "Search Again",
-									"payload": "Get Started"
+									"payload": "searchAgain"
 								}
 							]
 						}
@@ -1550,6 +1550,10 @@ function receivedPostback(event) {
 		case "FACEBOOK_WELCOME":
 			sendToApiAi(senderID, "Get Started");
 		break;
+
+    case "searchAgain":
+      sendToApiAi(senderID, "Find Another");
+    break;
 
     case "Show Choices":
       sendToApiAi(senderID, "Show Choices");
