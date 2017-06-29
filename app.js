@@ -702,6 +702,7 @@ function createResponse (sender, intent, tvshow){
         setTimeout(function(){
 				      moviequickreply(sender, strDirector);
         },2000);
+					  knowDirector(sender, Director);
 			break;
 
       case 'cast':
@@ -883,6 +884,55 @@ function sendMovieCards(sender){
 }
 
 
+function knowDirector(sender, Director){
+
+	request({
+        uri: "https://www.googleapis.com/customsearch/v1?",
+        qs: {
+          q: Director,
+          cx: `011868887043149504159:-5-5cnusvca`,
+          siteSearch: `https://www.imdb.com/`,
+          fields: 'items',
+          key: `AIzaSyCOdpES79O2cqWNdxNaLs_6g68cNdWBsWw`,
+        },
+        method: 'GET'
+      }, (error, response, body) => {
+        //console.log(response);
+        //console.log(JSON.parse(body));
+        var items = JSON.parse(body);
+        //console.log(JSON.parse(items.pagemap[0]));
+        if(!error && response.statusCode === 200){
+          (createResponseDirector(sender, items));
+        } else{
+          //reject(error);
+        }
+      });
+}
+
+function createResponseDirector(sender, director){
+	if(director){
+    console.log("Umabot ng director");
+    let{
+        items:[{          
+          pagemap: {
+            metatags: [{
+            //og:description
+            }]
+          }
+        }]
+    } = director;
+
+    console.log(metatags['og:description'] + "this is the desc");
+  }
+  else{
+    return{
+      text: "I'm sorry, there must be an error. Please try again.",
+      image: null
+    }
+  }
+
+
+}
 
 function moviequickreply(sender, text){
 var txtmessage = "";
