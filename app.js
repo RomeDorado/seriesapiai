@@ -440,7 +440,7 @@ if(tvshow != null) {
         uri: "https://www.omdbapi.com",
         qs: {
           t: tvshow,
-          plot: 'short',
+          plot: 'full',
           r: 'json',
           apiKey: "270b7488"
         },
