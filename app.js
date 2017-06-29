@@ -1506,6 +1506,7 @@ function receivedPostback(event) {
     break;
 
     case "Search Again":
+      console.logs("Napunta sa search again case");
       sendToApiAi(senderID, "Know About A Series");
     break;
 
