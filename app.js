@@ -232,7 +232,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       console.log("Napunta sa recommend-year");
       var cont = contexts.map(function (obj) {
         var contextObj = {};
-        if(obj.name === "year"){
+        if(obj.name === "movie-year"){
           var year = obj.parameters['year'];
           if(obj.parameters['year'] != ""){
             console.log("tama ang if statement sa yearsearch");
