@@ -1681,7 +1681,7 @@ function receivedPostback(event) {
       sendToApiAi(senderID, "Recommend Genre");
     break;
 
-    case "recommendYear":
+    case "Recommend Year":
     console.log("Napunta sa Recommend Year");
       sendToApiAi(senderID, "Recommend Year");
     break;
