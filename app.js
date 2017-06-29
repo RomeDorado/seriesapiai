@@ -844,14 +844,16 @@ function createResponse (sender, intent, tvshow){
 
     	case 'director':
 				if(Director == "N/A"){
-				let strDirector = `Sorry we couldn't identify who directed ${Title}, but it is written by ${Writer}`;
+				let strDirector1 = `Sorry we couldn't identify who directed ${Title}, but it is written by ${Writer}`;				
+				    moviequickreply(sender, strDirector1);        		
 				} else {
-			    let strDirector = `${Title} was directed by ${Director} and written by ${Writer}`;
+			    let strDirector2 = `${Title} was directed by ${Director} and written by ${Writer}`;
 				 knowDirector(sender, Director);
-				}
-					setTimeout(function(){
-				      moviequickreply(sender, strDirector);
+				 	setTimeout(function(){
+				      moviequickreply(sender, strDirector2);
         	},2000);
+				}
+				
 			break;
 
       case 'cast':
@@ -926,6 +928,11 @@ function createTrailer (sender, trailer) {
 		elements.push(element);
 
     sendGenericMessage(sender, elements);
+	let option = "Select other options";
+	setTimeout(function(){
+	moviequickreply(sender, option);			
+        },2500);
+	
   }
   else{
     return{
