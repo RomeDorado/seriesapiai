@@ -785,7 +785,7 @@ function createResponse (sender, intent, tvshow){
     	case 'director':
 				let strDirector = `${Title} was directed by ${Director} and written by ${Writer}`;        	
 			//	setTimeout(function(){
-				if(Director != "N/A"{
+				if(Director != "N/A"){
 					  knowDirector(sender, Director);
 			//		},3000);
 					}
