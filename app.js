@@ -783,10 +783,12 @@ function createResponse (sender, intent, tvshow){
 
     	case 'director':
 				let strDirector = `${Title} was directed by ${Director} and written by ${Writer}`;
-        setTimeout(function(){
+        	setTimeout(function(){
 				      moviequickreply(sender, strDirector);
-        },2000);
+        	},2000);
+		setTimeout(function(){
 					  knowDirector(sender, Director);
+					  },3000);
 			break;
 
       case 'cast':
@@ -969,7 +971,7 @@ function sendMovieCards(sender){
 
 
 function knowDirector(sender, Director){
-
+console.log("i was at director know");
 	request({
         uri: "https://www.googleapis.com/customsearch/v1?",
         qs: {
@@ -995,19 +997,43 @@ function knowDirector(sender, Director){
 
 function createResponseDirector(sender, director){
 	if(director){
-    console.log("Umabot ng director"+ JSON.stringify(director));
+    console.log("Umabot ng director" + JSON.stringify(director));
     let{
-        items:[{
-          pagemap: {
-            metatags: [{
-			og:description
-            }]
-          }
+        items:[{          
+			link,
+			pagemap: {				
+				person: [{
+					role
+				},
+					{
+					image,
+					name,
+					description,
+					awards
+				}]
+			}          
         }]
     } = director;
 
-    console.log(director.items.pagemap.metatags['og:description'] + " this is the desc");
-  }//
+   	let elements = [];
+    let buttons = [];
+    let button;
+    button = {
+					"type": "web_url",
+					"title": "View profile",
+					"url": link
+				}
+    buttons.push(button);
+    let element = {
+			"title": name,
+			"image_url": image,
+			"subtitle": description,
+			"buttons": buttons
+		};
+		elements.push(element);
+
+    sendGenericMessage(sender, elements);
+  }
   else{
     return{
       text: "I'm sorry, there must be an error. Please try again.",
@@ -1393,6 +1419,7 @@ function btn(id, data) {
 
 
 function sendGenericMessage(recipientId, elements) {
+	console.log("Generic message was called");
 	var messageData = {
 		recipient: {
 			id: recipientId
