@@ -237,6 +237,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
           }
         }
       });
+    sendTextMessage(sender, responseText);
     break;
 
     case "show-choices":
@@ -1001,9 +1002,9 @@ function createResponseDirector(sender, director){
 	if(director){
     console.log("Umabot ng director" + JSON.stringify(director));
     let{
-        items:[{          
+        items:[{
 			link,
-			pagemap: {				
+			pagemap: {
 				person: [{
 					role
 				},
@@ -1013,7 +1014,7 @@ function createResponseDirector(sender, director){
 					description,
 					awards
 				}]
-			}          
+			}
         }]
     } = director;
 
