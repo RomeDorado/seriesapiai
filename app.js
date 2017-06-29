@@ -787,6 +787,9 @@ function createResponse (sender, intent, tvshow){
 				var longPlot = [] = Plot.split(".");
 
 				for (var i=0; i <= 2; i++){
+				if (longPlot[i] == undefined){
+					longPlot[i] = "";
+				}
 				s1 += longPlot[i] + ".";
 			}
 				if(longPlot.length > 3){
