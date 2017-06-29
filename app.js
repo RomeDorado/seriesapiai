@@ -336,7 +336,7 @@ function yearSearch(sender, year){
   console.log("Pumasok sa yearSearch");
   var pagenumber = Math.floor(Math.random() * (10 - 1) + 1);
   request({
-    uri: "https://api.themoviedb.org/3/discover/tv?api_key=92b2df3080b91d92b31eacb015fc5497",
+    uri: "https://api.themoviedb.org/3/discover/movie?api_key=92b2df3080b91d92b31eacb015fc5497",
     qs: {
       language: "en-US",
       sort_by: "popularity.desc",
@@ -643,7 +643,7 @@ function createYearList(sender, yearList, year){
       poster_path
   } = yearList;
   let imagePath = "https://image.tmdb.org/t/p/w500";
-  let strYearList = `Here is a lis of movies from ${year}`;
+  let strYearList = `Here is a list of movies from ${year}`;
   let elements = [];
   let buttons = [];
   let button;
