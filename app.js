@@ -228,6 +228,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     break;
 
     case "recommend-year":
+      console.log("Napunta sa recommend-year");
       var cont = contexts.map(function (obj) {
         var contextObj = {};
         if(obj.name === "year"){
@@ -785,7 +786,7 @@ function createResponse (sender, intent, tvshow){
 			break;
 
     	case 'director':
-				let strDirector = `${Title} was directed by ${Director} and written by ${Writer}`;        	
+				let strDirector = `${Title} was directed by ${Director} and written by ${Writer}`;
 			//	setTimeout(function(){
 				if(Director != "N/A"){
 					  knowDirector(sender, Director);
