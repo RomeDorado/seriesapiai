@@ -578,7 +578,7 @@ if(pagenumber == 1){
 	max = 20;
 }
 
-	
+
 	for(var i= min; i < max; i++){
       var tvTitle = tvList.results[i].original_name;
 			var poster = tvList.results[i].poster_path;
@@ -635,7 +635,7 @@ function createMovieList(sender, movieList, genre){
 	}
 
 
-	
+
 	for(var i= min; i < max; i++){
       var movieTitle = movieList.results[i].title;
 			var poster = movieList.results[i].poster_path;
@@ -907,12 +907,12 @@ request({
 		{
 			"content_type": "text",
 			"title": "Show Choices",
-			"payload":"showChoices"
+			"payload":"Show Choices"
 		},
 		{
 			"content_type": "text",
 			"title": "Search Again",
-			"payload":"searchAgain"
+			"payload":"Search Again"
 
 		}
 
@@ -1501,11 +1501,11 @@ function receivedPostback(event) {
 			sendToApiAi(senderID, "Get Started");
 		break;
 
-    case "showChoices":
+    case "Show Choices":
       sendToApiAi(senderID, "Show Choices");
     break;
 
-    case "searchAgain":
+    case "Search Again":
       sendToApiAi(senderID, "Know About A Series");
     break;
 
