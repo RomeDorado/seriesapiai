@@ -228,6 +228,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     break;
 
     case "recommend-year":
+      console.log("Napunta sa recommend-year");
       var cont = contexts.map(function (obj) {
         var contextObj = {};
         if(obj.name === "year"){
