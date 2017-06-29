@@ -864,7 +864,7 @@ function sendMovieCards(sender){
 								{
 									"type": "postback",
 									"title": "Search Again",
-									"payload": "Get Started"
+									"payload": "searchAgain"
 								}
 							]
 						}
@@ -922,8 +922,7 @@ function createResponseDirector(sender, director){
 					description,
 					awards
 				}]
-			}
-          
+			}          
         }]
     } = director;
 
@@ -1573,6 +1572,10 @@ function receivedPostback(event) {
 			sendToApiAi(senderID, "Get Started");
 		break;
 
+    case "searchAgain":
+      sendToApiAi(senderID, "Find Another");
+    break;
+
     case "Show Choices":
       sendToApiAi(senderID, "Show Choices");
     break;
@@ -1582,7 +1585,8 @@ function receivedPostback(event) {
     break;
 
     case "recommendYear":
-      sendToApiAi(senderID, "Recomend Year");
+    console.log("Napunta sa Recommend Year");
+      sendToApiAi(senderID, "Recommend Year");
     break;
 
 		case "getStarted":
