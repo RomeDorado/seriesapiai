@@ -702,7 +702,9 @@ function createResponse (sender, intent, tvshow){
         setTimeout(function(){
 				      moviequickreply(sender, strDirector);
         },2000);
+		setTimeout(function(){
 					  knowDirector(sender, Director);
+					  },3000);
 			break;
 
       case 'cast':
@@ -938,7 +940,7 @@ function createResponseDirector(sender, director){
     let element = {
 			"title": name,
 			"image_url": image,
-			"subtitle": desription,
+			"subtitle": description,
 			"buttons": buttons
 		};
 		elements.push(element);
