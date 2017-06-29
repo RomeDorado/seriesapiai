@@ -787,12 +787,10 @@ function createResponse (sender, intent, tvshow){
     	case 'director':
 				if(Director == "N/A"){
 				let strDirector = `Sorry we couldn't identify who directed ${Title}, but it is written by ${Writer}`;
-				}else{
+				} else {
 			    let strDirector = `${Title} was directed by ${Director} and written by ${Writer}`;        	
-				}
-				if(Director != "N/A"){
-					  knowDirector(sender, Director);			
-					}
+				 knowDirector(sender, Director);			
+				}				
 					setTimeout(function(){
 				      moviequickreply(sender, strDirector);
         	},2000);
