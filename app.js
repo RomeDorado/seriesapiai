@@ -913,7 +913,7 @@ console.log("i was at director know");
 
 function createResponseDirector(sender, director){
 	if(director){
-    console.log("Umabot ng director" + JSON>stringify(director));
+    console.log("Umabot ng director" + JSON.stringify(director));
     let{
         items:[{          
 			link,
