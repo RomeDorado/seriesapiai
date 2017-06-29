@@ -910,7 +910,10 @@ function createTrailer (sender, trailer) {
 
     sendGenericMessage(sender, elements);
 	let option = "Select an option";
-	moviequickreply(sender, option);
+	setTimeout(function(){
+	moviequickreply(sender, option);			
+        },2500);
+	
   }
   else{
     return{
