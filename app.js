@@ -193,7 +193,7 @@ function handleEcho(messageId, appId, metadata) {
 	console.log("Received echo for message %s and app %d with metadata %s", messageId, appId, metadata);
 }
 
-let tvshow = "";
+var tvshow = "";
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
@@ -984,7 +984,18 @@ function sendMovieCards(sender){
 								}
 							]
 						},
-            {
+						{
+							"title": "Add to Favorites",
+							"image_url": "http://i.imgur.com/FEmuU4p.png",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Add",
+									"payload": "favorites:" + tvshow
+								}
+							]
+						},
+            			{
 							"title": "Search Again",
 							"image_url": "http://i.imgur.com/FEmuU4p.png",
 							"buttons": [
@@ -997,6 +1008,7 @@ function sendMovieCards(sender){
 						}
 					];
 					sendGenericMessage(sender, elements);
+					console.log(tvshow +  "THIS IS TVSHOW INSIDE SENDMOVIECARDS");
 				}
 				else{
 					console.log("Cannot get data for fb user with id",
