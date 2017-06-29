@@ -559,9 +559,27 @@ function createTvList(sender, tvList, genre){
 	let buttons = [];
 	let button;
 	var pagenumber = Math.floor(Math.random() * (5 - 1) + 1);
+	let min = 0;
+	let max = 0;
+if(pagenumber == 1){
+	min = 0;
+	max = 4;
+}else if (pagenumber == 2){
+	min = 4;
+	max = 8;
+}else if (pagenumber == 3){
+	min = 8;
+	max = 12;
+}else if (pagenumber == 4){
+	min = 12;
+	max = 16;
+}else if (pagenumber == 5){
+	min = 16;
+	max = 20;
+}
 
-	if(pagenumber == 1){
-	for(var i= 0; i < 4; i++){
+	
+	for(var i= min; i < max; i++){
       var tvTitle = tvList.results[i].original_name;
 			var poster = tvList.results[i].poster_path;
       // strMovieList += movieTitle + '\n';
@@ -582,99 +600,7 @@ function createTvList(sender, tvList, genre){
   }
 	sendTextMessage(sender, strTvList);
 	sendGenericMessage(sender, elements);
-}//random 1
-if(pagenumber == 2){
-	for(var i= 4; i < 8; i++){
-      var tvTitle = tvList.results[i].original_name;
-			var poster = tvList.results[i].poster_path;
-      // strMovieList += movieTitle + '\n';
-			imagePath += poster;
-			let element = {
-				"title": tvTitle,
-				"image_url": imagePath,
-				"buttons": [
-					{
-						"type": "postback",
-						"title": "Learn More",
-						"payload": "card:" + tvTitle
-					}
-				]
-			};
-			elements.push(element);
-			imagePath = "https://image.tmdb.org/t/p/w500";
-  }
-	sendTextMessage(sender, strTvList);
-	sendGenericMessage(sender, elements);
-}//random 2
-if(pagenumber == 3){
-	for(var i= 8; i < 12; i++){
-      var tvTitle = tvList.results[i].original_name;
-			var poster = tvList.results[i].poster_path;
-      // strMovieList += movieTitle + '\n';
-			imagePath += poster;
-			let element = {
-				"title": tvTitle,
-				"image_url": imagePath,
-				"buttons": [
-					{
-						"type": "postback",
-						"title": "Learn More",
-						"payload": "card:" + tvTitle
-					}
-				]
-			};
-			elements.push(element);
-			imagePath = "https://image.tmdb.org/t/p/w500";
-  }
-	sendTextMessage(sender, strTvList);
-	sendGenericMessage(sender, elements);
-}//random 3
-if(pagenumber == 4){
-	for(var i= 12; i < 16; i++){
-      var tvTitle = tvList.results[i].original_name;
-			var poster = tvList.results[i].poster_path;
-      // strMovieList += movieTitle + '\n';
-			imagePath += poster;
-			let element = {
-				"title": tvTitle,
-				"image_url": imagePath,
-				"buttons": [
-					{
-						"type": "postback",
-						"title": "Learn More",
-						"payload": "card:" + tvTitle
-					}
-				]
-			};
-			elements.push(element);
-			imagePath = "https://image.tmdb.org/t/p/w500";
-  }
-	sendTextMessage(sender, strTvList);
-	sendGenericMessage(sender, elements);
-}//random 4
-if(pagenumber == 5){
-	for(var i= 16; i < 20; i++){
-      var tvTitle = tvList.results[i].original_name;
-			var poster = tvList.results[i].poster_path;
-      // strMovieList += movieTitle + '\n';
-			imagePath += poster;
-			let element = {
-				"title": tvTitle,
-				"image_url": imagePath,
-				"buttons": [
-					{
-						"type": "postback",
-						"title": "Learn More",
-						"payload": "card:" + tvTitle
-					}
-				]
-			};
-			elements.push(element);
-			imagePath = "https://image.tmdb.org/t/p/w500";
-  }
-	sendTextMessage(sender, strTvList);
-	sendGenericMessage(sender, elements);
-	}//random 5
+
 }
 
 function createMovieList(sender, movieList, genre){
@@ -688,8 +614,29 @@ function createMovieList(sender, movieList, genre){
 	let buttons = [];
 	let button;
 	var pagenumber = Math.floor(Math.random() * (5 - 1) + 1);
+
+	let min = 0;
+	let max = 0;
 	if(pagenumber == 1){
-	for(var i= 0; i < 4; i++){
+		min = 0;
+		max = 4;
+	}else if (pagenumber == 2){
+		min = 4;
+		max = 8;
+	}else if (pagenumber == 3){
+		min = 8;
+		max = 12;
+	}else if (pagenumber == 4){
+		min = 12;
+		max = 16;
+	}else if (pagenumber == 5){
+		min = 16;
+		max = 20;
+	}
+
+
+	
+	for(var i= min; i < max; i++){
       var movieTitle = movieList.results[i].title;
 			var poster = movieList.results[i].poster_path;
       // strMovieList += movieTitle + '\n';
@@ -711,107 +658,7 @@ function createMovieList(sender, movieList, genre){
 
 	sendTextMessage(sender, strMovieList);
 	sendGenericMessage(sender, elements);
-}//random 1
-
-else if(pagenumber == 2){
-	for(var i= 4; i < 8; i++){
-      var movieTitle = movieList.results[i].title;
-			var poster = movieList.results[i].poster_path;
-      // strMovieList += movieTitle + '\n';
-			imagePath += poster;
-			let element = {
-				"title": movieTitle,
-				"image_url": imagePath,
-				"buttons": [
-					{
-						"type": "postback",
-						"title": "Learn More",
-						"payload": "card:" + movieTitle
-					}
-				]
-			};
-			elements.push(element);
-			imagePath = "https://image.tmdb.org/t/p/w500";
-  }
-
-	sendTextMessage(sender, strMovieList);
-	sendGenericMessage(sender, elements);
-}//random 2
-
-else if(pagenumber == 3){
-	for(var i= 8; i < 12; i++){
-      var movieTitle = movieList.results[i].title;
-			var poster = movieList.results[i].poster_path;
-      // strMovieList += movieTitle + '\n';
-			imagePath += poster;
-			let element = {
-				"title": movieTitle,
-				"image_url": imagePath,
-				"buttons": [
-					{
-						"type": "postback",
-						"title": "Learn More",
-						"payload": "card:" + movieTitle
-					}
-				]
-			};
-			elements.push(element);
-			imagePath = "https://image.tmdb.org/t/p/w500";
-  }
-
-	sendTextMessage(sender, strMovieList);
-	sendGenericMessage(sender, elements);
-}//random 3
-else if(pagenumber == 4){
-	for(var i= 12; i < 16; i++){
-      var movieTitle = movieList.results[i].title;
-			var poster = movieList.results[i].poster_path;
-      // strMovieList += movieTitle + '\n';
-			imagePath += poster;
-			let element = {
-				"title": movieTitle,
-				"image_url": imagePath,
-				"buttons": [
-					{
-						"type": "postback",
-						"title": "Learn More",
-						"payload": "card:" + movieTitle
-					}
-				]
-			};
-			elements.push(element);
-			imagePath = "https://image.tmdb.org/t/p/w500";
-  }
-
-	sendTextMessage(sender, strMovieList);
-	sendGenericMessage(sender, elements);
-}//random 4
-else if(pagenumber == 5){
-	for(var i= 16; i < 20; i++){
-      var movieTitle = movieList.results[i].title;
-			var poster = movieList.results[i].poster_path;
-      // strMovieList += movieTitle + '\n';
-			imagePath += poster;
-			let element = {
-				"title": movieTitle,
-				"image_url": imagePath,
-				"buttons": [
-					{
-						"type": "postback",
-						"title": "Learn More",
-						"payload": "card:" + movieTitle
-					}
-				]
-			};
-			elements.push(element);
-			imagePath = "https://image.tmdb.org/t/p/w500";
-  }
-
-	sendTextMessage(sender, strMovieList);
-	sendGenericMessage(sender, elements);
-}//random 1
 }
-
 function createResponse (sender, intent, tvshow){
 
 	if(tvshow.Response === 'True') {
