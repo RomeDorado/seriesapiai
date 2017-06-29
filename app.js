@@ -196,7 +196,7 @@ function handleEcho(messageId, appId, metadata) {
 	console.log("Received echo for message %s and app %d with metadata %s", messageId, appId, metadata);
 }
 
-let tvshow = "";
+var tvshow = "";
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
@@ -783,10 +783,44 @@ function createResponse (sender, intent, tvshow){
 			break;
 
 		  case 'plot':
+		  		var s1 ='';
+				var checker = true;
+				var s2 ='';
 				let strPlot = `${Plot}`;
+				var longPlot = [] = Plot.split(".");
+
+				for (var i=0; i <= 2; i++){
+				if (longPlot[i] == undefined){
+					longPlot[i] = "";
+				}
+				s1 += longPlot[i] + ".";
+			}
+				if(longPlot.length > 3){
+				for (var i=3; i <= 8; i++){
+				if (longPlot[i] == undefined){
+					longPlot[i] = "";
+				}				
+				s2 += longPlot[i] + ".";
+				checker = false;
+			}	
+		}else{
+			checker = true;
+		}
+
+		if(checker == true){
+			moviequickreply(sender, s1);
+		}else{
+			sendTextMessage(sender, s1)
 				setTimeout(function(){
-				      moviequickreply(sender, strPlot);
-        },2000);
+				      moviequickreply(sender, s2);
+        },5000);
+		}
+				
+
+				//if(checker == true){
+
+				//}
+		
 			break;
 
     	case 'director':
@@ -953,7 +987,18 @@ function sendMovieCards(sender){
 								}
 							]
 						},
-            {
+						{
+							"title": "Add to Favorites",
+							"image_url": "http://i.imgur.com/FEmuU4p.png",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Add",
+									"payload": "favorites:" + tvshow
+								}
+							]
+						},
+            			{
 							"title": "Search Again",
 							"image_url": "http://i.imgur.com/FEmuU4p.png",
 							"buttons": [
@@ -966,6 +1011,7 @@ function sendMovieCards(sender){
 						}
 					];
 					sendGenericMessage(sender, elements);
+					console.log(tvshow +  "THIS IS TVSHOW INSIDE SENDMOVIECARDS");
 				}
 				else{
 					console.log("Cannot get data for fb user with id",
