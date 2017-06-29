@@ -919,6 +919,9 @@ function createResponseDirector(sender, director){
 			link,
 			pagemap: {				
 				person: [{
+					role
+				},
+					{
 					image,
 					name,
 					description,
