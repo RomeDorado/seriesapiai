@@ -913,7 +913,7 @@ function createResponseDirector(sender, director){
 	if(director){
     console.log("Umabot ng director");
     let{
-        items:[{          
+        items:[{
           pagemap: {
             metatags: [{
             //og:description
@@ -1560,7 +1560,8 @@ function receivedPostback(event) {
     break;
 
     case "recommendYear":
-      sendToApiAi(senderID, "Recomend Year");
+    console.log("Napunta sa Recommend Year");
+      sendToApiAi(senderID, "Recommend Year");
     break;
 
 		case "getStarted":
