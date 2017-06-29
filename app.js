@@ -780,9 +780,21 @@ function createResponse (sender, intent, tvshow){
 			break;
 
 		  case 'plot':
+		  		var s1 ='';
+				var s2 ='';
 				let strPlot = `${Plot}`;
+				var longPlot = [] = Plot.split(".");
+
+				for (var i=1; i <= 3; i++){
+				s1 += longPlot[i] + ".";
+			}
+				for (var i=4; i <= 7; i++){
+				s2 += longPlot[i] + ".";
+			}	
+
+				sendTextMessage(sender, s1)
 				setTimeout(function(){
-				      moviequickreply(sender, strPlot);
+				      moviequickreply(sender, s2);
         },2000);
 			break;
 
