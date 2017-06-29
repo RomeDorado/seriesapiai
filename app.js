@@ -922,7 +922,7 @@ function createResponseDirector(sender, director){
         }]
     } = director;
 
-    console.log(metatags['og:description'] + "this is the desc");
+    console.log(metatags['og:description'] + " this is the desc");
   }
   else{
     return{
