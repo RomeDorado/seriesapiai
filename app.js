@@ -804,10 +804,15 @@ function createResponse (sender, intent, tvshow){
 			checker = true;
 		}
 
-				sendTextMessage(sender, s1)
+		if(checker == true){
+			moviequickreply(sender, s1);
+		}else{
+			sendTextMessage(sender, s1)
 				setTimeout(function(){
 				      moviequickreply(sender, s2);
-        },2000);
+        },5000);
+		}
+				
 
 				//if(checker == true){
 
