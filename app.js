@@ -1332,6 +1332,7 @@ function btn(id, data) {
 
 
 function sendGenericMessage(recipientId, elements) {
+	console.log("Generic message was called");
 	var messageData = {
 		recipient: {
 			id: recipientId
