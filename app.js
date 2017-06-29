@@ -781,6 +781,7 @@ function createResponse (sender, intent, tvshow){
 
 		  case 'plot':
 		  		var s1 ='';
+				var checker = true;
 				var s2 ='';
 				let strPlot = `${Plot}`;
 				var longPlot = [] = Plot.split(".");
@@ -788,14 +789,24 @@ function createResponse (sender, intent, tvshow){
 				for (var i=0; i <= 3; i++){
 				s1 += longPlot[i] + ".";
 			}
+				if(longPlot.length > 4){
 				for (var i=4; i <= 7; i++){
 				s2 += longPlot[i] + ".";
+				checker = false;
 			}	
+		}else{
+			checker = true;
+		}
 
 				sendTextMessage(sender, s1)
 				setTimeout(function(){
 				      moviequickreply(sender, s2);
         },2000);
+
+				//if(checker == true){
+
+				//}
+		
 			break;
 
     	case 'director':
