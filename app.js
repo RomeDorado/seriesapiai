@@ -751,6 +751,25 @@ function createMovieList(sender, movieList, genre){
 	sendTextMessage(sender, strMovieList);
 	sendGenericMessage(sender, elements);
 }
+
+function addToFavorites(senderID, tvshow){
+  var query = {user_id: senderID};
+  var update = {
+    user_id: senderID,
+    title: tvshow
+  };
+  var options = {upsert: true};
+  Movie.findOneAndUpdate(query, update, options, function(err, mov) {
+    if(err){
+      console.log("Database error: " + err);
+    }
+    else{
+      console.log("Added to Favorites!");
+      sendTextMessage(senderID, "Added to Favorites!");
+    }
+  });
+}
+
 function createResponse (sender, intent, tvshow){
 
 	if(tvshow.Response === 'True') {
@@ -799,10 +818,10 @@ function createResponse (sender, intent, tvshow){
 				for (var i=3; i <= 8; i++){
 				if (longPlot[i] == undefined){
 					longPlot[i] = "";
-				}				
+				}
 				s2 += longPlot[i] + ".";
 				checker = false;
-			}	
+			}
 		}else{
 			checker = true;
 		}
@@ -815,12 +834,12 @@ function createResponse (sender, intent, tvshow){
 				      moviequickreply(sender, s2);
         },5000);
 		}
-				
+
 
 				//if(checker == true){
 
 				//}
-		
+
 			break;
 
     	case 'director':
@@ -1756,6 +1775,12 @@ function receivedPostback(event) {
     let intents = "posters";
     payload = "card";
     omdb(senderID, intents, tvshow);
+  }
+
+  else if(payload.includes("favorites")){
+    let favTitle = payload.split(":")[1];
+    tvshow = favTitle;
+    addToFavorites(senderID, tvshow);
   }
 
 	switch (payload) {
