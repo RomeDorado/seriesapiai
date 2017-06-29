@@ -911,12 +911,12 @@ function knowDirector(sender, Director){
 
 function createResponseDirector(sender, director){
 	if(director){
-    console.log("Umabot ng director"+ director);
+    console.log("Umabot ng director"+ JSON.stringify(director));
     let{
         items:[{
           pagemap: {
             metatags: [{
-            //og:description
+			og:description
             }]
           }
         }]
