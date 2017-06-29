@@ -1555,9 +1555,12 @@ function receivedPostback(event) {
       sendToApiAi(senderID, "Show Choices");
     break;
 
-    case "Search Again":
-      console.logs("Napunta sa search again case");
-      sendToApiAi(senderID, "Know About A Series");
+    case "recommendGenre":
+      sendToApiAi(senderID, "Recommend Genre");
+    break;
+
+    case "recommendYear":
+      sendToApiAi(senderID, "Recomend Year");
     break;
 
 		case "getStarted":
