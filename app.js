@@ -445,10 +445,9 @@ if(tvshow != null) {
         },
         method: 'GET'
       }, (error, response, body) => {
-        //console.log(response);
+        console.log(response);
         if(!error && response.statusCode === 200) {
-          (createResponse(sender, intent, JSON.parse(body)));
-		  check = true;
+          (createResponse(sender, intent, JSON.parse(body)));		
         } else {
 
         }
@@ -787,12 +786,12 @@ function createResponse (sender, intent, tvshow){
 			break;
 
     	case 'director':
-				let strDirector = `${Title} was directed by ${Director} and written by ${Writer}`;
-			//	setTimeout(function(){
-				if(Director != "N/A"){
-					  knowDirector(sender, Director);
-			//		},3000);
-					}
+				if(Director == "N/A"){
+				let strDirector = `Sorry we couldn't identify who directed ${Title}, but it is written by ${Writer}`;
+				} else {
+			    let strDirector = `${Title} was directed by ${Director} and written by ${Writer}`;        	
+				 knowDirector(sender, Director);			
+				}				
 					setTimeout(function(){
 				      moviequickreply(sender, strDirector);
         	},2000);
@@ -832,7 +831,7 @@ function createResponse (sender, intent, tvshow){
     }
   }else{
     let str = `I'm still learning, please re-type if you have a typo`;
-          sendTextMessage(sender, str);
+          consufedquickreply(sender, str);
   }
 }
 
@@ -1083,6 +1082,46 @@ request({
 
 		}
 
+		];
+		sendQuickReply(sender, txtmessage, replies);
+			} else {
+				console.log("Cannot get data for fb user with id",
+					sender);
+			}
+		} else {
+			console.error(response.error);
+		}
+
+	});
+
+
+}
+
+function consufedquickreply(sender, text){
+var txtmessage = "";
+request({
+		uri: 'https://graph.facebook.com/v2.7/' + sender,
+		qs: {
+			access_token: config.FB_PAGE_TOKEN
+		}
+
+	}, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+
+			var user = JSON.parse(body);
+
+
+			if (user.first_name) {
+				console.log("FB user: %s %s, %s",
+					user.first_name, user.last_name, user.gender);
+
+				txtmessage = text;
+				let replies = [
+		{
+			"content_type": "text",
+			"title": "Back to Main Menu",
+			"payload":"Back to Main Menu"
+		}
 		];
 		sendQuickReply(sender, txtmessage, replies);
 			} else {
