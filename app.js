@@ -227,6 +227,18 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	  sendTextMessage(sender, responseText);
     break;
 
+    case "recommend-year":
+      var cont = contexts.map(function (obj) {
+        var contextObj = {};
+        if(obj.name === "year"){
+          var year = obj.parameters['year'];
+          if(obj.parameters['year'] != ""){
+            yearSearch(sender, year);
+          }
+        }
+      });
+    break;
+
     case "show-choices":
       console.log("Napunta sa show-choices");
       sendMovieCards(sender);
@@ -315,6 +327,23 @@ function getProfile(id) {
 	}
 
 var check = false;
+
+function yearSearch(sender, year){
+  request({
+    uri: "https://api.themoviedb.org/3/discover/tv?api_key=92b2df3080b91d92b31eacb015fc5497",
+    qs: {
+      language: "en-US",
+      sort_by: "popularity.desc",
+      page: `${pagenumber}`,
+      primary_release_year: year
+    },
+    method: "GET"
+  }, (error, response, body) => {
+    if(!error && response.statusCode === 200){
+      createYearList(sender, year);
+    }
+  });
+}
 
 function personSearch(sender, person){
   request({
@@ -601,6 +630,61 @@ if(pagenumber == 1){
 	sendTextMessage(sender, strTvList);
 	sendGenericMessage(sender, elements);
 
+}
+
+function createYearList(sender, year, yearList){
+  let{
+      title,
+      poster_path
+  } = yearList;
+  let imagePath = "https://image.tmdb.org/t/p/w500";
+  let strYearList = `Here is a lis of movies from ${year}`;
+  let elements = [];
+  let buttons = [];
+  let button;
+  var pagenumber = Math.floor(Math.random() * (5 - 1) + 1);
+
+  let min = 0;
+  let max = 0;
+  if(pagenumber == 1){
+    min = 0;
+    max = 4;
+  }else if (pagenumber == 2){
+    min = 4;
+    max = 8;
+  }else if (pagenumber == 3){
+    min = 8;
+    max = 12;
+  }else if (pagenumber == 4){
+    min = 12;
+    max = 16;
+  }else if (pagenumber == 5){
+    min = 16;
+    max = 20;
+  }
+
+  for(var i= min; i < max; i++){
+      var movieTitle = movieList.results[i].title;
+			var poster = movieList.results[i].poster_path;
+      // strMovieList += movieTitle + '\n';
+			imagePath += poster;
+			let element = {
+				"title": movieTitle,
+				"image_url": imagePath,
+				"buttons": [
+					{
+						"type": "postback",
+						"title": "Learn More",
+						"payload": "card:" + movieTitle
+					}
+				]
+			};
+			elements.push(element);
+			imagePath = "https://image.tmdb.org/t/p/w500";
+  }
+
+  sendTextMessage(sender, strYearList);
+	sendGenericMessage(sender, elements);
 }
 
 function createMovieList(sender, movieList, genre){
