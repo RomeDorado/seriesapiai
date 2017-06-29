@@ -911,7 +911,7 @@ function knowDirector(sender, Director){
 
 function createResponseDirector(sender, director){
 	if(director){
-    console.log("Umabot ng director");
+    console.log("Umabot ng director"+ director);
     let{
         items:[{
           pagemap: {
