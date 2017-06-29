@@ -234,6 +234,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         if(obj.name === "year"){
           var year = obj.parameters['year'];
           if(obj.parameters['year'] != ""){
+            console.log("tama ang if statement sa yearsearch");
             yearSearch(sender, year);
           }
         }
