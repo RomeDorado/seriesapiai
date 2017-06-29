@@ -698,13 +698,15 @@ function createResponse (sender, intent, tvshow){
 			break;
 
     	case 'director':
-				let strDirector = `${Title} was directed by ${Director} and written by ${Writer}`;
-        	setTimeout(function(){
+				let strDirector = `${Title} was directed by ${Director} and written by ${Writer}`;        	
+			//	setTimeout(function(){
+				if(Director != "N/A"{
+					  knowDirector(sender, Director);
+			//		},3000);
+					}
+					setTimeout(function(){
 				      moviequickreply(sender, strDirector);
         	},2000);
-		setTimeout(function(){
-					  knowDirector(sender, Director);
-					  },3000);
 			break;
 
       case 'cast':
