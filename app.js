@@ -215,6 +215,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		break;
 
 		case "actor-search":
+    console.log("Napunta sa actor-search");
       var cont = contexts.map(function(obj) {
         var contextObj = {};
         if(obj.name === "actors"){
@@ -447,7 +448,7 @@ if(tvshow != null) {
       }, (error, response, body) => {
         console.log(response);
         if(!error && response.statusCode === 200) {
-          (createResponse(sender, intent, JSON.parse(body)));		
+          (createResponse(sender, intent, JSON.parse(body)));
         } else {
 
         }
@@ -789,9 +790,9 @@ function createResponse (sender, intent, tvshow){
 				if(Director == "N/A"){
 				let strDirector = `Sorry we couldn't identify who directed ${Title}, but it is written by ${Writer}`;
 				} else {
-			    let strDirector = `${Title} was directed by ${Director} and written by ${Writer}`;        	
-				 knowDirector(sender, Director);			
-				}				
+			    let strDirector = `${Title} was directed by ${Director} and written by ${Writer}`;
+				 knowDirector(sender, Director);
+				}
 					setTimeout(function(){
 				      moviequickreply(sender, strDirector);
         	},2000);
