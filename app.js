@@ -783,36 +783,30 @@ function createMovieList(sender, movieList, genre){
 
 
 function addToFavorites(senderID, tvshow, imagePath){
-  console.log(imagePath + " Ito yung image path");
   var addMovie = new Movie({
     user_id: senderID,
     title: tvshow,
     poster: imagePath
   });
-  // var query = {user_id: senderID};
-  // var update = {
-  //   user_id: senderID,
-  //   title: tvshow
-  // };
-  // var options = {upsert: true};
-  // Movie.findOneAndUpdate(query, update, options, function(err, mov) {
-  //   if(err){
-  //     console.log("Database error: " + err);
-  //   }
-  //   else{
-  //     console.log("Added to Favorites!");
-  //     sendTextMessage(senderID, "Added to Favorites!");
-  //   }
-  // });
-  addMovie.save(function (err){
-    if(err){
-      console.log("Database error: " + err);
+  let strFavorites = "";
+
+  Movie.count({}, function(err, count) {
+    if(count > 10){
+      strFavorites = "You can only have 10 favorites at a time.";
+      sendTextMessage(senderID, strFavorites);
     }
     else{
-      console.log("Added to Favorites!");
-      sendTextMessage(senderID, "Added to Favorites!");
+      addMovie.save(function (err){
+        if(err){
+          console.log("Database error: " + err);
+        }
+        else{
+          strFavorites = "Added to Favorites!";
+          sendTextMessage(senderID, strFavorites);
+        }
+      });
     }
-  })
+  });
 }
 
 function createResponse (sender, intent, tvshow){
@@ -1883,6 +1877,7 @@ function receivedPostback(event) {
   if(payload.includes("favorites")){
     let favTitle = payload.split(":")[1];
     tvshow = favTitle;
+    payload = "favorites";
     addToFavorites(senderID, tvshow, imagePath);
   }
 
@@ -1890,6 +1885,10 @@ function receivedPostback(event) {
 		case "FACEBOOK_WELCOME":
 			sendToApiAi(senderID, "Get Started");
 		break;
+
+    case "favorites":
+      console.log("napunta sa favorites");
+    break;
 
     case "searchAgain":
       sendToApiAi(senderID, "Find Another");
