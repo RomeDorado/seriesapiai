@@ -408,14 +408,14 @@ function createBiography(sender, bio){
     s = biog[2] + ".";
   }
 
-  
+
   let elements = [];
     let buttons = [];
     let button;
     button = {
 					"type": "web_url",
 					"title": "Know more",
-					"url": `www.imbdb.com/name/${imdb_id}/bio?=ref_nm_ov_bio_sm`
+					"url": `www.imdb.com/name/${imdb_id}/bio?=ref_nm_ov_bio_sm`
 				}
     buttons.push(button);
     let element = {
@@ -435,7 +435,7 @@ function createBiography(sender, bio){
 
 
   //sendImageMessage(sender, imageURL);
-    
+
 }
 
 function omdb(sender, intent, tvshow){
