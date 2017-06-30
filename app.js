@@ -393,6 +393,7 @@ function createBiography(sender, bio){
   let{
     name,
     biography,
+	imdb_id,
     profile_path
   } = bio;
   var s = "";
@@ -414,7 +415,7 @@ function createBiography(sender, bio){
     button = {
 					"type": "web_url",
 					"title": "Know more",
-					"url": link //wikipedia
+					"url": `www.imbdb.com/name/${imdb_id}/bio?=ref_nm_ov_bio_sm`
 				}
     buttons.push(button);
     let element = {
