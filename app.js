@@ -936,7 +936,7 @@ function createTrailer (sender, trailer) {
           }
         }]
     } = trailer;
-
+/*
     let elements = [];
     let buttons = [];
     let button;
@@ -955,6 +955,8 @@ function createTrailer (sender, trailer) {
 		elements.push(element);
 
     sendGenericMessage(sender, elements);
+
+	*/
 	let option = "Select other options";
 	setTimeout(function(){
 	moviequickreply(sender, option);
