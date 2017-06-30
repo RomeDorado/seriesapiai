@@ -1230,7 +1230,7 @@ function Actorcards(sender){
 
 }
 
-}
+
 
 /*
 function Actorquickreply(sender, text){
