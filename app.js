@@ -780,7 +780,7 @@ function createMovieList(sender, movieList, genre){
 }
 
 var addMovie = new Movie({
-  user_id: senderID,
+  user_id: sender,
   title: tvshow
 });
 
