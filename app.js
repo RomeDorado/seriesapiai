@@ -1882,7 +1882,7 @@ function receivedPostback(event) {
   if(payload.includes("favorites")){
     let favTitle = payload.split(":")[1];
     tvshow = favTitle;
-    addToFavorites(senderID, tvshow, imageURL);
+    addToFavorites(senderID, tvshow, imagePath);
   }
 
 	switch (payload) {
