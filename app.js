@@ -1934,7 +1934,7 @@ function receivedPostback(event) {
     break;
 
     case "actorSearch":
-      sendToApiAi(senderID, "Actor");
+      sendToApiAi(senderID, "actorSearch");
     break;
 		case "aboutplot":
 			var intents = "plot";
