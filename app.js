@@ -13,7 +13,7 @@ const Agenda = require('agenda');
 const ObjectID = require('mongodb').ObjectID;
 const {MONGO_URI} = require('./config');
 const mongoose = require('mongoose');
-const db = mongoose.openUri(process.env.MONGO_URI);
+const db = mongoose.connect(process.env.MONGO_URI);
 const Movie = require("./movieModel");
 const agenda = new Agenda({
   db: {
