@@ -407,8 +407,34 @@ function createBiography(sender, bio){
     s = biog[2] + ".";
   }
 
-  sendImageMessage(sender, imageURL);
-  sendTextMessage(sender, strBiography + s);
+  
+  let elements = [];
+    let buttons = [];
+    let button;
+    button = {
+					"type": "web_url",
+					"title": "Know more",
+					"url": link //wikipedia
+				}
+    buttons.push(button);
+    let element = {
+			"title": name,
+			"image_url": imageURL,
+			"subtitle": `Want to know more about ${name}?`,
+			"buttons": buttons
+		};
+		elements.push(element);
+
+	sendTextMessage(sender, strBiography + s);
+    sendGenericMessage(sender, elements);
+	let option = "Select other options";
+	setTimeout(function(){
+	Actorquickreply(sender, option);
+        },2500);
+
+
+  //sendImageMessage(sender, imageURL);
+    
 }
 
 function omdb(sender, intent, tvshow){
@@ -1125,6 +1151,54 @@ function createResponseDirector(sender, director){
 
 
 }
+
+function Actorquickreply(sender, text){
+var txtmessage = "";
+request({
+		uri: 'https://graph.facebook.com/v2.7/' + sender,
+		qs: {
+			access_token: config.FB_PAGE_TOKEN
+		}
+
+	}, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+
+			var user = JSON.parse(body);
+
+
+			if (user.first_name) {
+				console.log("FB user: %s %s, %s",
+					user.first_name, user.last_name, user.gender);
+
+				txtmessage = text;
+				let replies = [
+		{
+			"content_type": "text",
+			"title": "Find another actor",
+			"payload":"Find another actor"
+		},
+		{
+			"content_type": "text",
+			"title": "Back to Main Menu",
+			"payload":"Back to Main Menu"
+
+		}
+
+		];
+		sendQuickReply(sender, txtmessage, replies);
+			} else {
+				console.log("Cannot get data for fb user with id",
+					sender);
+			}
+		} else {
+			console.error(response.error);
+		}
+
+	});
+
+
+}
+
 
 function moviequickreply(sender, text){
 var txtmessage = "";
