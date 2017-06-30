@@ -222,9 +222,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     console.log("Napunta sa actor-search");
       var cont = contexts.map(function(obj) {
         var contextObj = {};
-        if(obj.name === "actors"){
+        if(obj.name === "actor-intent"){
           var person = obj.parameters['actor'];
-          if(obj.parameters['actors'] != "") {
+          if(obj.parameters['actor'] != "") {
             personSearch(sender, person);
           }
         }
@@ -364,31 +364,40 @@ function personSearch(sender, person){
     },
     method: "GET"
   }, (error, response, body) => {
-    if(!error && response.statusCode === 200){
+		var per = JSON.parse(body);
+    if(!error && response.statusCode === 200 && per.total_results != 0){			
       createPerson(sender, JSON.parse(body));
-    }
+    }else{
+			sendTextMessage(sender, "I can't seem to find the person you are looking for. Please try again.");			
+				Actorcards(sender);			
+		}
   });
 }
 
 function createPerson(sender, resultPerson){
-  let{
-    results: [{
-      id
-    }]
-  } = resultPerson;
+		if(resultPerson != undefined || null){
+			let{
+				results: [{
+					id
+				}]
+			} = resultPerson;
 
-  request({
-    uri: "https://api.themoviedb.org/3/person/" + id,
-    qs:{
-      api_key: "92b2df3080b91d92b31eacb015fc5497",
-    },
-    method: "GET"
-  }, (error, response, body) => {
-    if(!error && response.statusCode === 200){
-      createBiography(sender, JSON.parse(body));
-    }
-  });
-}
+			request({
+				uri: "https://api.themoviedb.org/3/person/" + id,
+				qs:{
+					api_key: "92b2df3080b91d92b31eacb015fc5497",
+				},
+				method: "GET"
+			}, (error, response, body) => {
+				if(!error && response.statusCode === 200){
+					createBiography(sender, JSON.parse(body));
+				}
+			});
+		}else{
+			let text = `I can't seem to find that actor/actress please re-type if you have a typo`;
+			actorerrorquickreply(sender, text);
+		}
+	}
 
 function createBiography(sender, bio){
   let{
@@ -429,9 +438,9 @@ function createBiography(sender, bio){
 
 	sendTextMessage(sender, strBiography + s);
     sendGenericMessage(sender, elements);
-	let option = "Select other options";
+	//let option = "Select other options";
 	setTimeout(function(){
-	Actorquickreply(sender, option);
+	Actorcards(sender);
         },2500);
 
 
@@ -1178,6 +1187,55 @@ function createResponseDirector(sender, director){
 
 }
 
+function Actorcards(sender){
+	
+		request({
+			uri: 'https://graph.facebook.com/v2.7/' + sender,
+			qs: {
+				access_token: config.FB_PAGE_TOKEN
+			}
+		}, function(error, response, body) {
+			if(!error && response.statusCode == 200){
+				var user = JSON.parse(body);
+
+				if(user.first_name){
+					console.log("FB user: %s %s, %s",
+						user.first_name, user.last_name, user.gender);
+
+					let elements = [						
+						{
+							"title": "Select an option",
+							"image_url": "",
+							"buttons": [
+              {
+                "type":"postback",                
+                "title":"Find another actor",
+								"payload":"actorSearch"
+              },{
+                "type":"postback",
+                "title":"Back to Main Menu",
+                "payload":"backMenu"
+              }              
+            ] 					
+						}
+					];
+					sendGenericMessage(sender, elements);					
+				}
+				else{
+					console.log("Cannot get data for fb user with id",
+						sender);
+				}
+			}
+			else{
+				console.error(response.error);
+			}
+		});
+
+}
+
+
+
+/*
 function Actorquickreply(sender, text){
 var txtmessage = "";
 request({
@@ -1224,7 +1282,7 @@ request({
 
 
 }
-
+*/
 
 function moviequickreply(sender, text){
 var txtmessage = "";
@@ -1302,6 +1360,51 @@ request({
 			"content_type": "text",
 			"title": "Re-type title",
 			"payload":"Re-type title"
+		}
+		];
+		sendQuickReply(sender, txtmessage, replies);
+			} else {
+				console.log("Cannot get data for fb user with id",
+					sender);
+			}
+		} else {
+			console.error(response.error);
+		}
+
+	});
+
+
+}
+
+function actorerrorquickreply(sender, text){
+var txtmessage = "";
+request({
+		uri: 'https://graph.facebook.com/v2.7/' + sender,
+		qs: {
+			access_token: config.FB_PAGE_TOKEN
+		}
+
+	}, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+
+			var user = JSON.parse(body);
+
+
+			if (user.first_name) {
+				console.log("FB user: %s %s, %s",
+					user.first_name, user.last_name, user.gender);
+
+				txtmessage = text;
+				let replies = [
+		{
+			"content_type": "text",
+			"title": "Back to Main Menu",
+			"payload":"Back to Main Menu"
+		},
+		{
+			"content_type": "text",
+			"title": "Re-type name",
+			"payload":"Re-type name"
 		}
 		];
 		sendQuickReply(sender, txtmessage, replies);
@@ -1896,6 +1999,10 @@ function receivedPostback(event) {
 			sendToApiAi(senderID, "Get Started");
 		break;
 
+		case "backMenu":
+		sendToApiAi(senderID, "Back to Main Menu");
+		break;
+
     case "addfavorites":
       console.log("napunta sa favorites");
     break;
@@ -1934,7 +2041,7 @@ function receivedPostback(event) {
     break;
 
     case "actorSearch":
-      sendToApiAi(senderID, "Actor");
+      sendToApiAi(senderID, "actorSearch");
     break;
 		case "aboutplot":
 			var intents = "plot";
