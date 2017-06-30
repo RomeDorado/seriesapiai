@@ -804,7 +804,7 @@ function addToFavorites(senderID, tvshow, imagePath){
         }
         else{
           strFavorites = "Added to Favorites!";
-		  
+
           //sendTextMessage(senderID, strFavorites);
 		  moviequickreply(senderID, strFavorites);
         }
@@ -814,8 +814,8 @@ function addToFavorites(senderID, tvshow, imagePath){
 }
 
 function getFavorites(senderID){
-  Movie.count({}, function(err, count) {
-
+  Movie.find({user_id: senderID}, function(err, favList){
+    console.log(favList);
   });
 }
 
