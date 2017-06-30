@@ -830,6 +830,7 @@ function createResponse (sender, intent, tvshow){
       Writer,
       totalSeasons
     } = tvshow;
+    imagePath = Poster;
 
     switch(intent) {
       case 'tvInfo' : {
