@@ -364,10 +364,15 @@ function personSearch(sender, person){
     },
     method: "GET"
   }, (error, response, body) => {
-    if(!error && response.statusCode === 200){
-			console.log(JSON.parse(body));
+		var per = JSON.parse(body);
+    if(!error && response.statusCode === 200 && per.total_results != 0){			
       createPerson(sender, JSON.parse(body));
-    }
+    }else{
+			sendTextMessage(sender, "I can't seem to find the person you are looking for. Please try again.");
+			setTimeout(function(){
+				Actorcards(sender);
+			},2000);
+		}
   });
 }
 
