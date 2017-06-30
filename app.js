@@ -936,27 +936,7 @@ function createTrailer (sender, trailer) {
           }
         }]
     } = trailer;
-/*
-    let elements = [];
-    let buttons = [];
-    let button;
-    button = {
-					"type": "web_url",
-					"title": "Watch trailer",
-					"url": link
-				}
-    buttons.push(button);
-    let element = {
-			"title": title,
-			"image_url": src,
-			"subtitle": snippet,
-			"buttons": buttons
-		};
-		elements.push(element);
 
-    sendGenericMessage(sender, elements);
-
-	*/
 	var messageData = {
 		recipient: {
 			id: sender
