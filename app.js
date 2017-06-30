@@ -368,10 +368,8 @@ function personSearch(sender, person){
     if(!error && response.statusCode === 200 && per.total_results != 0){			
       createPerson(sender, JSON.parse(body));
     }else{
-			sendTextMessage(sender, "I can't seem to find the person you are looking for. Please try again.");
-			setTimeout(function(){
-				Actorcards(sender);
-			},500);
+			sendTextMessage(sender, "I can't seem to find the person you are looking for. Please try again.");			
+				Actorcards(sender);			
 		}
   });
 }
