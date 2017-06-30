@@ -389,6 +389,8 @@ function createPerson(sender, resultPerson){
   });
 }
 
+var imageURL = "";
+
 function createBiography(sender, bio){
   let{
     name,
@@ -781,10 +783,11 @@ function createMovieList(sender, movieList, genre){
 
 
 
-function addToFavorites(senderID, tvshow){
+function addToFavorites(senderID, tvshow, imageURL){
   var addMovie = new Movie({
     user_id: senderID,
-    title: tvshow
+    title: tvshow,
+    poster: imageURL
   });
   // var query = {user_id: senderID};
   // var update = {
@@ -1879,7 +1882,7 @@ function receivedPostback(event) {
   if(payload.includes("favorites")){
     let favTitle = payload.split(":")[1];
     tvshow = favTitle;
-    addToFavorites(senderID, tvshow);
+    addToFavorites(senderID, tvshow, imageURL);
   }
 
 	switch (payload) {

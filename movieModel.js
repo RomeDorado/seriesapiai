@@ -5,7 +5,8 @@ var Schema = mongoose.Schema;
 
 var MovieSchema = new Schema({
   user_id: {type: String},
-  title: {type: String}
+  title: {type: String},
+  poster: {type: String}
 });
 
 module.exports = mongoose.model("Movie", MovieSchema);
