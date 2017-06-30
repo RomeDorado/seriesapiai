@@ -1206,7 +1206,7 @@ function Actorcards(sender){
 							"buttons": [
               {
                 "type":"postback",                
-                "title":"View Website",
+                "title":"Find another actor",
 								"payload":"actorSearch"
               },{
                 "type":"postback",
