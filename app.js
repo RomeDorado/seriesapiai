@@ -222,9 +222,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     console.log("Napunta sa actor-search");
       var cont = contexts.map(function(obj) {
         var contextObj = {};
-        if(obj.name === "actors"){
+        if(obj.name === "actor-intent"){
           var person = obj.parameters['actor'];
-          if(obj.parameters['actors'] != "") {
+          if(obj.parameters['actor'] != "") {
             personSearch(sender, person);
           }
         }
