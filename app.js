@@ -951,24 +951,26 @@ function createTrailer (sender, trailer) {
         }]
     } = trailer;
 
-    let elements = [];
-    let buttons = [];
-    let button;
-    button = {
-					"type": "web_url",
-					"title": "Watch trailer",
-					"url": link
+	var messageData = {
+		recipient: {
+			id: sender
+		},
+		message: {
+			attachment: {
+				type: "template",
+				payload: {
+					template_type: "open_graph",
+					elements: [{
+						url : link
+					}]
 				}
-    buttons.push(button);
-    let element = {
-			"title": title,
-			"image_url": src,
-			"subtitle": snippet,
-			"buttons": buttons
-		};
-		elements.push(element);
+			}
+		}
+	};
 
-    sendGenericMessage(sender, elements);
+	callSendAPI(messageData);
+
+
 	let option = "Select other options";
 	setTimeout(function(){
 	moviequickreply(sender, option);
