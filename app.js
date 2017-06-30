@@ -790,7 +790,7 @@ function addToFavorites(senderID, tvshow, imagePath){
   });
   let strFavorites = "";
 
-  Movie.count({}, function(err, count) {
+  Movie.count({user_id: senderID}, function(err, count) {
     console.log("Number of docs: " + count);
     if(count > 9){
       strFavorites = "You can only have 10 favorites at a time.";
@@ -807,6 +807,12 @@ function addToFavorites(senderID, tvshow, imagePath){
         }
       });
     }
+  });
+}
+
+function getFavorites(senderID){
+  Movie.count({}, function(err, count) {
+
   });
 }
 
@@ -1878,7 +1884,7 @@ function receivedPostback(event) {
   if(payload.includes("favorites")){
     let favTitle = payload.split(":")[1];
     tvshow = favTitle;
-    payload = "favorites";
+    payload = "addfavorites";
     addToFavorites(senderID, tvshow, imagePath);
   }
 
@@ -1887,7 +1893,7 @@ function receivedPostback(event) {
 			sendToApiAi(senderID, "Get Started");
 		break;
 
-    case "favorites":
+    case "addfavorites":
       console.log("napunta sa favorites");
     break;
 
@@ -1911,6 +1917,10 @@ function receivedPostback(event) {
 		case "getStarted":
 			sendToApiAi(senderID, "Get Started");
 		break;
+
+    case "favorites":
+      getFavorites(senderID);
+    break;
 
     case "showSearch":
       sendToApiAi(senderID, "Know About A Series");
