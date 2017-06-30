@@ -791,6 +791,7 @@ function addToFavorites(senderID, tvshow, imagePath){
   let strFavorites = "";
 
   Movie.count({}, function(err, count) {
+    console.log("Number of docs: " + count);
     if(count > 10){
       strFavorites = "You can only have 10 favorites at a time.";
       sendTextMessage(senderID, strFavorites);
