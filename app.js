@@ -197,6 +197,7 @@ function handleEcho(messageId, appId, metadata) {
 }
 
 var tvshow = "";
+var imagePath = "";
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
@@ -388,8 +389,6 @@ function createPerson(sender, resultPerson){
     }
   });
 }
-
-var imagePath = "";
 
 function createBiography(sender, bio){
   let{
@@ -784,6 +783,7 @@ function createMovieList(sender, movieList, genre){
 
 
 function addToFavorites(senderID, tvshow, imagePath){
+  console.log(imagePath + " Ito yung image path");
   var addMovie = new Movie({
     user_id: senderID,
     title: tvshow,
