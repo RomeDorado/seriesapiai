@@ -779,14 +779,29 @@ function createMovieList(sender, movieList, genre){
 	sendGenericMessage(sender, elements);
 }
 
+
+
 function addToFavorites(senderID, tvshow){
-  var query = {user_id: senderID};
-  var update = {
+  var addMovie = new Movie({
     user_id: senderID,
     title: tvshow
-  };
-  var options = {upsert: true};
-  Movie.findOneAndUpdate(query, update, options, function(err, mov) {
+  });
+  // var query = {user_id: senderID};
+  // var update = {
+  //   user_id: senderID,
+  //   title: tvshow
+  // };
+  // var options = {upsert: true};
+  // Movie.findOneAndUpdate(query, update, options, function(err, mov) {
+  //   if(err){
+  //     console.log("Database error: " + err);
+  //   }
+  //   else{
+  //     console.log("Added to Favorites!");
+  //     sendTextMessage(senderID, "Added to Favorites!");
+  //   }
+  // });
+  addMovie.save(function (err){
     if(err){
       console.log("Database error: " + err);
     }
@@ -794,7 +809,7 @@ function addToFavorites(senderID, tvshow){
       console.log("Added to Favorites!");
       sendTextMessage(senderID, "Added to Favorites!");
     }
-  });
+  })
 }
 
 function createResponse (sender, intent, tvshow){
