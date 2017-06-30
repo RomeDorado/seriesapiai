@@ -389,7 +389,7 @@ function createPerson(sender, resultPerson){
   });
 }
 
-var imageURL = "";
+var imagePath = "";
 
 function createBiography(sender, bio){
   let{
@@ -619,7 +619,7 @@ function createTvList(sender, tvList, genre){
 		original_name,
 		poster_path
 	} = tvList;
-	let imagePath = "https://image.tmdb.org/t/p/w500";
+	imagePath = "https://image.tmdb.org/t/p/w500";
 	let strTvList = `Here is a list of ${genre} tv shows`;
 	let elements = [];
 	let buttons = [];
@@ -674,7 +674,7 @@ function createYearList(sender, yearList, year){
       title,
       poster_path
   } = yearList;
-  let imagePath = "https://image.tmdb.org/t/p/w500";
+  imagePath = "https://image.tmdb.org/t/p/w500";
   let strYearList = `Here is a list of movies from ${year}`;
   let elements = [];
   let buttons = [];
@@ -729,7 +729,7 @@ function createMovieList(sender, movieList, genre){
 		title,
 		poster_path
 	} = movieList;
-	let imagePath = "https://image.tmdb.org/t/p/w500";
+	imagePath = "https://image.tmdb.org/t/p/w500";
 	let strMovieList = `Here is a list of ${genre} movies`;
 	let elements = [];
 	let buttons = [];
@@ -783,11 +783,11 @@ function createMovieList(sender, movieList, genre){
 
 
 
-function addToFavorites(senderID, tvshow, imageURL){
+function addToFavorites(senderID, tvshow, imagePath){
   var addMovie = new Movie({
     user_id: senderID,
     title: tvshow,
-    poster: imageURL
+    poster: imagePath
   });
   // var query = {user_id: senderID};
   // var update = {
