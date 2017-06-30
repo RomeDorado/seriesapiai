@@ -371,7 +371,7 @@ function personSearch(sender, person){
 }
 
 function createPerson(sender, resultPerson){
-		if(resultPerson){
+		if(resultPerson != undefined || null){
 			let{
 				results: [{
 					id
