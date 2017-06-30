@@ -371,7 +371,7 @@ function personSearch(sender, person){
 			sendTextMessage(sender, "I can't seem to find the person you are looking for. Please try again.");
 			setTimeout(function(){
 				Actorcards(sender);
-			},2000);
+			},500);
 		}
   });
 }
