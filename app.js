@@ -779,12 +779,13 @@ function createMovieList(sender, movieList, genre){
 	sendGenericMessage(sender, elements);
 }
 
-var addMovie = new Movie({
-  user_id: sender,
-  title: tvshow
-});
+
 
 function addToFavorites(senderID, tvshow){
+  var addMovie = new Movie({
+    user_id: senderID,
+    title: tvshow
+  });
   // var query = {user_id: senderID};
   // var update = {
   //   user_id: senderID,
