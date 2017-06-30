@@ -1301,7 +1301,7 @@ request({
 		{
 			"content_type": "text",
 			"title": "Re-type title",
-			"payload":"searchAgain"
+			"payload":"Re-type title"
 		}
 		];
 		sendQuickReply(sender, txtmessage, replies);
