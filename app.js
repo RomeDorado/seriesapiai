@@ -1044,7 +1044,7 @@ function sendMovieCards(sender){
 						},
 						{
 							"title": "Add to Favorites",
-							"image_url": "http://i.imgur.com/FEmuU4p.png",
+							"image_url": "http://i.imgur.com/HNjfVQk.png",
 							"buttons": [
 								{
 									"type": "postback",
