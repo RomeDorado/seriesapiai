@@ -957,6 +957,26 @@ function createTrailer (sender, trailer) {
     sendGenericMessage(sender, elements);
 
 	*/
+	var messageData = {
+		recipient: {
+			id: sender
+		},
+		message: {
+			attachment: {
+				type: "template",
+				payload: {
+					template_type: "open_graph",
+					elements: [{
+						url : link
+					}]
+				}
+			}
+		}
+	};
+
+	callSendAPI(messageData);
+
+
 	let option = "Select other options";
 	setTimeout(function(){
 	moviequickreply(sender, option);
