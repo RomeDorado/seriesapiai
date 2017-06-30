@@ -794,7 +794,8 @@ function addToFavorites(senderID, tvshow, imagePath){
     console.log("Number of docs: " + count);
     if(count > 9){
       strFavorites = "You can only have 10 favorites at a time.";
-      sendTextMessage(senderID, strFavorites);
+	  moviequickreply(senderID, strFavorites);
+      //sendTextMessage(senderID, strFavorites);
     }
     else{
       addMovie.save(function (err){
@@ -803,7 +804,9 @@ function addToFavorites(senderID, tvshow, imagePath){
         }
         else{
           strFavorites = "Added to Favorites!";
-          sendTextMessage(senderID, strFavorites);
+		  
+          //sendTextMessage(senderID, strFavorites);
+		  moviequickreply(senderID, strFavorites);
         }
       });
     }
@@ -862,7 +865,7 @@ function createResponse (sender, intent, tvshow){
 				s1 += longPlot[i] + ".";
 			}
 				if(longPlot.length > 3){
-				for (var i=3; i <= 8; i++){
+				for (var i=3; i <= 7; i++){
 				if (longPlot[i] == undefined){
 					longPlot[i] = "";
 				}
