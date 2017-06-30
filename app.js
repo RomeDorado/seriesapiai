@@ -365,6 +365,7 @@ function personSearch(sender, person){
     method: "GET"
   }, (error, response, body) => {
     if(!error && response.statusCode === 200){
+			console.log(JSON.parse(body));
       createPerson(sender, JSON.parse(body));
     }
   });
