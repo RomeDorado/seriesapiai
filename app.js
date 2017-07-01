@@ -181,7 +181,7 @@ function receivedMessage(event) {
 const Speech = require('@google-cloud/speech');
 const speech = Speech();
 
-
+var google = require('googleapis');
 google.auth.getApplicationDefault(function(err, authClient) {
     if (err) {
       return cb(err);
