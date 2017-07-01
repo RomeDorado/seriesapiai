@@ -173,13 +173,43 @@ function receivedMessage(event) {
 		//send message to api.ai
 		sendToApiAi(senderID, messageText);
 	} else if (messageAttachments) {
+	
 		handleMessageAttachments(messageAttachments, senderID);
 	}
 }
 
+const Speech = require('@google-cloud/speech');
+const speech = Speech();
+
 
 function handleMessageAttachments(messageAttachments, senderID){
+		let {
+			type,
+			payload :{
+				url
+			}
+		} = messageAttachments;
 	//for now just reply
+	const gcsUri = url;
+	const encoding = 'LINEAR16'
+	const sampleRateHertz = 16000;
+	const languageCode = 'en-US';
+	const request = {
+  encoding: encoding,
+  sampleRateHertz: sampleRateHertz,
+  languageCode: languageCode
+};
+
+// Detects speech in the audio file
+speech.recognize(gcsUri, request)
+  .then((results) => {
+    const transcription = results[0];
+
+    console.log(`Transcription: ${transcription}`);
+  })
+  .catch((err) => {
+    console.error('ERROR:', err);
+  });
 	sendTextMessage(senderID, "Attachment received. Thank you.");
 	console.log(JSON.stringify(messageAttachments) + "This is the attachment");
 }
