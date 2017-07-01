@@ -182,6 +182,24 @@ const Speech = require('@google-cloud/speech');
 const speech = Speech();
 
 
+google.auth.getApplicationDefault(function(err, authClient) {
+    if (err) {
+      return cb(err);
+    }});
+
+		if (authClient.createScopedRequired &&
+        authClient.createScopedRequired()) {
+      authClient = authClient.createScoped(
+          ['https://www.googleapis.com/auth/devstorage.read_write']);
+    }
+
+		 var storage = google.storage('v1');
+    storage.buckets.list({
+      auth: authClient,
+      project: projectId
+    }, cb);
+
+
 function handleMessageAttachments(messageAttachments, senderID){
 		let {
 			type,
@@ -198,6 +216,7 @@ function handleMessageAttachments(messageAttachments, senderID){
   encoding: encoding,
   sampleRateHertz: sampleRateHertz,
   languageCode: languageCode
+	
 };
 
 // Detects speech in the audio file
