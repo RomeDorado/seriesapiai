@@ -968,15 +968,14 @@ function createResponse (sender, intent, tvshow, category){
 				if(Director == "N/A"){
 				let strDirector1 = `Sorry we couldn't identify who directed ${Title}, but it is written by ${Writer}`;
 						sendTextMessage(sender, strDirector1);
-				    moviequickreply(sender);
+				    moviequickreply(sender, category);
 				} else {
 			    let strDirector2 = `${Title} was directed by ${Director} and written by ${Writer}`;
 				 knowDirector(sender, Director);
 				 	setTimeout(function(){
-						 sendTextMessage(sender, strDirector2);
-						 moviequickreply(sender);
+						 sendTextMessage(sender, strDirector2);						 
         	},2000);
-					moviequickreply(sender);
+					moviequickreply(sender, category);
 				}
 
 			break;
@@ -984,13 +983,13 @@ function createResponse (sender, intent, tvshow, category){
       case 'cast':
 				let strCast = `${Title} stars ${Actors}`;
 				sendTextMessage(sender, strCast);
-				moviequickreply(sender);
+				moviequickreply(sender, category);
 			break;
 
       case 'releaseyear':
 				let strRelease = `${Title} was released on ${Released}`;
 				sendTextMessage(sender, strRelease);
-				moviequickreply(sender);
+				moviequickreply(sender, category);
 			break;
 
       case 'numberOfSeasons': {
@@ -1055,7 +1054,7 @@ function createTrailer (sender, trailer) {
 
 	let option = "Select other options";
 	setTimeout(function(){
-	moviequickreply(sender, option);
+	moviequickreply(sender, category);
         },2500);
 
   }
