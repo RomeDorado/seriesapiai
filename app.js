@@ -803,8 +803,8 @@ function addToFavorites(senderID, tvshow, imagePath){
     console.log("Number of docs: " + count);
     if(count > 9){
       strFavorites = "You can only have 10 favorites at a time.";
-	  moviequickreply(senderID, strFavorites);
-      //sendTextMessage(senderID, strFavorites);
+	  moviequickreply(senderID);
+      sendTextMessage(senderID, strFavorites);
     }
     else{
       addMovie.save(function (err){
@@ -814,8 +814,8 @@ function addToFavorites(senderID, tvshow, imagePath){
         else{
           strFavorites = "Added to Favorites!";
 		  
-          //sendTextMessage(senderID, strFavorites);
-		  moviequickreply(senderID, strFavorites);
+          sendTextMessage(senderID, strFavorites);
+		  moviequickreply(senderID);
         }
       });
     }
