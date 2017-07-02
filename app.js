@@ -2205,7 +2205,7 @@ function receivedPostback(event) {
 
   if(payload.includes("card")){
     let recTitle = payload.split("/")[1];
-		let category = payload.split("/")[2];
+		category = payload.split("/")[2];
     tvshow = recTitle;		
     let intents = "posters";
     payload = "card";
