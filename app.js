@@ -1029,8 +1029,6 @@ function createResponse (sender, intent, tvshow, category){
 		if(checker == true){
 			console.log(category + " at moviequickreply")
 			sendTextMessage(sender, s1);
-
-
 			moviequickreply(sender, category);
 		}else{
 			sendTextMessage(sender, s1);
@@ -1719,7 +1717,7 @@ function moviequickreply(sender, category){
               {
                 "type":"postback",
                 "title":"Show choices",
-								"payload":"Show_Choices_Genre"
+								"payload":"Show_Choices_Year"
               },{
                 "type":"postback",
                 "title":"Back to Main Menu",
@@ -1728,10 +1726,7 @@ function moviequickreply(sender, category){
             ]
 						}
 					];
-					sendGenericMessage(sender, elements);
-
-
-					sendGenericMessage(sender, elements);
+					sendGenericMessage(sender, elements);					
 					}else if (category == 'tvseries'){
 
 					sendGenericMessage(sender, elements);
