@@ -918,7 +918,8 @@ function createResponse (sender, intent, tvshow){
 
       case 'cast':
 				let strCast = `${Title} stars ${Actors}`;
-				sendTextMessage(sender, strCast);	        
+				sendTextMessage(sender, strCast);	
+				moviequickreply(sender);     
 			break;
 
       case 'releaseyear':
