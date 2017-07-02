@@ -785,9 +785,50 @@ function createMovieList(sender, movieList, genre){
 			imagePath = "https://image.tmdb.org/t/p/w500";
   }
 
-	sendTextMessage(sender, strMovieList);
-	sendGenericMessage(sender, elements);
-}
+	//sendTextMessage(sender, strMovieList);
+	
+		var messageData = {
+				recipient: {
+					id: recipientId
+				},
+				message: {
+					attachment: {
+						type: "template",
+						payload: {
+							template_type: "generic",
+							elements: elements + `,{
+								"title": "Select other genres",
+								"image_url": '',
+								"buttons": [
+									{
+										"type": "postback",
+										"title": "Other genres",
+										"payload": "recommendGenre"
+									}
+								]
+							},
+							{
+								"title": "Back to recommendation menu",
+								"image_url": '',
+								"buttons": [
+									{
+										"type": "postback",
+										"title": "Recommendation menu",
+										"payload": "recommend"
+									}
+								]
+							}`
+
+						}
+					}
+				}
+			};
+
+			callSendAPI(messageData);
+		}
+
+
+
 
 
 
@@ -1310,7 +1351,7 @@ function moviequickreply(sender){
 								"payload":"Show_Choices"
               },{
                 "type":"postback",
-                "title":"Find Another",
+                "title":"Back to Main menu",
                 "payload":"searchAgain"
               }              
             ] 					
@@ -1983,7 +2024,7 @@ function receivedPostback(event) {
     tvshow = recTitle;
     let intents = "posters";
     payload = "card";
-    omdb(senderID, intents, tvshow);
+    omdb(senderID, intents, tvshow);//add new variable to distinguish genre etc.
   }
 
   if(payload.includes("favorites")){
