@@ -785,7 +785,7 @@ function createMovieList(sender, movieList, genre){
 			imagePath = "https://image.tmdb.org/t/p/w500";
   }
 
-			let ele = [{
+			let ele = {
 								"title": "Select other genres",
 								"image_url": '',
 								"buttons": [
@@ -795,8 +795,10 @@ function createMovieList(sender, movieList, genre){
 										"payload": "recommendGenre"
 									}
 								]
-							},
-							{
+							};
+				elements.push(ele);
+
+				let elem = {				
 								"title": "Back to recommendation menu",
 								"image_url": '',
 								"buttons": [
@@ -807,8 +809,9 @@ function createMovieList(sender, movieList, genre){
 									}
 								]
 							}
-							];
-				elements.push(ele);
+				
+
+				elements.push(elem);
 
 	//sendTextMessage(sender, strMovieList);
 	
