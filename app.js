@@ -2274,27 +2274,27 @@ function receivedPostback(event) {
     break;
 		case "aboutplot":
 			var intents = "plot";
-			omdb(senderID, intents, tvshow);
+			omdb(senderID, intents, tvshow, category);
 		break;
 
 		case "aboutdirector":
 			var intents = 'director';
-			omdb(senderID, intents, tvshow);
+			omdb(senderID, intents, tvshow, category);
 		break;
 
 		case "aboutcast":
 			var intents = 'cast';
-			omdb(senderID, intents, tvshow);
+			omdb(senderID, intents, tvshow, category);
 		break;
 
 		case "aboutreleaseyear":
 			var intents = "releaseyear";
-			omdb(senderID, intents, tvshow);
+			omdb(senderID, intents, tvshow, category);
 		break;
 
 		case "abouttrailer" :
 			var intents = "trailerInfo";
-			omdb(senderID, intents, tvshow);
+			omdb(senderID, intents, tvshow, category);
 		break;
 
 		case "watchlist" :
