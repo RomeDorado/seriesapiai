@@ -365,11 +365,11 @@ function personSearch(sender, person){
     method: "GET"
   }, (error, response, body) => {
 		var per = JSON.parse(body);
-    if(!error && response.statusCode === 200 && per.total_results != 0){			
+    if(!error && response.statusCode === 200 && per.total_results != 0){
       createPerson(sender, JSON.parse(body));
     }else{
-			sendTextMessage(sender, "I can't seem to find the person you are looking for. Please try again.");			
-				Actorcards(sender);			
+			sendTextMessage(sender, "I can't seem to find the person you are looking for. Please try again.");
+				Actorcards(sender);
 		}
   });
 }
@@ -1188,7 +1188,7 @@ function createResponseDirector(sender, director){
 }
 
 function Actorcards(sender){
-	
+
 		request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
 			qs: {
@@ -1202,24 +1202,24 @@ function Actorcards(sender){
 					console.log("FB user: %s %s, %s",
 						user.first_name, user.last_name, user.gender);
 
-					let elements = [						
+					let elements = [
 						{
 							"title": "Select an option",
 							"image_url": "",
 							"buttons": [
               {
-                "type":"postback",                
+                "type":"postback",
                 "title":"Find another actor",
 								"payload":"actorSearch"
               },{
                 "type":"postback",
                 "title":"Back to Main Menu",
                 "payload":"backMenu"
-              }              
-            ] 					
+              }
+            ]
 						}
 					];
-					sendGenericMessage(sender, elements);					
+					sendGenericMessage(sender, elements);
 				}
 				else{
 					console.log("Cannot get data for fb user with id",
@@ -2028,7 +2028,7 @@ function receivedPostback(event) {
 			sendToApiAi(senderID, "Get Started");
 		break;
 
-    case "favorites":
+    case "getList":
       getFavorites(senderID);
     break;
 
