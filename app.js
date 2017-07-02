@@ -232,9 +232,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	  sendTextMessage(sender, responseText);
     break;
 		case "search-again":
-		sendToApiAi("Know About A Series");
+		sendToApiAi(sender, "Know About A Series");
 		break;
-		
+
     case "recommend-year":
       console.log("Napunta sa recommend-year");
       var cont = contexts.map(function (obj) {
