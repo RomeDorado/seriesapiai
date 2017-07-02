@@ -232,7 +232,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       });
 	  sendTextMessage(sender, responseText);
     break;
-		
+
     case "recommend-year":
       console.log("Napunta sa recommend-year");
       var cont = contexts.map(function (obj) {
@@ -370,11 +370,11 @@ function personSearch(sender, person){
     method: "GET"
   }, (error, response, body) => {
 		var per = JSON.parse(body);
-    if(!error && response.statusCode === 200 && per.total_results != 0){			
+    if(!error && response.statusCode === 200 && per.total_results != 0){
       createPerson(sender, JSON.parse(body));
     }else{
-			sendTextMessage(sender, "I can't seem to find the person you are looking for. Please try again.");			
-				Actorcards(sender);			
+			sendTextMessage(sender, "I can't seem to find the person you are looking for. Please try again.");
+				Actorcards(sender);
 		}
   });
 }
@@ -804,7 +804,7 @@ function createMovieList(sender, movieList, genre){
 							};
 				elements.push(ele);
 
-				let elem = {				
+				let elem = {
 								"title": "Back to recommendation menu",
 								"image_url": 'http://i.imgur.com/tPICPoU.png',
 								"buttons": [
@@ -815,12 +815,12 @@ function createMovieList(sender, movieList, genre){
 									}
 								]
 							}
-				
+
 
 				elements.push(elem);
 
 	//sendTextMessage(sender, strMovieList);
-	
+
 		var messageData = {
 				recipient: {
 					id: sender
@@ -867,9 +867,9 @@ function addToFavorites(senderID, tvshow, imagePath){
         }
         else{
           strFavorites = "Added to Favorites!";
-		  
-          sendTextMessage(senderID, strFavorites);
-		  moviequickreply(senderID);
+
+          //sendTextMessage(senderID, strFavorites);
+		  moviequickreply(senderID, strFavorites);
         }
       });
     }
@@ -877,8 +877,8 @@ function addToFavorites(senderID, tvshow, imagePath){
 }
 
 function getFavorites(senderID){
-  Movie.count({}, function(err, count) {
-
+  Movie.find({user_id: senderID}, function(err, favList){
+    console.log(favList);
   });
 }
 
@@ -913,16 +913,11 @@ function createResponse (sender, intent, tvshow, category){
 				if(category == "genre"){
 					setTimeout(function(){
 				      sendMovieCardsGenre(sender);
-        },2000);	
-        
-				} else {
-				setTimeout(function(){
-				      sendMovieCards(sender);
         },2000);
 				}
 			break;
 
-		  case 'plot':			
+		  case 'plot':
 		  	var s1 ='';
 				var checker = true;
 				var s2 ='';
@@ -950,16 +945,19 @@ function createResponse (sender, intent, tvshow, category){
 		if(checker == true){
 			console.log(category + " at moviequickreply")
 			sendTextMessage(sender, s1);
-			
 
-			moviequickreply(sender, category);									
+
+			moviequickreply(sender, category);
 		}else{
-			sendTextMessage(sender, s1);			
+			sendTextMessage(sender, s1);
 			sendTextMessage(sender, s2);
-				console.log(category + " at moviequickreply")
-				moviequickreply(sender, category);								
+			if(category == 'genre'){
+				moviequickreply(sender, category);
+
+		}else{
+			moviequickreply(sender);
 		}
-	
+
 
 
 				//if(checker == true){
@@ -971,13 +969,13 @@ function createResponse (sender, intent, tvshow, category){
     	case 'director':
 				if(Director == "N/A"){
 				let strDirector1 = `Sorry we couldn't identify who directed ${Title}, but it is written by ${Writer}`;
-						sendTextMessage(sender, strDirector1);			
+						sendTextMessage(sender, strDirector1);
 				    moviequickreply(sender);
 				} else {
 			    let strDirector2 = `${Title} was directed by ${Director} and written by ${Writer}`;
 				 knowDirector(sender, Director);
 				 	setTimeout(function(){
-						 sendTextMessage(sender, strDirector2);					      
+						 sendTextMessage(sender, strDirector2);
 						 moviequickreply(sender);
         	},2000);
 					moviequickreply(sender);
@@ -987,13 +985,13 @@ function createResponse (sender, intent, tvshow, category){
 
       case 'cast':
 				let strCast = `${Title} stars ${Actors}`;
-				sendTextMessage(sender, strCast);	
-				moviequickreply(sender);     
+				sendTextMessage(sender, strCast);
+				moviequickreply(sender);
 			break;
 
       case 'releaseyear':
 				let strRelease = `${Title} was released on ${Released}`;
-				sendTextMessage(sender, strRelease);	      
+				sendTextMessage(sender, strRelease);
 				moviequickreply(sender);
 			break;
 
@@ -1284,7 +1282,7 @@ function sendMovieCardsGenre(sender){
 									}
 								]
 							},
-							{				
+							{
 								"title": "Back to recommendation menu",
 								"image_url": 'http://i.imgur.com/tPICPoU.png',
 								"buttons": [
@@ -1387,7 +1385,7 @@ function createResponseDirector(sender, director){
 }
 
 function Actorcards(sender){
-	
+
 		request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
 			qs: {
@@ -1401,24 +1399,24 @@ function Actorcards(sender){
 					console.log("FB user: %s %s, %s",
 						user.first_name, user.last_name, user.gender);
 
-					let elements = [						
+					let elements = [
 						{
 							"title": "Select an option",
 							"image_url": "",
 							"buttons": [
               {
-                "type":"postback",                
+                "type":"postback",
                 "title":"Find another actor",
 								"payload":"actorSearch"
               },{
                 "type":"postback",
                 "title":"Back to Main Menu",
                 "payload":"backMenu"
-              }              
-            ] 					
+              }
+            ]
 						}
 					];
-					sendGenericMessage(sender, elements);					
+					sendGenericMessage(sender, elements);
 				}
 				else{
 					console.log("Cannot get data for fb user with id",
@@ -1498,49 +1496,49 @@ function moviequickreply(sender, category){
 					console.log("FB user: %s %s, %s",
 						user.first_name, user.last_name, user.gender);
 					if(category == 'genre'){
-					let elements = [						
+					let elements = [
 						{
 							"title": "Select an option",
 							"image_url": "",
 							"buttons": [
               {
-                "type":"postback",                
+                "type":"postback",
                 "title":"Show choices",
 								"payload":"Show_Choices_Genre"
               },{
                 "type":"postback",
                 "title":"Back to Main Menu",
                 "payload":"searchAgain"
-              }              
-            ] 					
+              }
+            ]
 						}
 					];
-					sendGenericMessage(sender, elements);			
+					sendGenericMessage(sender, elements);
 					}else if(category == 'year'){
 
-					sendGenericMessage(sender, elements);			
+					sendGenericMessage(sender, elements);
 					}else if (category == 'tvseries'){
 
-					sendGenericMessage(sender, elements);			
+					sendGenericMessage(sender, elements);
 					}else{
-					let elements = [						
+					let elements = [
 						{
 							"title": "Select an option",
 							"image_url": "",
 							"buttons": [
               {
-                "type":"postback",                
+                "type":"postback",
                 "title":"Show choices",
 								"payload":"Show_Choices"
               },{
                 "type":"postback",
                 "title":"Back to Main Menu",
                 "payload":"searchAgain"
-              }              
-            ] 					
+              }
+            ]
 						}
 					];
-					sendGenericMessage(sender, elements);					
+					sendGenericMessage(sender, elements);
 				}
 			}
 				else{
@@ -2205,8 +2203,8 @@ function receivedPostback(event) {
 
   if(payload.includes("card")){
     let recTitle = payload.split("/")[1];
-		category = payload.split("/")[2];
-    tvshow = recTitle;		
+		let category = payload.split("/")[2];
+    tvshow = recTitle;
     let intents = "posters";
     payload = "card";
     omdb(senderID, intents, tvshow, category);//add new variable to distinguish genre etc.
@@ -2257,7 +2255,7 @@ function receivedPostback(event) {
 			sendToApiAi(senderID, "Get Started");
 		break;
 
-    case "favorites":
+    case "getList":
       getFavorites(senderID);
     break;
 
