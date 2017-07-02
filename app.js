@@ -789,7 +789,7 @@ function createMovieList(sender, movieList, genre){
 	
 		var messageData = {
 				recipient: {
-					id: recipientId
+					id: sender
 				},
 				message: {
 					attachment: {
