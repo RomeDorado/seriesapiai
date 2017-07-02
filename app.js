@@ -199,6 +199,7 @@ function handleEcho(messageId, appId, metadata) {
 var tvshow = "";
 var category = "";
 var imagePath = "";
+var atyear = false;
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
@@ -884,33 +885,16 @@ function getFavorites(senderID){
   	let button;
     let strFav = "Here are a list of your favorite movie and tv shows: ";
 
-    for(var ctr = 0; ctr < favList.length; ctr++){
-      var favTitle = favList[ctr].title;
-      var favPoster = favList[ctr].poster;
+    favList.forEach(function(fav) {
+      favMap[fav._id] = fav;
+    });
 
-      favTitle = favTitle.replace(/\w\S*/g, function(txt){
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    // for(var ctr = 0; ctr < favMap.length; ctr++){
+    //   var favTitle = favMap[ctr].title;
+    //   strFav += favTitle + '\n';
+    // }
 
-      let element = {
-        "title": favTitle,
-        "image_url": favPoster,
-        "buttons": [
-          {
-            "type": "postback",
-            "title": "Learn More",
-            "payload": "card/" + favTitle + "/genre"
-          },
-          {
-            "type": "postback",
-            "title": "Remove from Favorites",
-            "payload": "remove/" + favTitle + "/genre"
-          }
-        ]
-      };
-      elements.push(element);
-    }
-    sendTextMessage(senderID, strFav);
-    sendGenericMessage(senderID, elements);
+    console.log(favMap);
   });
 }
 
