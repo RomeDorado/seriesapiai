@@ -13,10 +13,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/speech": "^0.9.3",
     "agenda": "^0.9.1",
     "apiai": "^2.0.5",
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
+    "googleapis": "^20.0.1",
     "moment": "^2.18.1",
     "mongoose": "^4.11.0",
     "request": "^2.72.0",

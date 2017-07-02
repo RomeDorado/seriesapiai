@@ -252,6 +252,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendMovieCards(sender);
     break;
 
+		case "show-choices-genre":
+			sendMovieCardsGenre(sender);
+		break;
+
 		case "create-reminder":
 		console.log("create reminder log");
 		var datetime = '';
@@ -448,8 +452,8 @@ function createBiography(sender, bio){
 
 }
 
-function omdb(sender, intent, tvshow){
-
+function omdb(sender, intent, tvshow, category){
+	console.log(category);
 if(intent == 'trailerInfo'){
       request({
         uri: "https://www.googleapis.com/customsearch/v1?",
@@ -486,9 +490,9 @@ if(tvshow != null) {
         },
         method: 'GET'
       }, (error, response, body) => {
-        console.log(response);
+        //console.log(response);
         if(!error && response.statusCode === 200) {
-          (createResponse(sender, intent, JSON.parse(body)));
+          (createResponse(sender, intent, JSON.parse(body), category));
         } else {
 
         }
@@ -557,6 +561,7 @@ function tmdbTVDiscover (sender, genre){
     }
   });
 }
+
 
 function tmdbMovieDiscover (sender, genre){
 	//Check genre and assign genreID
@@ -665,7 +670,7 @@ if(pagenumber == 1){
 					{
 						"type": "postback",
 						"title": "Learn More",
-						"payload": "card:" + tvTitle
+						"payload": "card/" + tvTitle
 					}
 				]
 			};
@@ -720,7 +725,7 @@ function createYearList(sender, yearList, year){
 					{
 						"type": "postback",
 						"title": "Learn More",
-						"payload": "card:" + movieTitle
+						"payload": "card/" + movieTitle
 					}
 				]
 			};
@@ -777,7 +782,7 @@ function createMovieList(sender, movieList, genre){
 					{
 						"type": "postback",
 						"title": "Learn More",
-						"payload": "card:" + movieTitle
+						"payload": "card/" + movieTitle + "/genre"
 					}
 				]
 			};
@@ -785,9 +790,57 @@ function createMovieList(sender, movieList, genre){
 			imagePath = "https://image.tmdb.org/t/p/w500";
   }
 
-	sendTextMessage(sender, strMovieList);
-	sendGenericMessage(sender, elements);
-}
+			let ele = {
+								"title": "Select other genres",
+								"image_url": 'http://i.imgur.com/TZ2LGfo.png',
+								"buttons": [
+									{
+										"type": "postback",
+										"title": "Other genres",
+										"payload": "recommendGenre"
+									}
+								]
+							};
+				elements.push(ele);
+
+				let elem = {
+								"title": "Back to recommendation menu",
+								"image_url": 'http://i.imgur.com/tPICPoU.png',
+								"buttons": [
+									{
+										"type": "postback",
+										"title": "Recommendation menu",
+										"payload": "recommend"
+									}
+								]
+							}
+
+
+				elements.push(elem);
+
+	//sendTextMessage(sender, strMovieList);
+
+		var messageData = {
+				recipient: {
+					id: sender
+				},
+				message: {
+					attachment: {
+						type: "template",
+						payload: {
+							template_type: "generic",
+							elements: elements
+
+						}
+					}
+				}
+			};
+
+			callSendAPI(messageData);
+		}
+
+
+
 
 
 
@@ -803,8 +856,8 @@ function addToFavorites(senderID, tvshow, imagePath){
     console.log("Number of docs: " + count);
     if(count > 9){
       strFavorites = "You can only have 10 favorites at a time.";
-	  moviequickreply(senderID, strFavorites);
-      //sendTextMessage(senderID, strFavorites);
+	  moviequickreply(senderID);
+      sendTextMessage(senderID, strFavorites);
     }
     else{
       addMovie.save(function (err){
@@ -828,7 +881,7 @@ function getFavorites(senderID){
   });
 }
 
-function createResponse (sender, intent, tvshow){
+function createResponse (sender, intent, tvshow, category){
 
 	if(tvshow.Response === 'True') {
     let {
@@ -854,14 +907,21 @@ function createResponse (sender, intent, tvshow){
       }
 
 		  case 'posters':
+
 				sendImageMessage(sender, Poster);
+				if(category != "genre"){
         setTimeout(function(){
 				      sendMovieCards(sender);
-        },3000);
+        },2000);
+				} else {
+				setTimeout(function(){
+				      sendMovieCardsGenre(sender);
+        },2000);
+				}
 			break;
 
 		  case 'plot':
-		  		var s1 ='';
+		  	var s1 ='';
 				var checker = true;
 				var s2 ='';
 				let strPlot = `${Plot}`;
@@ -886,13 +946,23 @@ function createResponse (sender, intent, tvshow){
 		}
 
 		if(checker == true){
-			moviequickreply(sender, s1);
+			sendTextMessage(sender, s1);
+			if(category == 'genre'){
+
+			moviequickreply(sender, category);
+			}else{
+			moviequickreply(sender);
+			}
 		}else{
-			sendTextMessage(sender, s1)
-				setTimeout(function(){
-				      moviequickreply(sender, s2);
-        },5000);
+			sendTextMessage(sender, s1);
+			sendTextMessage(sender, s2);
+			if(category == 'genre'){
+				moviequickreply(sender, category);
+
+		}else{
+			moviequickreply(sender);
 		}
+	}
 
 
 				//if(checker == true){
@@ -904,29 +974,30 @@ function createResponse (sender, intent, tvshow){
     	case 'director':
 				if(Director == "N/A"){
 				let strDirector1 = `Sorry we couldn't identify who directed ${Title}, but it is written by ${Writer}`;
-				    moviequickreply(sender, strDirector1);
+						sendTextMessage(sender, strDirector1);
+				    moviequickreply(sender);
 				} else {
 			    let strDirector2 = `${Title} was directed by ${Director} and written by ${Writer}`;
 				 knowDirector(sender, Director);
 				 	setTimeout(function(){
-				      moviequickreply(sender, strDirector2);
+						 sendTextMessage(sender, strDirector2);
+						 moviequickreply(sender);
         	},2000);
+					moviequickreply(sender);
 				}
 
 			break;
 
       case 'cast':
 				let strCast = `${Title} stars ${Actors}`;
-        setTimeout(function(){
-				      moviequickreply(sender, strCast);
-        },2000);
+				sendTextMessage(sender, strCast);
+				moviequickreply(sender);
 			break;
 
       case 'releaseyear':
 				let strRelease = `${Title} was released on ${Released}`;
-        setTimeout(function(){
-				      moviequickreply(sender, strRelease);
-        },2000);
+				sendTextMessage(sender, strRelease);
+				moviequickreply(sender);
 			break;
 
       case 'numberOfSeasons': {
@@ -1086,16 +1157,147 @@ function sendMovieCards(sender){
 							]
 						},
             			{
-							"title": "Search Again",
+							"title": "Back to Main Menu",
 							"image_url": "http://i.imgur.com/FEmuU4p.png",
 							"buttons": [
 								{
 									"type": "postback",
-									"title": "Search Again",
+									"title": "Back to Main Menu",
 									"payload": "searchAgain"
 								}
 							]
 						}
+					];
+					sendGenericMessage(sender, elements);
+					console.log(tvshow +  "THIS IS TVSHOW INSIDE SENDMOVIECARDS");
+				}
+				else{
+					console.log("Cannot get data for fb user with id",
+						sender);
+				}
+			}
+			else{
+				console.error(response.error);
+			}
+		});
+
+}
+
+function sendMovieCardsGenre(sender){
+
+		request({
+			uri: 'https://graph.facebook.com/v2.7/' + sender,
+			qs: {
+				access_token: config.FB_PAGE_TOKEN
+			}
+		}, function(error, response, body) {
+			if(!error && response.statusCode == 200){
+				var user = JSON.parse(body);
+
+				if(user.first_name){
+					console.log("FB user: %s %s, %s",
+						user.first_name, user.last_name, user.gender);
+
+					let elements = [
+						{
+							"title": "Know about the Plot",
+							"image_url": "http://i.imgur.com/DFSanrI.png",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Plot",
+									"payload": "aboutplot"
+								}
+							]
+						},
+						{
+							"title": "Know the Director",
+							"image_url": "http://i.imgur.com/HWpIyNx.png",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Director",
+									"payload": "aboutdirector"
+								}
+							]
+						},
+						{
+							"title": "Know the Cast",
+							"image_url": "http://i.imgur.com/2UxrgcT.png",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Cast",
+									"payload": "aboutcast"
+								}
+							]
+						},
+						{
+							"title": "Know the Release Year",
+							"image_url": "http://i.imgur.com/Gbd4YFV.png",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Release Year",
+									"payload": "aboutreleaseyear"
+								}
+							]
+						},
+						{
+							"title": "Watch the trailer",
+							"image_url": "http://i.imgur.com/9pE8MRL.png",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Trailer",
+									"payload": "abouttrailer"
+								}
+							]
+						},
+						{
+							"title": "Add to Favorites",
+							"image_url": "http://i.imgur.com/HNjfVQk.png",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Add",
+									"payload": "favorites:" + tvshow
+								}
+							]
+						},
+            			{
+							"title": "Back to Main Menu",
+							"image_url": "http://i.imgur.com/FEmuU4p.png",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Back to Main Menu",
+									"payload": "searchAgain"
+								}
+							]
+						},
+						{
+								"title": "Select other genres",
+								"image_url": 'http://i.imgur.com/TZ2LGfo.png',
+								"buttons": [
+									{
+										"type": "postback",
+										"title": "Other genres",
+										"payload": "recommendGenre"
+									}
+								]
+							},
+							{
+								"title": "Back to recommendation menu",
+								"image_url": 'http://i.imgur.com/tPICPoU.png',
+								"buttons": [
+									{
+										"type": "postback",
+										"title": "Recommendation menu",
+										"payload": "recommend"
+									}
+								]
+							}
 					];
 					sendGenericMessage(sender, elements);
 					console.log(tvshow +  "THIS IS TVSHOW INSIDE SENDMOVIECARDS");
@@ -1284,50 +1486,75 @@ request({
 }
 */
 
-function moviequickreply(sender, text){
-var txtmessage = "";
-request({
-		uri: 'https://graph.facebook.com/v2.7/' + sender,
-		qs: {
-			access_token: config.FB_PAGE_TOKEN
-		}
 
-	}, function (error, response, body) {
-		if (!error && response.statusCode == 200) {
-
-			var user = JSON.parse(body);
-
-
-			if (user.first_name) {
-				console.log("FB user: %s %s, %s",
-					user.first_name, user.last_name, user.gender);
-
-				txtmessage = text;
-				let replies = [
-		{
-			"content_type": "text",
-			"title": "Show Choices",
-			"payload":"Show Choices"
-		},
-		{
-			"content_type": "text",
-			"title": "Find Another",
-			"payload":"Find Another"
-
-		}
-
-		];
-		sendQuickReply(sender, txtmessage, replies);
-			} else {
-				console.log("Cannot get data for fb user with id",
-					sender);
+function moviequickreply(sender, category){
+	request({
+			uri: 'https://graph.facebook.com/v2.7/' + sender,
+			qs: {
+				access_token: config.FB_PAGE_TOKEN
 			}
-		} else {
-			console.error(response.error);
-		}
+		}, function(error, response, body) {
+			if(!error && response.statusCode == 200){
+				var user = JSON.parse(body);
 
-	});
+				if(user.first_name){
+					console.log("FB user: %s %s, %s",
+						user.first_name, user.last_name, user.gender);
+					if(category == 'genre'){
+					let elements = [
+						{
+							"title": "Select an option",
+							"image_url": "",
+							"buttons": [
+              {
+                "type":"postback",
+                "title":"Show choices",
+								"payload":"Show_Choices_Genre"
+              },{
+                "type":"postback",
+                "title":"Back to Main Menu",
+                "payload":"searchAgain"
+              }
+            ]
+						}
+					];
+					sendGenericMessage(sender, elements);
+					}else if(category == 'year'){
 
+					sendGenericMessage(sender, elements);
+					}else if (category == 'tvseries'){
+
+					sendGenericMessage(sender, elements);
+					}else{
+					let elements = [
+						{
+							"title": "Select an option",
+							"image_url": "",
+							"buttons": [
+              {
+                "type":"postback",
+                "title":"Show choices",
+								"payload":"Show_Choices"
+              },{
+                "type":"postback",
+                "title":"Back to Main Menu",
+                "payload":"searchAgain"
+              }
+            ]
+						}
+					];
+					sendGenericMessage(sender, elements);
+				}
+			}
+				else{
+					console.log("Cannot get data for fb user with id",
+						sender);
+				}
+			}
+			else{
+				console.error(response.error);
+			}
+		});
 
 }
 
@@ -1980,11 +2207,12 @@ function receivedPostback(event) {
 	var payload = event.postback.payload;
 
   if(payload.includes("card")){
-    let recTitle = payload.split(":")[1];
+    let recTitle = payload.split("/")[1];
+		let category = payload.split("/")[2];
     tvshow = recTitle;
     let intents = "posters";
     payload = "card";
-    omdb(senderID, intents, tvshow);
+    omdb(senderID, intents, tvshow, category);//add new variable to distinguish genre etc.
   }
 
   if(payload.includes("favorites")){
@@ -2008,11 +2236,15 @@ function receivedPostback(event) {
     break;
 
     case "searchAgain":
-      sendToApiAi(senderID, "Find Another");
+      sendToApiAi(senderID, "Back to Main Menu");
     break;
 
-    case "Show Choices":
+    case "Show_Choices":
       sendToApiAi(senderID, "Show Choices");
+    break;
+
+		case "Show_Choices_Genre":
+      sendToApiAi(senderID, "Show_Choices_Genre");
     break;
 
     case "recommendGenre":
