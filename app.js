@@ -886,12 +886,12 @@ function createResponse (sender, intent, tvshow){
 		}
 
 		if(checker == true){
-			moviequickreply(sender, s1);
+			sendTextMessage(sender, s1);
+			moviequickreply(sender);
 		}else{
-			sendTextMessage(sender, s1)
-				setTimeout(function(){
-				      moviequickreply(sender, s2);
-        },5000);
+			sendTextMessage(sender, s1);			
+			sendTextMessage(sender, s2);
+			moviequickreply(sender);
 		}
 
 
@@ -904,12 +904,13 @@ function createResponse (sender, intent, tvshow){
     	case 'director':
 				if(Director == "N/A"){
 				let strDirector1 = `Sorry we couldn't identify who directed ${Title}, but it is written by ${Writer}`;
-				    moviequickreply(sender, strDirector1);
+						sendTextMessage(sender, strDirector1);			
+				    moviequickreply(sender);
 				} else {
 			    let strDirector2 = `${Title} was directed by ${Director} and written by ${Writer}`;
 				 knowDirector(sender, Director);
 				 	setTimeout(function(){
-				      moviequickreply(sender, strDirector2);
+						 sendTextMessage(sender, strDirector2);					      
         	},2000);
 				}
 
@@ -917,16 +918,12 @@ function createResponse (sender, intent, tvshow){
 
       case 'cast':
 				let strCast = `${Title} stars ${Actors}`;
-        setTimeout(function(){
-				      moviequickreply(sender, strCast);
-        },2000);
+				sendTextMessage(sender, strCast);	        
 			break;
 
       case 'releaseyear':
 				let strRelease = `${Title} was released on ${Released}`;
-        setTimeout(function(){
-				      moviequickreply(sender, strRelease);
-        },2000);
+				sendTextMessage(sender, strRelease);	      
 			break;
 
       case 'numberOfSeasons': {
