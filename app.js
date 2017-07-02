@@ -888,12 +888,12 @@ function getFavorites(senderID){
       favMap[fav._id] = fav;
     });
 
-    for(var ctr = 0; ctr < favMap.length; ctr++){
-      var favTitle = favMap[ctr].title;
-      strFav += favTitle + '\n';
-    }
+    // for(var ctr = 0; ctr < favMap.length; ctr++){
+    //   var favTitle = favMap[ctr].title;
+    //   strFav += favTitle + '\n';
+    // }
 
-    console.log(strFav);
+    console.log(favMap);
   });
 }
 
