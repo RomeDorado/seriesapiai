@@ -845,7 +845,7 @@ function createMovieList(sender, movieList, genre){
 
 
 
-function addToFavorites(senderID, tvshow, imagePath){
+function addToFavorites(senderID, tvshow, imagePath, category){
   var addMovie = new Movie({
     user_id: senderID,
     title: tvshow,
@@ -869,7 +869,7 @@ function addToFavorites(senderID, tvshow, imagePath){
           strFavorites = "Added to Favorites!";
 
       sendTextMessage(senderID, strFavorites);
-		  moviequickreply(senderID, strFavorites);
+		  moviequickreply(senderID, category);
         }
       });
     }
@@ -2226,7 +2226,7 @@ function receivedPostback(event) {
     let favTitle = payload.split(":")[1];
     tvshow = favTitle;
     payload = "addfavorites";
-    addToFavorites(senderID, tvshow, imagePath);
+    addToFavorites(senderID, tvshow, imagePath, category);
   }
 
 	switch (payload) {
