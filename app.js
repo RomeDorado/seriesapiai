@@ -787,7 +787,7 @@ function createMovieList(sender, movieList, genre){
 
 			let ele = {
 								"title": "Select other genres",
-								"image_url": '',
+								"image_url": 'http://i.imgur.com/TZ2LGfo.png',
 								"buttons": [
 									{
 										"type": "postback",
@@ -800,7 +800,7 @@ function createMovieList(sender, movieList, genre){
 
 				let elem = {				
 								"title": "Back to recommendation menu",
-								"image_url": '',
+								"image_url": 'http://i.imgur.com/tPICPoU.png',
 								"buttons": [
 									{
 										"type": "postback",
