@@ -912,6 +912,7 @@ function createResponse (sender, intent, tvshow){
 				 	setTimeout(function(){
 						 sendTextMessage(sender, strDirector2);					      
         	},2000);
+					moviequickreply(sender);
 				}
 
 			break;
@@ -1090,7 +1091,7 @@ function sendMovieCards(sender){
 							"buttons": [
 								{
 									"type": "postback",
-									"title": "Search Again",
+									"title": "Back to Main Menu",
 									"payload": "searchAgain"
 								}
 							]
