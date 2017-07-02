@@ -868,8 +868,8 @@ function addToFavorites(senderID, tvshow, imagePath){
         else{
           strFavorites = "Added to Favorites!";
 
-          //sendTextMessage(senderID, strFavorites);
-		  moviequickreply(senderID, strFavorites);
+      sendTextMessage(senderID, strFavorites);
+		  moviequickreply(senderID, category);
         }
       });
     }
