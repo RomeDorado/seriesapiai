@@ -892,8 +892,7 @@ function getFavorites(senderID){
     //   var favTitle = favMap[ctr].title;
     //   strFav += favTitle + '\n';
     // }
-
-    console.log(favMap);
+    console.log(favMap.length);
   });
 }
 
