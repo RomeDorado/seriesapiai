@@ -252,6 +252,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendMovieCards(sender);
     break;
 
+		case "show-choices-genre":
+			sendMovieCardsGenre(sender);
+		break;
+
 		case "create-reminder":
 		console.log("create reminder log");
 		var datetime = '';
@@ -945,7 +949,7 @@ function createResponse (sender, intent, tvshow, category){
 			sendTextMessage(sender, s1);
 			if(category == 'genre'){
 
-			sendMovieCardsGenre(sender);
+			moviequickreply(sender, category);
 			}else{
 			moviequickreply(sender);
 			}
@@ -953,7 +957,7 @@ function createResponse (sender, intent, tvshow, category){
 			sendTextMessage(sender, s1);			
 			sendTextMessage(sender, s2);
 			if(category == 'genre'){
-				sendMovieCardsGenre(sender);
+				moviequickreply(sender, category);
 			
 		}else{
 			moviequickreply(sender);
@@ -1482,7 +1486,8 @@ request({
 }
 */
 
-function moviequickreply(sender){
+
+function moviequickreply(sender, category){
 	request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
 			qs: {
@@ -1495,7 +1500,32 @@ function moviequickreply(sender){
 				if(user.first_name){
 					console.log("FB user: %s %s, %s",
 						user.first_name, user.last_name, user.gender);
+					if(category == 'genre'){
+					let elements = [						
+						{
+							"title": "Select an option",
+							"image_url": "",
+							"buttons": [
+              {
+                "type":"postback",                
+                "title":"Show choices",
+								"payload":"Show_Choices_Genre"
+              },{
+                "type":"postback",
+                "title":"Back to Main Menu",
+                "payload":"searchAgain"
+              }              
+            ] 					
+						}
+					];
+					sendGenericMessage(sender, elements);			
+					}else if(category == 'year'){
 
+					sendGenericMessage(sender, elements);			
+					}else if (category == 'tvseries'){
+
+					sendGenericMessage(sender, elements);			
+					}else{
 					let elements = [						
 						{
 							"title": "Select an option",
@@ -1507,7 +1537,7 @@ function moviequickreply(sender){
 								"payload":"Show_Choices"
               },{
                 "type":"postback",
-                "title":"Back to Main menu",
+                "title":"Back to Main Menu",
                 "payload":"searchAgain"
               }              
             ] 					
@@ -1515,6 +1545,7 @@ function moviequickreply(sender){
 					];
 					sendGenericMessage(sender, elements);					
 				}
+			}
 				else{
 					console.log("Cannot get data for fb user with id",
 						sender);
@@ -2210,6 +2241,10 @@ function receivedPostback(event) {
 
     case "Show_Choices":
       sendToApiAi(senderID, "Show Choices");
+    break;
+
+		case "Show_Choices_Genre":
+      sendToApiAi(senderID, "Show_Choices_Genre");
     break;
 
     case "recommendGenre":
