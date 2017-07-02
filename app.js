@@ -911,6 +911,7 @@ function getFavorites(senderID){
     }
     sendTextMessage(senderID, strFav);
     sendGenericMessage(senderID, elements);
+    console.log("Success and Favorites");
   });
 }
 
