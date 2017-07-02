@@ -449,6 +449,7 @@ function createBiography(sender, bio){
 }
 
 function omdb(sender, intent, tvshow, category){
+	console.log(category);
 if (category == 'genre'){
 
 } else if (category == 'year'){
