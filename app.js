@@ -925,6 +925,7 @@ function createResponse (sender, intent, tvshow){
       case 'releaseyear':
 				let strRelease = `${Title} was released on ${Released}`;
 				sendTextMessage(sender, strRelease);	      
+				moviequickreply(sender);
 			break;
 
       case 'numberOfSeasons': {
