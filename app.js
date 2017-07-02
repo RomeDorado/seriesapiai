@@ -197,6 +197,7 @@ function handleEcho(messageId, appId, metadata) {
 }
 
 var tvshow = "";
+var category = "";
 var imagePath = "";
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
@@ -453,7 +454,7 @@ function createBiography(sender, bio){
 }
 
 function omdb(sender, intent, tvshow, category){
-	console.log(category);
+	console.log(category + "This is the category");
 if(intent == 'trailerInfo'){
       request({
         uri: "https://www.googleapis.com/customsearch/v1?",
@@ -909,12 +910,8 @@ function createResponse (sender, intent, tvshow, category){
 		  case 'posters':
 
 				sendImageMessage(sender, Poster);
-				if(category != "genre"){
-        setTimeout(function(){
-				      sendMovieCards(sender);
-        },2000);
-				} else {
-				setTimeout(function(){
+				if(category == "genre"){
+					setTimeout(function(){
 				      sendMovieCardsGenre(sender);
         },2000);
 				}
@@ -946,13 +943,11 @@ function createResponse (sender, intent, tvshow, category){
 		}
 
 		if(checker == true){
+			console.log(category + " at moviequickreply")
 			sendTextMessage(sender, s1);
-			if(category == 'genre'){
+
 
 			moviequickreply(sender, category);
-			}else{
-			moviequickreply(sender);
-			}
 		}else{
 			sendTextMessage(sender, s1);
 			sendTextMessage(sender, s2);
@@ -962,7 +957,7 @@ function createResponse (sender, intent, tvshow, category){
 		}else{
 			moviequickreply(sender);
 		}
-	}
+
 
 
 				//if(checker == true){
