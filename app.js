@@ -2005,7 +2005,7 @@ function receivedPostback(event) {
     break;
 
     case "searchAgain":
-      sendToApiAi(senderID, "searchAgain");
+      sendToApiAi(senderID, "Back to Main Menu");
     break;
 
     case "Show_Choices":
