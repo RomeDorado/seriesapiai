@@ -946,6 +946,7 @@ function createResponse (sender, intent, tvshow, category){
 		}
 
 		if(checker == true){
+			console.log(category + " at moviequickreply")
 			sendTextMessage(sender, s1);
 			if(category == 'genre'){
 
