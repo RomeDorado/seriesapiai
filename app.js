@@ -454,7 +454,7 @@ function createBiography(sender, bio){
 }
 
 function omdb(sender, intent, tvshow, category){
-	console.log(category);
+	console.log(category + "This is the category");
 if(intent == 'trailerInfo'){
       request({
         uri: "https://www.googleapis.com/customsearch/v1?",
@@ -956,7 +956,7 @@ function createResponse (sender, intent, tvshow, category){
 		}else{
 			sendTextMessage(sender, s1);			
 			sendTextMessage(sender, s2);
-			
+				console.log(category + " at moviequickreply")
 				moviequickreply(sender, category);								
 		}
 	
