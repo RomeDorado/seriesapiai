@@ -199,7 +199,7 @@ function handleEcho(messageId, appId, metadata) {
 var tvshow = "";
 var category = "";
 var imagePath = "";
-var atyear = false;
+var year = "";
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
@@ -239,7 +239,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       var cont = contexts.map(function (obj) {
         var contextObj = {};
         if(obj.name === "movie-year"){
-          var year = obj.parameters['year'];
+          year = obj.parameters['year'];
           if(obj.parameters['year'] != ""){
             console.log("tama ang if statement sa yearsearch");
             yearSearch(sender, year);
@@ -344,7 +344,7 @@ var check = false;
 
 function yearSearch(sender, year){
   console.log("Pumasok sa yearSearch");
-  var pagenumber = Math.floor(Math.random() * (10 - 1) + 1);
+  var pagenumber = Math.floor(Math.random() * (12 - 1) + 1);
   request({
     uri: "https://api.themoviedb.org/3/discover/movie?api_key=92b2df3080b91d92b31eacb015fc5497",
     qs: {
@@ -735,9 +735,35 @@ function createYearList(sender, yearList, year){
 			imagePath = "https://image.tmdb.org/t/p/w500";
   }
 
-  sendTextMessage(sender, strYearList);
-	sendGenericMessage(sender, elements);
-}
+			let ele = {
+								"title": `View more movies from year ${year}`,
+								"image_url": 'http://i.imgur.com/TZ2LGfo.png',
+								"buttons": [
+									{
+										"type": "postback",
+										"title": "More",
+										"payload": "moreyear"
+									}
+								]
+							};
+				elements.push(ele);
+
+				let elem = {
+								"title": "Back to recommendation menu",
+								"image_url": 'http://i.imgur.com/tPICPoU.png',
+								"buttons": [
+									{
+										"type": "postback",
+										"title": "Recommendation menu",
+										"payload": "recommend"
+									}
+								]
+							}
+
+
+				elements.push(elem);
+		sendGenericMessage(sender, elements);
+		}
 
 function createMovieList(sender, movieList, genre){
 	let{
@@ -2278,6 +2304,10 @@ function receivedPostback(event) {
     case "recommendGenre":
       sendToApiAi(senderID, "Recommend Genre");
     break;
+
+		case "moreyear":
+			yearsearch(senderID, year);
+		break;
 
     case "Recommend Year":
     console.log("Napunta sa Recommend Year");
