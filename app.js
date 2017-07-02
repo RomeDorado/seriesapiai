@@ -197,6 +197,7 @@ function handleEcho(messageId, appId, metadata) {
 }
 
 var tvshow = "";
+var category = "";
 var imagePath = "";
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
@@ -909,14 +910,15 @@ function createResponse (sender, intent, tvshow, category){
 		  case 'posters':
 
 				sendImageMessage(sender, Poster);
-				if(category != "genre"){
-        setTimeout(function(){
-				      sendMovieCards(sender);
-        },2000);
-				} else {
-				setTimeout(function(){
+				if(category == "genre"){
+					setTimeout(function(){
 				      sendMovieCardsGenre(sender);
         },2000);	
+        
+				} else {
+				setTimeout(function(){
+				      sendMovieCards(sender);
+        },2000);
 				}
 			break;
 
