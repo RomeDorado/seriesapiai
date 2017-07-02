@@ -666,7 +666,7 @@ if(pagenumber == 1){
 					{
 						"type": "postback",
 						"title": "Learn More",
-						"payload": "card:" + tvTitle
+						"payload": "card/" + tvTitle
 					}
 				]
 			};
@@ -721,7 +721,7 @@ function createYearList(sender, yearList, year){
 					{
 						"type": "postback",
 						"title": "Learn More",
-						"payload": "card:" + movieTitle
+						"payload": "card/" + movieTitle
 					}
 				]
 			};
@@ -778,7 +778,7 @@ function createMovieList(sender, movieList, genre){
 					{
 						"type": "postback",
 						"title": "Learn More",
-						"payload": "card:" + movieTitle + ":genre"
+						"payload": "card/" + movieTitle + "/genre"
 					}
 				]
 			};
@@ -2166,8 +2166,8 @@ function receivedPostback(event) {
 	var payload = event.postback.payload;
 
   if(payload.includes("card")){
-    let recTitle = payload.split(":")[1];
-		let category = payload.split(":")[2];
+    let recTitle = payload.split("/")[1];
+		let category = payload.split("/")[2];
     tvshow = recTitle;		
     let intents = "posters";
     payload = "card";
