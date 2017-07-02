@@ -885,13 +885,14 @@ function getFavorites(senderID){
     let strFav = "Here are a list of your favorite movie and tv shows: ";
 
     favList.forEach(function(fav) {
-      favMap[] = fav;
+      favMap = fav;
     });
 
     // for(var ctr = 0; ctr < favMap.length; ctr++){
     //   var favTitle = favMap[ctr].title;
     //   strFav += favTitle + '\n';
     // }
+    console.log(favList);
     console.log(favMap);
   });
 }
