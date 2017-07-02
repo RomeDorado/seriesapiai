@@ -916,8 +916,8 @@ function createResponse (sender, intent, tvshow, category){
 				}
 			break;
 
-		  case 'plot':
-		  		var s1 ='';
+		  case 'plot':			
+		  	var s1 ='';
 				var checker = true;
 				var s2 ='';
 				let strPlot = `${Plot}`;
@@ -943,12 +943,22 @@ function createResponse (sender, intent, tvshow, category){
 
 		if(checker == true){
 			sendTextMessage(sender, s1);
+			if(category == 'genre'){
+
+			sendMovieCardsGenre(sender);
+			}else{
 			moviequickreply(sender);
+			}
 		}else{
 			sendTextMessage(sender, s1);			
 			sendTextMessage(sender, s2);
+			if(category == 'genre'){
+				sendMovieCardsGenre(sender);
+			
+		}else{
 			moviequickreply(sender);
 		}
+	}
 
 
 				//if(checker == true){
