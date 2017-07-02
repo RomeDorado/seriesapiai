@@ -231,10 +231,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       });
 	  sendTextMessage(sender, responseText);
     break;
-		case "search-again":
-		sendToApiAi(sender, "Know About A Series");
-		break;
-
+		
     case "recommend-year":
       console.log("Napunta sa recommend-year");
       var cont = contexts.map(function (obj) {
@@ -2008,7 +2005,7 @@ function receivedPostback(event) {
     break;
 
     case "searchAgain":
-      sendToApiAi(senderID, "Find Another");
+      sendToApiAi(senderID, "searchAgain");
     break;
 
     case "Show_Choices":
