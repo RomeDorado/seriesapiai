@@ -1284,50 +1284,48 @@ request({
 }
 */
 
-function moviequickreply(sender, text){
-var txtmessage = "";
-request({
-		uri: 'https://graph.facebook.com/v2.7/' + sender,
-		qs: {
-			access_token: config.FB_PAGE_TOKEN
-		}
-
-	}, function (error, response, body) {
-		if (!error && response.statusCode == 200) {
-
-			var user = JSON.parse(body);
-
-
-			if (user.first_name) {
-				console.log("FB user: %s %s, %s",
-					user.first_name, user.last_name, user.gender);
-
-				txtmessage = text;
-				let replies = [
-		{
-			"content_type": "text",
-			"title": "Show Choices",
-			"payload":"Show Choices"
-		},
-		{
-			"content_type": "text",
-			"title": "Find Another",
-			"payload":"Find Another"
-
-		}
-
-		];
-		sendQuickReply(sender, txtmessage, replies);
-			} else {
-				console.log("Cannot get data for fb user with id",
-					sender);
+function moviequickreply(sender){
+	request({
+			uri: 'https://graph.facebook.com/v2.7/' + sender,
+			qs: {
+				access_token: config.FB_PAGE_TOKEN
 			}
-		} else {
-			console.error(response.error);
-		}
+		}, function(error, response, body) {
+			if(!error && response.statusCode == 200){
+				var user = JSON.parse(body);
 
-	});
+				if(user.first_name){
+					console.log("FB user: %s %s, %s",
+						user.first_name, user.last_name, user.gender);
 
+					let elements = [						
+						{
+							"title": "Select an option",
+							"image_url": "",
+							"buttons": [
+              {
+                "type":"postback",                
+                "title":"Show choices",
+								"payload":"Show_Choices"
+              },{
+                "type":"postback",
+                "title":"Find Another",
+                "payload":"Find_Another"
+              }              
+            ] 					
+						}
+					];
+					sendGenericMessage(sender, elements);					
+				}
+				else{
+					console.log("Cannot get data for fb user with id",
+						sender);
+				}
+			}
+			else{
+				console.error(response.error);
+			}
+		});
 
 }
 
@@ -2011,7 +2009,11 @@ function receivedPostback(event) {
       sendToApiAi(senderID, "Find Another");
     break;
 
-    case "Show Choices":
+		case "Find_Another":
+		sendToApiAi(senderID, "Find Another");
+		break;
+
+    case "Show_Choices":
       sendToApiAi(senderID, "Show Choices");
     break;
 
