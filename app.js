@@ -958,9 +958,7 @@ function createResponse (sender, intent, tvshow, category){
 			moviequickreply(sender);
 		}
 
-
-
-				//if(checker == true){
+}				//if(checker == true){
 
 				//}
 
