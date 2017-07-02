@@ -845,7 +845,7 @@ function createMovieList(sender, movieList, genre){
 
 
 
-function addToFavorites(senderID, tvshow, imagePath){
+function addToFavorites(senderID, tvshow, imagePath, category){
   var addMovie = new Movie({
     user_id: senderID,
     title: tvshow,
@@ -878,7 +878,13 @@ function addToFavorites(senderID, tvshow, imagePath){
 
 function getFavorites(senderID){
   Movie.find({user_id: senderID}, function(err, favList){
-    console.log(favList.title);
+    var favMap = {};
+
+    favList.forEach(function(fav) {
+      favMap[fav._id] = fav;
+    });
+    console.log(favMap);
+
   });
 }
 
@@ -973,7 +979,7 @@ function createResponse (sender, intent, tvshow, category){
 			    let strDirector2 = `${Title} was directed by ${Director} and written by ${Writer}`;
 				 knowDirector(sender, Director);
 				 	setTimeout(function(){
-						 sendTextMessage(sender, strDirector2);						 
+						 sendTextMessage(sender, strDirector2);
         	},2000);
 					moviequickreply(sender, category);
 				}
@@ -2211,7 +2217,7 @@ function receivedPostback(event) {
     let favTitle = payload.split(":")[1];
     tvshow = favTitle;
     payload = "addfavorites";
-    addToFavorites(senderID, tvshow, imagePath);
+    addToFavorites(senderID, tvshow, imagePath, category);
   }
 
 	switch (payload) {
