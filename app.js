@@ -878,7 +878,7 @@ function addToFavorites(senderID, tvshow, imagePath){
 
 function getFavorites(senderID){
   Movie.find({user_id: senderID}, function(err, favList){
-    console.log(favList);
+    console.log(favList.title);
   });
 }
 
