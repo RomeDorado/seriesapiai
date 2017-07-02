@@ -781,8 +781,10 @@ function createMovieList(sender, movieList, genre){
 					}
 				]
 			};
-			elements.push(element);
-			let eleme = [
+			elements.push(element);			
+			imagePath = "https://image.tmdb.org/t/p/w500";
+  }
+	let eleme = [
 				{			
 			"title": 'Select other genre',
 				"image_url": '',
@@ -807,8 +809,6 @@ function createMovieList(sender, movieList, genre){
 				}
 			];
 			elements.push(eleme);
-			imagePath = "https://image.tmdb.org/t/p/w500";
-  }
 
 	sendTextMessage(sender, strMovieList);
 	sendGenericMessage(sender, elements);
