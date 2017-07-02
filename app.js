@@ -450,13 +450,6 @@ function createBiography(sender, bio){
 
 function omdb(sender, intent, tvshow, category){
 	console.log(category);
-if (category == 'genre'){
-
-} else if (category == 'year'){
-
-}else if (category == 'tvseries'){
-
-}else{
 if(intent == 'trailerInfo'){
       request({
         uri: "https://www.googleapis.com/customsearch/v1?",
@@ -564,7 +557,7 @@ function tmdbTVDiscover (sender, genre){
     }
   });
 }
-}//end else if
+
 
 function tmdbMovieDiscover (sender, genre){
 	//Check genre and assign genreID
