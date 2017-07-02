@@ -886,9 +886,31 @@ function getFavorites(senderID){
 
     for(var ctr = 0; ctr < favList.length; ctr++){
       var favTitle = favList[ctr].title;
-      strFav += favTitle + '\n';
+      var favPoster = favList[ctr].poster;
+
+      favTitle = favTitle.replace(/\w\S*/g, function(txt){
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+
+      let element = {
+        "title": favTitle,
+        "image_url": favPoster,
+        "buttons": [
+          {
+            "type": "postback",
+            "title": "Learn More",
+            "payload": "card/" + favTitle + "/genre"
+          },
+          {
+            "type": "postback",
+            "title": "Remove from Favorites",
+            "payload": "remove/" + favTitle + "/genre"
+          }
+        ]
+      };
+      elements.push(element);
     }
-    console.log(strFav);
+    sendTextMessage(senderID, strFav);
+    sendGenericMessage(senderID, elements);
   });
 }
 
