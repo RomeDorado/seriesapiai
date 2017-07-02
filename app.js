@@ -2397,102 +2397,102 @@ function receivedPostback(event) {
     break;
 
 		case "movieAction":
-			var genre = "action";
+			genre = "action";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
 		case "movieAdventure":
-			var genre = "adventure";
+			genre = "adventure";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
 		case "movieAnimation":
-			var genre = "animation";
+			genre = "animation";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
 		case "movieComedy":
-			var genre = "comedy";
+			genre = "comedy";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
 		case "movieDrama":
-			var genre = "drama";
+			genre = "drama";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
 		case "movieFantasy":
-			var genre = "fantasy";
+			genre = "fantasy";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
 		case "movieHorror":
-			var genre = "horror";
+			genre = "horror";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
 		case "movieMusic":
-			var genre = "music";
+			genre = "music";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
 		case "movieRomance":
-			var genre = "romance";
+			genre = "romance";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
 		case "movieSciFi":
-			var genre = "science fiction";
+			genre = "science fiction";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
     case "tvAction":
-      var genre = "action";
+      genre = "action";
       tmdbTVDiscover(senderID, genre);
     break;
 
     case "tvAnimation":
-      var genre = "animation";
+      genre = "animation";
       tmdbTVDiscover(senderID, genre);
     break;
 
     case "tvComedy":
-      var genre = "comedy";
+      genre = "comedy";
       tmdbTVDiscover(senderID, genre);
     break;
 
     case "tvDocumentary":
-      var genre = "documentary";
+      genre = "documentary";
       tmdbTVDiscover(senderID, genre);
     break;
 
     case "tvDrama":
-      var genre = "drama";
+      genre = "drama";
       tmdbTVDiscover(senderID, genre);
     break;
 
     case "tvFamily":
-      var genre = "family";
+      genre = "family";
       tmdbTVDiscover(senderID, genre);
     break;
 
     case "tvKids":
-      var genre = "kids";
+      genre = "kids";
       tmdbTVDiscover(senderID, genre);
     break;
 
     case "tvMystery":
-      var genre = "mystery";
+      genre = "mystery";
       tmdbTVDiscover(senderID, genre);
     break;
 
     case "tvReality":
-      var genre = "reality";
+      genre = "reality";
       tmdbTVDiscover(senderID, genre);
     break;
 
     case "tvSciFi":
-      var genre = "science fiction";
+      genre = "science fiction";
       tmdbTVDiscover(senderID, genre);
     break;
 
