@@ -885,16 +885,36 @@ function getFavorites(senderID){
   	let button;
     let strFav = "Here are a list of your favorite movie and tv shows: ";
 
-    favList.forEach(function(fav) {
-      favMap[fav._id] = fav;
-    });
 
-    // for(var ctr = 0; ctr < favMap.length; ctr++){
-    //   var favTitle = favMap[ctr].title;
-    //   strFav += favTitle + '\n';
-    // }
+    for(var ctr = 0; ctr < favList.length; ctr++){
+      var favTitle = favList[ctr].title;
+      var favPoster = favList[ctr].poster;
 
-    console.log(favMap);
+      favTitle = favTitle.replace(/\w\S*/g, function(txt){
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+
+      let element = {
+        "title": favTitle,
+        "image_url": favPoster,
+        "buttons": [
+          {
+            "type": "postback",
+            "title": "Learn More",
+            "payload": "card/" + favTitle
+          },
+          {
+            "type": "postback",
+            "title": "Remove from Favorites",
+            "payload": "remove/" + favTitle
+          }
+        ]
+      };
+      elements.push(element);
+    }
+    sendTextMessage(senderID, strFav);
+    sendGenericMessage(senderID, elements);
+    console.log("Success and Favorites");
+
   });
 }
 
