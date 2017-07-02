@@ -1034,13 +1034,8 @@ function createResponse (sender, intent, tvshow, category){
 			moviequickreply(sender, category);
 		}else{
 			sendTextMessage(sender, s1);
-			sendTextMessage(sender, s2);
-			if(category == 'genre' || category == 'year' ){
-				moviequickreply(sender, category);
-
-		}else{
-			moviequickreply(sender);
-		}
+			sendTextMessage(sender, s2);			
+				moviequickreply(sender, category);		
 
 }				//if(checker == true){
 
