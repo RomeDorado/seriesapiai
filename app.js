@@ -770,8 +770,7 @@ function createMovieList(sender, movieList, genre){
 			var poster = movieList.results[i].poster_path;
       // strMovieList += movieTitle + '\n';
 			imagePath += poster;
-			let element = [
-				{
+			let element = {
 				"title": movieTitle,
 				"image_url": imagePath,
 				"buttons": [
@@ -781,8 +780,10 @@ function createMovieList(sender, movieList, genre){
 						"payload": "card:" + movieTitle
 					}
 				]
-			},
-			{
+			};
+			elements.push(element);
+			let eleme = [
+				{			
 			"title": 'Select other genre',
 				"image_url": '',
 				"buttons": [
@@ -805,7 +806,7 @@ function createMovieList(sender, movieList, genre){
 				]
 				}
 			];
-			elements.push(element);
+			elements.push(eleme);
 			imagePath = "https://image.tmdb.org/t/p/w500";
   }
 
