@@ -770,7 +770,8 @@ function createMovieList(sender, movieList, genre){
 			var poster = movieList.results[i].poster_path;
       // strMovieList += movieTitle + '\n';
 			imagePath += poster;
-			let element = {
+			let element = [
+				{
 				"title": movieTitle,
 				"image_url": imagePath,
 				"buttons": [
@@ -780,7 +781,30 @@ function createMovieList(sender, movieList, genre){
 						"payload": "card:" + movieTitle
 					}
 				]
-			};
+			},
+			{
+			"title": 'Select other genre',
+				"image_url": '',
+				"buttons": [
+					{
+						"type": "postback",
+						"title": "Other Genres",
+						"payload": "recommendGenre"
+					}
+				]
+				},
+			{
+			"title": 'Select other category',
+				"image_url": '',
+				"buttons": [
+					{
+						"type": "postback",
+						"title": "Other Categories",
+						"payload": "recommendMovie"
+					}
+				]
+				}
+			];
 			elements.push(element);
 			imagePath = "https://image.tmdb.org/t/p/w500";
   }
@@ -911,6 +935,7 @@ function createResponse (sender, intent, tvshow){
 				 knowDirector(sender, Director);
 				 	setTimeout(function(){
 						 sendTextMessage(sender, strDirector2);					      
+						 moviequickreply(sender);
         	},2000);
 					moviequickreply(sender);
 				}
@@ -1086,7 +1111,7 @@ function sendMovieCards(sender){
 							]
 						},
             			{
-							"title": "Search Again",
+							"title": "Back to Main Menu",
 							"image_url": "http://i.imgur.com/FEmuU4p.png",
 							"buttons": [
 								{
