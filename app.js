@@ -200,6 +200,7 @@ var tvshow = "";
 var category = "";
 var imagePath = "";
 var year = "";
+var genre = "";
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
@@ -745,7 +746,7 @@ function createYearList(sender, yearList, year){
 										"payload": "moreyear"
 									}
 								]
-							};
+							}
 				elements.push(ele);
 
 				let elem = {
@@ -830,6 +831,19 @@ function createMovieList(sender, movieList, genre){
 								]
 							};
 				elements.push(ele);
+
+					let eleme = {
+								"title": `View more ${genre} movies`,
+								"image_url": 'http://i.imgur.com/TZ2LGfo.png',
+								"buttons": [
+									{
+										"type": "postback",
+										"title": "More",
+										"payload": "moregenre"
+									}
+								]
+							}
+							elements.push(eleme);
 
 				let elem = {
 								"title": "Back to recommendation menu",
@@ -2305,6 +2319,11 @@ function receivedPostback(event) {
       sendToApiAi(senderID, "Recommend Genre");
     break;
 
+		case "moregenre":
+			tmdbMovieDiscover(senderID, genre);
+		break;
+
+		
 		case "moreyear":
 			yearSearch(senderID, year);
 		break;
