@@ -1035,7 +1035,7 @@ function createResponse (sender, intent, tvshow, category){
 		}else{
 			sendTextMessage(sender, s1);
 			sendTextMessage(sender, s2);
-			if(category == 'genre'){
+			if(category == 'genre' || category == 'year' ){
 				moviequickreply(sender, category);
 
 		}else{
