@@ -781,34 +781,9 @@ function createMovieList(sender, movieList, genre){
 					}
 				]
 			};
-			elements.push(element);			
+			elements.push(element);
 			imagePath = "https://image.tmdb.org/t/p/w500";
   }
-	let eleme = [
-				{			
-			"title": 'Select other genre',
-				"image_url": '',
-				"buttons": [
-					{
-						"type": "postback",
-						"title": "Other Genres",
-						"payload": "recommendGenre"
-					}
-				]
-				},
-			{
-			"title": 'Select other category',
-				"image_url": '',
-				"buttons": [
-					{
-						"type": "postback",
-						"title": "Other Categories",
-						"payload": "recommendMovie"
-					}
-				]
-				}
-			];
-			elements.push(eleme);
 
 	sendTextMessage(sender, strMovieList);
 	sendGenericMessage(sender, elements);
