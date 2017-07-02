@@ -950,22 +950,16 @@ function createResponse (sender, intent, tvshow, category){
 		if(checker == true){
 			console.log(category + " at moviequickreply")
 			sendTextMessage(sender, s1);
-			if(category == 'genre'){
+			
 
-			moviequickreply(sender, category);
-			}else{
-			moviequickreply(sender);
-			}
+			moviequickreply(sender, category);									
 		}else{
 			sendTextMessage(sender, s1);			
 			sendTextMessage(sender, s2);
-			if(category == 'genre'){
-				moviequickreply(sender, category);
 			
-		}else{
-			moviequickreply(sender);
+				moviequickreply(sender, category);								
 		}
-	}
+	
 
 
 				//if(checker == true){
