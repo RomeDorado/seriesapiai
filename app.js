@@ -868,7 +868,7 @@ function addToFavorites(senderID, tvshow, imagePath){
         else{
           strFavorites = "Added to Favorites!";
 
-          //sendTextMessage(senderID, strFavorites);
+      sendTextMessage(senderID, strFavorites);
 		  moviequickreply(senderID, strFavorites);
         }
       });
@@ -878,7 +878,13 @@ function addToFavorites(senderID, tvshow, imagePath){
 
 function getFavorites(senderID){
   Movie.find({user_id: senderID}, function(err, favList){
-    console.log(favList.title);
+    var favMap = {};
+
+    favList.forEach(function(fav) {
+      favMap[fav._id] = fav;
+    });
+    console.log(favMap);
+
   });
 }
 
@@ -973,7 +979,7 @@ function createResponse (sender, intent, tvshow, category){
 			    let strDirector2 = `${Title} was directed by ${Director} and written by ${Writer}`;
 				 knowDirector(sender, Director);
 				 	setTimeout(function(){
-						 sendTextMessage(sender, strDirector2);						 
+						 sendTextMessage(sender, strDirector2);
         	},2000);
 					moviequickreply(sender, category);
 				}
