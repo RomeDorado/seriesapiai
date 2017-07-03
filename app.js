@@ -1790,6 +1790,7 @@ console.log("i was at director know");
 		sendTextMessage(sender, `If you want to know the full cast of ${tvshow}, click the link below: \n ${link}`);		
 
 	}
+}
 
 function createResponseDirector(sender, director){
 	if(director){
@@ -3062,4 +3063,4 @@ function isDefined(obj) {
 // Spin up the server
 app.listen(app.get('port'), function () {
 	console.log('running on port', app.get('port'))
-})
+});
