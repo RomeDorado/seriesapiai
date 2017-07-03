@@ -788,7 +788,7 @@ function createUpcomingList(senderID, upcomingList){
         {
           "type": "postback",
           "title": "Learn More",
-          "payload": "upcoming/" + upTitle
+          "payload": "card/" + upTitle
         }
       ]
     };
