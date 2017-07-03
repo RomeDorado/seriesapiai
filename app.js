@@ -262,7 +262,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 		case "show-choices-year":
 		sendMovieCardsYear(sender);
-		break;		
+		break;
 
 		case "create-reminder":
 		console.log("create reminder log");
@@ -725,7 +725,7 @@ if(pagenumber == 1){
 							}
 
 
-				elements.push(elem);			
+				elements.push(elem);
 	sendTextMessage(sender, strTvList);
 	sendGenericMessage(sender, elements);
 
@@ -1014,7 +1014,7 @@ function getFavorites(senderID){
 
 function removeFavorites(senderID, tvshow){
   var strRemove = "";
-  Movie.findOneAndRemove({user_id: senderID, title: tvshow}, function(err){
+  Movie.remove({user_id: senderID, title: tvshow}, function(err){
     if(err){
       strRemove = "I'm sorry there seems to be an error connecting to the database. Please try again later.";
       sendTextMessage(senderID, strRemove);
@@ -1065,7 +1065,7 @@ function createResponse (sender, intent, tvshow, category){
 				}else if (category == "tv"){
 					setTimeout(function(){
 				      sendMovieCardsYear(sender);
-        },2000);				
+        },2000);
 				}else{
 						setTimeout(function(){
 				      sendMovieCards(sender);
