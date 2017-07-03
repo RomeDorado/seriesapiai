@@ -998,6 +998,10 @@ function createResponse (sender, intent, tvshow, category){
 					setTimeout(function(){
 				      sendMovieCardsYear(sender);
         },2000);
+				}else{
+						setTimeout(function(){
+				      sendMovieCards(sender);
+        },2000);
 				}
 			break;
 
@@ -1052,7 +1056,9 @@ function createResponse (sender, intent, tvshow, category){
 				 	setTimeout(function(){
 						 sendTextMessage(sender, strDirector2);
         	},2000);
+					setTimeout(function(){
 					moviequickreply(sender, category);
+					},2000);
 				}
 
 			break;
