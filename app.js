@@ -1046,7 +1046,7 @@ function getFavorites(senderID){
     if(count === 0){
       let strFav = "It seems like your favorites list is empty.";
       sendTextMessage(senderID, strFav);
-      moviequickreply(senderID);
+      moviequickreplyfave(senderID);
     }
     else{
       Movie.find({user_id: senderID}, function(err, favList){
@@ -1101,7 +1101,7 @@ function removeFavorites(senderID, tvshow){
     else{
       strRemove = `Successfully removed ${tvshow} from your favorites list.`;
       sendTextMessage(senderID, strRemove);
-			moviequickreply(senderID);
+			moviequickreplyfave(senderID);
     }
   })
 }
@@ -1897,6 +1897,27 @@ function createResponseDirector(sender, director){
 
 }
 
+function moviequickreplyfave(sender){
+	let elements = [
+						{
+							"title": "Select an option",
+							"image_url": "",
+							"buttons": [
+              {
+                "type":"postback",
+                "title":"Show choices",
+								"payload":"Show_Choices_Genre"
+              },{
+                "type":"postback",
+                "title":"Back to Main Menu",
+                "payload":"searchAgain"
+              }
+            ]
+						}
+					];
+					sendGenericMessage(sender, elements);
+
+}
 
 function moviequickreply(sender, category){
 	request({
