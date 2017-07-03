@@ -445,7 +445,7 @@ function createBiography(sender, bio){
 				}					
     buttons.push(button);
 
-		button1 = {
+		let button1 = {
 			
                 "type":"postback",
                 "title":"Find another actor",
@@ -453,7 +453,7 @@ function createBiography(sender, bio){
               }
 		buttons.push(button1);
 
-		button2 = {
+		let button2 = {
 								"type":"postback",
                 "title":"Back to Main Menu",
                 "payload":"backMenu"
