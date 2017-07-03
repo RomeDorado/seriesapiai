@@ -442,11 +442,11 @@ function createBiography(sender, bio){
 					"type": "web_url",
 					"title": "Know more",
 					"url": `www.imdb.com/name/${imdb_id}/bio?=ref_nm_ov_bio_sm`
-				}					
+				}
     buttons.push(button);
 
 		let button1 = {
-			
+
                 "type":"postback",
                 "title":"Find another actor",
 								"payload":"actorSearch"
@@ -457,13 +457,13 @@ function createBiography(sender, bio){
 								"type":"postback",
                 "title":"Back to Main Menu",
                 "payload":"backMenu"
-				}					
+				}
     buttons.push(button2);
-		
 
-				
 
-		
+
+
+
     let element = {
 			"title": name,
 			"image_url": imageURL,
@@ -1776,29 +1776,27 @@ function sendMovieCardsYear(sender){
 
 }
 
-// function knowfullcast(sender, Title){
-// 		request({
-//         uri: "https://www.googleapis.com/customsearch/v1?",
-//         qs: {
-//           q: Title + " full cast",
-//           cx: `011868887043149504159:-5-5cnusvca`,
-//           siteSearch: `https://www.imdb.com/`,
-//           fields: 'items',
-//           key: `AIzaSyCOdpES79O2cqWNdxNaLs_6g68cNdWBsWw`,
-//         },
-//         method: 'GET'
-//       }, (error, response, body) => {        
-//         var items = JSON.parse(body);      
-//         if(!error && response.statusCode === 200){
-//           (createResponseCast(sender, items));
-//         } else{
-//           //reject(error);
-//         }
-//       });
-// }
 
-
-
+function knowfullcast(sender, Title){
+		request({
+        uri: "https://www.googleapis.com/customsearch/v1?",
+        qs: {
+          q: Title + " full cast",
+          cx: `011868887043149504159:-5-5cnusvca`,
+          siteSearch: `https://www.imdb.com/`,
+          fields: 'items',
+          key: `AIzaSyCOdpES79O2cqWNdxNaLs_6g68cNdWBsWw`,
+        },
+        method: 'GET'
+      }, (error, response, body) => {        
+        var items = JSON.parse(body);      
+        if(!error && response.statusCode === 200){
+          (createResponseCast(sender, items));
+        } else{
+          //reject(error);
+        }
+      });
+}
 
 function knowDirector(sender, Director){
 console.log("i was at director know");
@@ -1812,7 +1810,7 @@ console.log("i was at director know");
           key: `AIzaSyCOdpES79O2cqWNdxNaLs_6g68cNdWBsWw`,
         },
         method: 'GET'
-      }, (error, response, body) => {        
+      }, (error, response, body) => {
         var items = JSON.parse(body);
         if(!error && response.statusCode === 200){
           (createResponseDirector(sender, items));
@@ -1822,18 +1820,18 @@ console.log("i was at director know");
       });
 }
 
-// 	function createResponseCast(sender, title){
-// 		if(title){
-// 			let{
-//         items:[{
-// 			link
-// 				}]
-// 		} = title;
+	function createResponseCast(sender, title){
+		if(title){
+			let{
+        items:[{
+			link
+				}]
+		} = title;
 
-// 		sendTextMessage(sender, `If you want to know the full cast of ${tvshow}, click the link below: \n ${link}`);		
+		sendTextMessage(sender, `If you want to know the full cast of ${tvshow}, click the link below: \n ${link}`);		
 
-// 	}
-// }
+	}
+}
 
 function createResponseDirector(sender, director){
 	if(director){
@@ -3110,4 +3108,4 @@ function isDefined(obj) {
 // Spin up the server
 app.listen(app.get('port'), function () {
 	console.log('running on port', app.get('port'))
-});
+})
