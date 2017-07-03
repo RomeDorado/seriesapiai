@@ -442,8 +442,28 @@ function createBiography(sender, bio){
 					"type": "web_url",
 					"title": "Know more",
 					"url": `www.imdb.com/name/${imdb_id}/bio?=ref_nm_ov_bio_sm`
-				}
+				}					
     buttons.push(button);
+
+		let button1 = {
+			
+                "type":"postback",
+                "title":"Find another actor",
+								"payload":"actorSearch"
+              }
+		buttons.push(button1);
+
+		let button2 = {
+								"type":"postback",
+                "title":"Back to Main Menu",
+                "payload":"backMenu"
+				}					
+    buttons.push(button2);
+		
+
+				
+
+		
     let element = {
 			"title": name,
 			"image_url": imageURL,
@@ -457,7 +477,7 @@ function createBiography(sender, bio){
 	//let option = "Select other options";
 	setTimeout(function(){
 	Actorcards(sender);
-        },2500);
+        },3000);
 
 
   //sendImageMessage(sender, imageURL);
@@ -1181,6 +1201,7 @@ function createResponse (sender, intent, tvshow, category){
       case 'cast':
 				let strCast = `${Title} stars ${Actors}`;
 				sendTextMessage(sender, strCast);
+				knowfullcast (sender, Title);
 				moviequickreply(sender, category);
 			break;
 
@@ -1755,6 +1776,29 @@ function sendMovieCardsYear(sender){
 
 }
 
+function knowfullcast(sender, Title){
+		request({
+        uri: "https://www.googleapis.com/customsearch/v1?",
+        qs: {
+          q: Title + " full cast",
+          cx: `011868887043149504159:-5-5cnusvca`,
+          siteSearch: `https://www.imdb.com/`,
+          fields: 'items',
+          key: `AIzaSyCOdpES79O2cqWNdxNaLs_6g68cNdWBsWw`,
+        },
+        method: 'GET'
+      }, (error, response, body) => {        
+        var items = JSON.parse(body);      
+        if(!error && response.statusCode === 200){
+          (createResponseCast(sender, items));
+        } else{
+          //reject(error);
+        }
+      });
+}
+
+
+
 
 function knowDirector(sender, Director){
 console.log("i was at director know");
@@ -1768,11 +1812,8 @@ console.log("i was at director know");
           key: `AIzaSyCOdpES79O2cqWNdxNaLs_6g68cNdWBsWw`,
         },
         method: 'GET'
-      }, (error, response, body) => {
-        //console.log(response);
-        //console.log(JSON.parse(body));
+      }, (error, response, body) => {        
         var items = JSON.parse(body);
-        //console.log(JSON.parse(items.pagemap[0]));
         if(!error && response.statusCode === 200){
           (createResponseDirector(sender, items));
         } else{
@@ -1780,6 +1821,18 @@ console.log("i was at director know");
         }
       });
 }
+
+	function createResponseCast(sender, title){
+		if(title){
+			let{
+        items:[{
+			link
+				}]
+		} = title;
+
+		sendTextMessage(sender, `If you want to know the full cast of ${tvshow}, click the link below: \n ${link}`);		
+
+	}
 
 function createResponseDirector(sender, director){
 	if(director){
@@ -1829,103 +1882,6 @@ function createResponseDirector(sender, director){
 
 
 }
-
-function Actorcards(sender){
-
-		request({
-			uri: 'https://graph.facebook.com/v2.7/' + sender,
-			qs: {
-				access_token: config.FB_PAGE_TOKEN
-			}
-		}, function(error, response, body) {
-			if(!error && response.statusCode == 200){
-				var user = JSON.parse(body);
-
-				if(user.first_name){
-					console.log("FB user: %s %s, %s",
-						user.first_name, user.last_name, user.gender);
-
-					let elements = [
-						{
-							"title": "Select an option",
-							"image_url": "",
-							"buttons": [
-              {
-                "type":"postback",
-                "title":"Find another actor",
-								"payload":"actorSearch"
-              },{
-                "type":"postback",
-                "title":"Back to Main Menu",
-                "payload":"backMenu"
-              }
-            ]
-						}
-					];
-					sendGenericMessage(sender, elements);
-				}
-				else{
-					console.log("Cannot get data for fb user with id",
-						sender);
-				}
-			}
-			else{
-				console.error(response.error);
-			}
-		});
-
-}
-
-
-
-/*
-function Actorquickreply(sender, text){
-var txtmessage = "";
-request({
-		uri: 'https://graph.facebook.com/v2.7/' + sender,
-		qs: {
-			access_token: config.FB_PAGE_TOKEN
-		}
-
-	}, function (error, response, body) {
-		if (!error && response.statusCode == 200) {
-
-			var user = JSON.parse(body);
-
-
-			if (user.first_name) {
-				console.log("FB user: %s %s, %s",
-					user.first_name, user.last_name, user.gender);
-
-				txtmessage = text;
-				let replies = [
-		{
-			"content_type": "text",
-			"title": "Find another actor",
-			"payload":"Find another actor"
-		},
-		{
-			"content_type": "text",
-			"title": "Back to Main Menu",
-			"payload":"Back to Main Menu"
-
-		}
-
-		];
-		sendQuickReply(sender, txtmessage, replies);
-			} else {
-				console.log("Cannot get data for fb user with id",
-					sender);
-			}
-		} else {
-			console.error(response.error);
-		}
-
-	});
-
-
-}
-*/
 
 
 function moviequickreply(sender, category){
