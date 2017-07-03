@@ -1202,7 +1202,9 @@ function createResponse (sender, intent, tvshow, category){
 				let strCast = `${Title} stars ${Actors}`;
 				sendTextMessage(sender, strCast);
 				knowfullcast (sender, Title);
+				setTimeout(function(){
 				moviequickreply(sender, category);
+				},2000);
 			break;
 
       case 'releaseyear':
