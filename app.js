@@ -907,7 +907,7 @@ function addToFavorites(senderID, tvshow, imagePath, category){
     }
     else{
       Movie.count({user_id: senderID, title: tvshow}, function(err, ctr){
-        if(ctr == 1){
+        if(ctr == 0){
           strFavorites = `${tvshow} is already in your list.`;
           sendTextMessage(senderID, strFavorites);
         }
@@ -1044,8 +1044,8 @@ function createResponse (sender, intent, tvshow, category){
 			moviequickreply(sender, category);
 		}else{
 			sendTextMessage(sender, s1);
-			sendTextMessage(sender, s2);			
-				moviequickreply(sender, category);		
+			sendTextMessage(sender, s2);
+				moviequickreply(sender, category);
 
 }				//if(checker == true){
 
@@ -1489,7 +1489,7 @@ function sendMovieCardsYear(sender){
 									"payload": "searchAgain"
 								}
 							]
-						},						
+						},
 							{
 								"title": "Back to recommendation menu",
 								"image_url": 'http://i.imgur.com/tPICPoU.png',
@@ -1740,7 +1740,7 @@ function moviequickreply(sender, category){
             ]
 						}
 					];
-					sendGenericMessage(sender, elements);					
+					sendGenericMessage(sender, elements);
 					}else if (category == 'tvseries'){
 
 					sendGenericMessage(sender, elements);
@@ -2478,7 +2478,7 @@ function receivedPostback(event) {
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
-		
+
 		case "moreyear":
 			yearSearch(senderID, year);
 		break;
