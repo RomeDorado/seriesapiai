@@ -1068,7 +1068,7 @@ function createResponse (sender, intent, tvshow, category){
         },2000);
 				}else if (category == "tv"){
 					setTimeout(function(){
-				      sendMovieCardsYear(sender);
+				      sendMovieCardsTv(sender);
         },2000);
 				}else{
 						setTimeout(function(){
