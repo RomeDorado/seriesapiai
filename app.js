@@ -1898,11 +1898,18 @@ function createResponseDirector(sender, director){
 }
 
 function moviequickreplyfave(sender){
-	let elements = [						{
+	let elements = [						
+		{
+							"title": "Select an option",
+							"image_url": "",
+							"buttons": [
+								{
                 "type":"postback",
                 "title":"Back to Main Menu",
                 "payload":"searchAgain"
-              }            
+              }
+							]
+		}            
 					];
 					sendGenericMessage(sender, elements);
 
