@@ -438,11 +438,23 @@ function createBiography(sender, bio){
   let elements = [];
     let buttons = [];
     let button;
-    button = {
+    button = [{
 					"type": "web_url",
 					"title": "Know more",
 					"url": `www.imdb.com/name/${imdb_id}/bio?=ref_nm_ov_bio_sm`
-				}
+				},
+				{
+                "type":"postback",
+                "title":"Find another actor",
+								"payload":"actorSearch"
+              },{
+                "type":"postback",
+                "title":"Back to Main Menu",
+                "payload":"backMenu"
+              }
+				]
+					                        					
+					
     buttons.push(button);
     let element = {
 			"title": name,
@@ -457,7 +469,7 @@ function createBiography(sender, bio){
 	//let option = "Select other options";
 	setTimeout(function(){
 	Actorcards(sender);
-        },2500);
+        },3000);
 
 
   //sendImageMessage(sender, imageURL);
