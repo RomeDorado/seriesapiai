@@ -1014,7 +1014,7 @@ function getFavorites(senderID){
 
 function removeFavorites(senderID, tvshow){
   var strRemove = "";
-  Movie.remove({user_id: senderID, title: tvshow}, function(err){
+  Movie.remove({user_id: senderID, title: tvshow.toLowerCase()}, function(err){
     if(err){
       strRemove = "I'm sorry there seems to be an error connecting to the database. Please try again later.";
       sendTextMessage(senderID, strRemove);
