@@ -1009,19 +1009,24 @@ function addToFavorites(senderID, tvshow, imagePath, category){
 
   Movie.count({user_id: senderID}, function(err, count) {
     console.log("Number of docs: " + count);
-    if(count > 9){
-      strFavorites = "You can only have 10 favorites at a time.";	    
-      sendTextMessage(senderID, strFavorites);			
-				moviequickreply(senderID);				
-			
+    if(count == 0){
+      strFavorites = "It seems like your favorites list is empty.";
+      sendTextMessage(senderID, strFavorites);
+      moviequickreply(senderID);
+    }
+    else if(count > 9){
+      strFavorites = "You can only have 10 favorites at a time.";
+      sendTextMessage(senderID, strFavorites);
+				moviequickreply(senderID);
+
     }
     else{
       Movie.count({user_id: senderID, title: tvshow}, function(err, ctr){
         if(ctr == 1){
           strFavorites = `${tvshow} is already in your list.`;
-          sendTextMessage(senderID, strFavorites);					
-						moviequickreply(senderID);						
-					
+          sendTextMessage(senderID, strFavorites);
+						moviequickreply(senderID);
+
         }
         else{
           addMovie.save(function (err){
