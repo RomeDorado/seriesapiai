@@ -1790,8 +1790,8 @@ function knowfullcast(sender, Title){
           key: `AIzaSyCOdpES79O2cqWNdxNaLs_6g68cNdWBsWw`,
         },
         method: 'GET'
-      }, (error, response, body) => {        
-        var items = JSON.parse(body);      
+      }, (error, response, body) => {
+        var items = JSON.parse(body);
         if(!error && response.statusCode === 200){
           (createResponseCast(sender, items));
         } else{
@@ -1830,7 +1830,7 @@ console.log("i was at director know");
 				}]
 		} = title;
 
-		sendTextMessage(sender, `If you want to know the full cast of ${tvshow}, click the link below: \n ${link}`);		
+		sendTextMessage(sender, `If you want to know the full cast of ${tvshow}, click the link below: \n ${link}`);
 
 	}
 }
