@@ -1002,7 +1002,7 @@ function createMovieList(sender, movieList, genre){
 function addToFavorites(senderID, tvshow, imagePath, category){
   var addMovie = new Movie({
     user_id: senderID,
-    title: tvshow,
+    title: tvshow.toLowerCase(),
     poster: imagePath
   });
   let strFavorites = "";
