@@ -1011,20 +1011,16 @@ function addToFavorites(senderID, tvshow, imagePath, category){
     console.log("Number of docs: " + count);
     if(count > 9){
       strFavorites = "You can only have 10 favorites at a time.";	    
-      sendTextMessage(senderID, strFavorites);
-			setTimeout(function() {
-				moviequickreply(senderID, category);	
-			}, 1000);
+      sendTextMessage(senderID, strFavorites);			
+				moviequickreply(senderID);				
 			
     }
     else{
       Movie.count({user_id: senderID, title: tvshow}, function(err, ctr){
         if(ctr == 1){
           strFavorites = `${tvshow} is already in your list.`;
-          sendTextMessage(senderID, strFavorites);
-					setTimeout(function() {
-						moviequickreply(senderID, category);	
-					}, 1000);
+          sendTextMessage(senderID, strFavorites);					
+						moviequickreply(senderID);						
 					
         }
         else{
@@ -1096,6 +1092,7 @@ function removeFavorites(senderID, tvshow){
     else{
       strRemove = `Successfully removed ${tvshow} from your favorites list.`;
       sendTextMessage(senderID, strRemove);
+			moviequickreply(senderID);
     }
   })
 }
