@@ -442,11 +442,11 @@ function createBiography(sender, bio){
 					"type": "web_url",
 					"title": "Know more",
 					"url": `www.imdb.com/name/${imdb_id}/bio?=ref_nm_ov_bio_sm`
-				}					
+				}
     buttons.push(button);
 
 		let button1 = {
-			
+
                 "type":"postback",
                 "title":"Find another actor",
 								"payload":"actorSearch"
@@ -457,13 +457,13 @@ function createBiography(sender, bio){
 								"type":"postback",
                 "title":"Back to Main Menu",
                 "payload":"backMenu"
-				}					
+				}
     buttons.push(button2);
-		
 
-				
 
-		
+
+
+
     let element = {
 			"title": name,
 			"image_url": imageURL,
@@ -1787,8 +1787,8 @@ function knowfullcast(sender, Title){
           key: `AIzaSyCOdpES79O2cqWNdxNaLs_6g68cNdWBsWw`,
         },
         method: 'GET'
-      }, (error, response, body) => {        
-        var items = JSON.parse(body);      
+      }, (error, response, body) => {
+        var items = JSON.parse(body);
         if(!error && response.statusCode === 200){
           (createResponseCast(sender, items));
         } else{
@@ -1812,7 +1812,7 @@ console.log("i was at director know");
           key: `AIzaSyCOdpES79O2cqWNdxNaLs_6g68cNdWBsWw`,
         },
         method: 'GET'
-      }, (error, response, body) => {        
+      }, (error, response, body) => {
         var items = JSON.parse(body);
         if(!error && response.statusCode === 200){
           (createResponseDirector(sender, items));
@@ -1830,10 +1830,9 @@ console.log("i was at director know");
 				}]
 		} = title;
 
-		sendTextMessage(sender, `If you want to know the full cast of ${tvshow}, click the link below: \n ${link}`);		
+		sendTextMessage(sender, `If you want to know the full cast of ${tvshow}, click the link below: \n ${link}`);
 
 	}
-}
 
 function createResponseDirector(sender, director){
 	if(director){
@@ -3050,7 +3049,8 @@ function receivedAuthentication(event) {
 
 	// The 'ref' field is set in the 'Send to Messenger' plugin, in the 'data-ref'
 	// The developer can set this to an arbitrary value to associate the
-	// authentication callback with the 'Send to Messenger' click event. This is
+	// auth
+  entication callback with the 'Send to Messenger' click event. This is
 	// a way to do account linking when the user clicks the 'Send to Messenger'
 	// plugin.
 	var passThroughParam = event.optin.ref;
@@ -3110,4 +3110,4 @@ function isDefined(obj) {
 // Spin up the server
 app.listen(app.get('port'), function () {
 	console.log('running on port', app.get('port'))
-});
+})
