@@ -262,7 +262,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 		case "show-choices-year":
 		sendMovieCardsYear(sender);
-		break;		
+		break;
 
 		case "show-choices-tv":
 		sendMovieCardsTv(sender);	
@@ -729,7 +729,7 @@ if(pagenumber == 1){
 							}
 
 
-				elements.push(elem);			
+				elements.push(elem);
 	sendTextMessage(sender, strTvList);
 	sendGenericMessage(sender, elements);
 
@@ -1016,6 +1016,20 @@ function getFavorites(senderID){
   });
 }
 
+function removeFavorites(senderID, tvshow){
+  var strRemove = "";
+  Movie.remove({user_id: senderID, title: tvshow}, function(err){
+    if(err){
+      strRemove = "I'm sorry there seems to be an error connecting to the database. Please try again later.";
+      sendTextMessage(senderID, strRemove);
+    }
+    else{
+      strRemove = `Successfully removed ${tvshow} from your favorites list.`;
+      sendTextMessage(senderID, strRemove);
+    }
+  })
+}
+
 function createResponse (sender, intent, tvshow, category){
 
 	if(tvshow.Response === 'True') {
@@ -1054,8 +1068,8 @@ function createResponse (sender, intent, tvshow, category){
         },2000);
 				}else if (category == "tv"){
 					setTimeout(function(){
-				      sendMovieCardsTv(sender);
-        },2000);				
+				      sendMovieCardsYear(sender);
+        },2000);
 				}else{
 						setTimeout(function(){
 				      sendMovieCards(sender);
@@ -2634,10 +2648,17 @@ function receivedPostback(event) {
   }
 
   if(payload.includes("favorites")){
-    let favTitle = payload.split(":")[1];
+    let favTitle = payload.split("/")[1];
     tvshow = favTitle;
     payload = "addfavorites";
     addToFavorites(senderID, tvshow, imagePath, category);
+  }
+
+  if(payload.includes("remove")){
+    let remTitle = payload.split("/")[1];
+    tvshow = remTitle;
+    payload = "remFavorites";
+    removeFavorites(senderID, tvshow);
   }
 
 	switch (payload) {
@@ -2651,6 +2672,10 @@ function receivedPostback(event) {
 
     case "addfavorites":
       console.log("napunta sa favorites");
+    break;
+
+    case 'remFavorites':
+      console.log("napunta sa remove favorites");
     break;
 
     case "searchAgain":
