@@ -755,6 +755,49 @@ if(pagenumber == 1){
 
 }
 
+function tmdbUpcoming(senderID){
+  request({
+		uri: "http://api.themoviedb.org/3/movie/upcoming?api_key=92b2df3080b91d92b31eacb015fc5497",
+		method: "GET",
+	}, (error, response, body) => {
+		if(!error && response.statusCode === 200) {
+			createUpcomingList(senderID, JSON.parse(body));
+		}
+	});
+}
+
+function createUpcomingList(senderID, upcomingList){
+  let{
+    title,
+    poster_path
+  } = upcomingList;
+  imagePath = "https://image.tmdb.org/t/p/w500";
+  let elements = [];
+  let buttons = [];
+  let button;
+
+  for(var i = 0; i < 9; i++){
+    var upTitle = upcomingList.results[i].title;
+    var upPoster = upcomingList.results[i].poster_path;
+    imagePath += upPoster;
+
+    let element = {
+      "title": upTitle,
+      "image_url": imagePath,
+      "buttons": [
+        {
+          "type": "postback",
+          "title": "Learn More",
+          "payload": "upcoming/" + upTitle
+        }
+      ]
+    };
+    elements.push(element);
+    imagePath = "https://image.tmdb.org/t/p/w500";
+  }
+  sendGenericMessage(senderID, elements);
+}
+
 function createYearList(sender, yearList, year){
   let{
       title,
@@ -2842,6 +2885,10 @@ function receivedPostback(event) {
 
     case "card":
       console.log("pumasok ng card case");
+    break;
+
+    case "upcomingMovies":
+      tmdbUpcoming(senderID);
     break;
 
 		default:
