@@ -1014,7 +1014,7 @@ function addToFavorites(senderID, tvshow, imagePath, category){
       sendTextMessage(senderID, strFavorites);
       moviequickreply(senderID);
     }
-    else if(count > 9){
+    if(count > 9){
       strFavorites = "You can only have 10 favorites at a time.";
       sendTextMessage(senderID, strFavorites);
 				moviequickreply(senderID);
