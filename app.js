@@ -1212,7 +1212,7 @@ function createResponse (sender, intent, tvshow, category){
 				sendTextMessage(sender, strRelease);
 				moviequickreply(sender, category);
 			break;
-
+//
       case 'numberOfSeasons': {
         if(Type == 'movie'){
           let str = `${Title} is not a TV Series. Please try again.`;
