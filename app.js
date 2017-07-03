@@ -1044,8 +1044,8 @@ function addToFavorites(senderID, tvshow, imagePath, category){
 function getFavorites(senderID){
   Movie.count({user_id: senderID}, function(err, count){
     if(count === 0){
-      strFavorites = "It seems like your favorites list is empty.";
-      sendTextMessage(senderID, strFavorites);
+      strFav = "It seems like your favorites list is empty.";
+      sendTextMessage(senderID, strFav);
       moviequickreply(senderID);
     }
     else{
