@@ -902,19 +902,27 @@ function addToFavorites(senderID, tvshow, imagePath, category){
     console.log("Number of docs: " + count);
     if(count > 9){
       strFavorites = "You can only have 10 favorites at a time.";
-	  moviequickreply(senderID);
+	    moviequickreply(senderID);
       sendTextMessage(senderID, strFavorites);
     }
     else{
-      addMovie.save(function (err){
-        if(err){
-          console.log("Database error: " + err);
+      Movie.count({user_id: senderID, title: tvshow}, function(err, ctr){
+        if(ctr == 1){
+          strFavorites = `${tvshow} is already in your list.`;
+          sendTextMessage(senderID, strFavorites);
         }
         else{
-          strFavorites = "Added to Favorites!";
+          addMovie.save(function (err){
+            if(err){
+              console.log("Database error: " + err);
+            }
+            else{
+              strFavorites = "Added to Favorites!";
 
-      sendTextMessage(senderID, strFavorites);
-		  moviequickreply(senderID, category);
+          sendTextMessage(senderID, strFavorites);
+    		  moviequickreply(senderID, category);
+            }
+          });
         }
       });
     }
