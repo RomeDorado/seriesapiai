@@ -202,6 +202,7 @@ var imagePath = "";
 var year = "";
 var genre = "";
 
+
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "know-a-series" :
@@ -261,7 +262,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 		case "show-choices-year":
 		sendMovieCardsYear(sender);
-		break;
+		break;		
 
 		case "create-reminder":
 		console.log("create reminder log");
@@ -677,13 +678,54 @@ if(pagenumber == 1){
 					{
 						"type": "postback",
 						"title": "Learn More",
-						"payload": "card/" + tvTitle
+						"payload": "card/" + tvTitle + "/tv"
 					}
 				]
 			};
 			elements.push(element);
 			imagePath = "https://image.tmdb.org/t/p/w500";
   }
+
+			let ele = {
+								"title": "Select other genres",
+								"image_url": 'http://i.imgur.com/TZ2LGfo.png',
+								"buttons": [
+									{
+										"type": "postback",
+										"title": "Other genres",
+										"payload": "recommendTV"
+									}
+								]
+							};
+				elements.push(ele);
+
+					let eleme = {
+								"title": `View more ${genre} tv series`,
+								"image_url": 'http://i.imgur.com/TZ2LGfo.png',
+								"buttons": [
+									{
+										"type": "postback",
+										"title": "More",
+										"payload": "moregenretv"
+									}
+								]
+							}
+							elements.push(eleme);
+
+				let elem = {
+								"title": "Back to recommendation menu",
+								"image_url": 'http://i.imgur.com/tPICPoU.png',
+								"buttons": [
+									{
+										"type": "postback",
+										"title": "Recommendation menu",
+										"payload": "recommend"
+									}
+								]
+							}
+
+
+				elements.push(elem);			
 	sendTextMessage(sender, strTvList);
 	sendGenericMessage(sender, elements);
 
@@ -1020,6 +1062,10 @@ function createResponse (sender, intent, tvshow, category){
 					setTimeout(function(){
 				      sendMovieCardsYear(sender);
         },2000);
+				}else if (category == "tv"){
+					setTimeout(function(){
+				      sendMovieCardsYear(sender);
+        },2000);				
 				}else{
 						setTimeout(function(){
 				      sendMovieCards(sender);
@@ -1736,7 +1782,7 @@ function moviequickreply(sender, category){
 						}
 					];
 					sendGenericMessage(sender, elements);
-					}else if(category == 'year'){
+					}else if(category == 'year' || category == 'tv' ){
 					let elements = [
 						{
 							"title": "Select an option",
@@ -1754,9 +1800,6 @@ function moviequickreply(sender, category){
             ]
 						}
 					];
-					sendGenericMessage(sender, elements);
-					}else if (category == 'tvseries'){
-
 					sendGenericMessage(sender, elements);
 					}else{
 					let elements = [
@@ -2501,6 +2544,10 @@ function receivedPostback(event) {
 
 		case "moregenre":
 			tmdbMovieDiscover(senderID, genre);
+		break;
+
+		case "moregenretv":
+			tmdbTVDiscover(senderID,genre);
 		break;
 
 
