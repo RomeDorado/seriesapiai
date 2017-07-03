@@ -199,6 +199,8 @@ function handleEcho(messageId, appId, metadata) {
 var tvshow = "";
 var category = "";
 var imagePath = "";
+var year = "";
+var genre = "";
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
@@ -238,7 +240,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       var cont = contexts.map(function (obj) {
         var contextObj = {};
         if(obj.name === "movie-year"){
-          var year = obj.parameters['year'];
+          year = obj.parameters['year'];
           if(obj.parameters['year'] != ""){
             console.log("tama ang if statement sa yearsearch");
             yearSearch(sender, year);
@@ -255,6 +257,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 		case "show-choices-genre":
 			sendMovieCardsGenre(sender);
+		break;
+
+		case "show-choices-year":
+		sendMovieCardsYear(sender);
 		break;
 
 		case "create-reminder":
@@ -343,7 +349,7 @@ var check = false;
 
 function yearSearch(sender, year){
   console.log("Pumasok sa yearSearch");
-  var pagenumber = Math.floor(Math.random() * (10 - 1) + 1);
+  var pagenumber = Math.floor(Math.random() * (12 - 1) + 1);
   request({
     uri: "https://api.themoviedb.org/3/discover/movie?api_key=92b2df3080b91d92b31eacb015fc5497",
     qs: {
@@ -726,7 +732,7 @@ function createYearList(sender, yearList, year){
 					{
 						"type": "postback",
 						"title": "Learn More",
-						"payload": "card/" + movieTitle
+						"payload": "card/" + movieTitle + "/year"
 					}
 				]
 			};
@@ -734,9 +740,35 @@ function createYearList(sender, yearList, year){
 			imagePath = "https://image.tmdb.org/t/p/w500";
   }
 
-  sendTextMessage(sender, strYearList);
-	sendGenericMessage(sender, elements);
-}
+			let ele = {
+								"title": `View more movies from year ${year}`,
+								"image_url": 'http://i.imgur.com/TZ2LGfo.png',
+								"buttons": [
+									{
+										"type": "postback",
+										"title": "More",
+										"payload": "moreyear"
+									}
+								]
+							}
+				elements.push(ele);
+
+				let elem = {
+								"title": "Back to recommendation menu",
+								"image_url": 'http://i.imgur.com/tPICPoU.png',
+								"buttons": [
+									{
+										"type": "postback",
+										"title": "Recommendation menu",
+										"payload": "recommend"
+									}
+								]
+							}
+
+
+				elements.push(elem);
+		sendGenericMessage(sender, elements);
+		}
 
 function createMovieList(sender, movieList, genre){
 	let{
@@ -803,6 +835,19 @@ function createMovieList(sender, movieList, genre){
 								]
 							};
 				elements.push(ele);
+
+					let eleme = {
+								"title": `View more ${genre} movies`,
+								"image_url": 'http://i.imgur.com/TZ2LGfo.png',
+								"buttons": [
+									{
+										"type": "postback",
+										"title": "More",
+										"payload": "moregenre"
+									}
+								]
+							}
+							elements.push(eleme);
 
 				let elem = {
 								"title": "Back to recommendation menu",
@@ -892,6 +937,7 @@ function getFavorites(senderID){
   	let button;
     let strFav = "Here are a list of your favorite movie and tv shows: ";
 
+
     for(var ctr = 0; ctr < favList.length; ctr++){
       var favTitle = favList[ctr].title;
       var favPoster = favList[ctr].poster;
@@ -906,12 +952,12 @@ function getFavorites(senderID){
           {
             "type": "postback",
             "title": "Learn More",
-            "payload": "card/" + favTitle + "/genre"
+            "payload": "card/" + favTitle
           },
           {
             "type": "postback",
             "title": "Remove from Favorites",
-            "payload": "remove/" + favTitle + "/genre"
+            "payload": "remove/" + favTitle
           }
         ]
       };
@@ -920,6 +966,7 @@ function getFavorites(senderID){
     sendTextMessage(senderID, strFav);
     sendGenericMessage(senderID, elements);
     console.log("Success and Favorites");
+
   });
 }
 
@@ -955,6 +1002,10 @@ function createResponse (sender, intent, tvshow, category){
 					setTimeout(function(){
 				      sendMovieCardsGenre(sender);
         },2000);
+				}else if (category == "year"){
+					setTimeout(function(){
+				      sendMovieCardsYear(sender);
+        },2000);
 				}
 			break;
 
@@ -986,18 +1037,11 @@ function createResponse (sender, intent, tvshow, category){
 		if(checker == true){
 			console.log(category + " at moviequickreply")
 			sendTextMessage(sender, s1);
-
-
 			moviequickreply(sender, category);
 		}else{
 			sendTextMessage(sender, s1);
-			sendTextMessage(sender, s2);
-			if(category == 'genre'){
-				moviequickreply(sender, category);
-
-		}else{
-			moviequickreply(sender);
-		}
+			sendTextMessage(sender, s2);			
+				moviequickreply(sender, category);		
 
 }				//if(checker == true){
 
@@ -1347,6 +1391,126 @@ function sendMovieCardsGenre(sender){
 
 }
 
+function sendMovieCardsYear(sender){
+
+		request({
+			uri: 'https://graph.facebook.com/v2.7/' + sender,
+			qs: {
+				access_token: config.FB_PAGE_TOKEN
+			}
+		}, function(error, response, body) {
+			if(!error && response.statusCode == 200){
+				var user = JSON.parse(body);
+
+				if(user.first_name){
+					console.log("FB user: %s %s, %s",
+						user.first_name, user.last_name, user.gender);
+
+					let elements = [
+						{
+							"title": "Know about the Plot",
+							"image_url": "http://i.imgur.com/DFSanrI.png",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Plot",
+									"payload": "aboutplot"
+								}
+							]
+						},
+						{
+							"title": "Know the Director",
+							"image_url": "http://i.imgur.com/HWpIyNx.png",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Director",
+									"payload": "aboutdirector"
+								}
+							]
+						},
+						{
+							"title": "Know the Cast",
+							"image_url": "http://i.imgur.com/2UxrgcT.png",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Cast",
+									"payload": "aboutcast"
+								}
+							]
+						},
+						{
+							"title": "Know the Release Year",
+							"image_url": "http://i.imgur.com/Gbd4YFV.png",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Release Year",
+									"payload": "aboutreleaseyear"
+								}
+							]
+						},
+						{
+							"title": "Watch the trailer",
+							"image_url": "http://i.imgur.com/9pE8MRL.png",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Trailer",
+									"payload": "abouttrailer"
+								}
+							]
+						},
+						{
+							"title": "Add to Favorites",
+							"image_url": "http://i.imgur.com/HNjfVQk.png",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Add",
+									"payload": "favorites:" + tvshow
+								}
+							]
+						},
+            			{
+							"title": "Back to Main Menu",
+							"image_url": "http://i.imgur.com/FEmuU4p.png",
+							"buttons": [
+								{
+									"type": "postback",
+									"title": "Back to Main Menu",
+									"payload": "searchAgain"
+								}
+							]
+						},						
+							{
+								"title": "Back to recommendation menu",
+								"image_url": 'http://i.imgur.com/tPICPoU.png',
+								"buttons": [
+									{
+										"type": "postback",
+										"title": "Recommendation menu",
+										"payload": "recommend"
+									}
+								]
+							}
+					];
+					sendGenericMessage(sender, elements);
+					console.log(tvshow +  "THIS IS TVSHOW INSIDE SENDMOVIECARDS");
+				}
+				else{
+					console.log("Cannot get data for fb user with id",
+						sender);
+				}
+			}
+			else{
+				console.error(response.error);
+			}
+		});
+
+}
+
 
 function knowDirector(sender, Director){
 console.log("i was at director know");
@@ -1553,8 +1717,24 @@ function moviequickreply(sender, category){
 					];
 					sendGenericMessage(sender, elements);
 					}else if(category == 'year'){
-
-					sendGenericMessage(sender, elements);
+					let elements = [
+						{
+							"title": "Select an option",
+							"image_url": "",
+							"buttons": [
+              {
+                "type":"postback",
+                "title":"Show choices",
+								"payload":"Show_Choices_Year"
+              },{
+                "type":"postback",
+                "title":"Back to Main Menu",
+                "payload":"searchAgain"
+              }
+            ]
+						}
+					];
+					sendGenericMessage(sender, elements);					
 					}else if (category == 'tvseries'){
 
 					sendGenericMessage(sender, elements);
@@ -2280,9 +2460,22 @@ function receivedPostback(event) {
       sendToApiAi(senderID, "Show_Choices_Genre");
     break;
 
+		case "Show_Choices_Year":
+			sendToApiAi(senderID, "Show_Choices_Year");
+		break;
+
     case "recommendGenre":
       sendToApiAi(senderID, "Recommend Genre");
     break;
+
+		case "moregenre":
+			tmdbMovieDiscover(senderID, genre);
+		break;
+
+		
+		case "moreyear":
+			yearSearch(senderID, year);
+		break;
 
     case "Recommend Year":
     console.log("Napunta sa Recommend Year");
@@ -2353,102 +2546,102 @@ function receivedPostback(event) {
     break;
 
 		case "movieAction":
-			var genre = "action";
+			genre = "action";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
 		case "movieAdventure":
-			var genre = "adventure";
+			genre = "adventure";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
 		case "movieAnimation":
-			var genre = "animation";
+			genre = "animation";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
 		case "movieComedy":
-			var genre = "comedy";
+			genre = "comedy";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
 		case "movieDrama":
-			var genre = "drama";
+			genre = "drama";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
 		case "movieFantasy":
-			var genre = "fantasy";
+			genre = "fantasy";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
 		case "movieHorror":
-			var genre = "horror";
+			genre = "horror";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
 		case "movieMusic":
-			var genre = "music";
+			genre = "music";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
 		case "movieRomance":
-			var genre = "romance";
+			genre = "romance";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
 		case "movieSciFi":
-			var genre = "science fiction";
+			genre = "science fiction";
 			tmdbMovieDiscover(senderID, genre);
 		break;
 
     case "tvAction":
-      var genre = "action";
+      genre = "action";
       tmdbTVDiscover(senderID, genre);
     break;
 
     case "tvAnimation":
-      var genre = "animation";
+      genre = "animation";
       tmdbTVDiscover(senderID, genre);
     break;
 
     case "tvComedy":
-      var genre = "comedy";
+      genre = "comedy";
       tmdbTVDiscover(senderID, genre);
     break;
 
     case "tvDocumentary":
-      var genre = "documentary";
+      genre = "documentary";
       tmdbTVDiscover(senderID, genre);
     break;
 
     case "tvDrama":
-      var genre = "drama";
+      genre = "drama";
       tmdbTVDiscover(senderID, genre);
     break;
 
     case "tvFamily":
-      var genre = "family";
+      genre = "family";
       tmdbTVDiscover(senderID, genre);
     break;
 
     case "tvKids":
-      var genre = "kids";
+      genre = "kids";
       tmdbTVDiscover(senderID, genre);
     break;
 
     case "tvMystery":
-      var genre = "mystery";
+      genre = "mystery";
       tmdbTVDiscover(senderID, genre);
     break;
 
     case "tvReality":
-      var genre = "reality";
+      genre = "reality";
       tmdbTVDiscover(senderID, genre);
     break;
 
     case "tvSciFi":
-      var genre = "science fiction";
+      genre = "science fiction";
       tmdbTVDiscover(senderID, genre);
     break;
 
