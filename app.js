@@ -1299,7 +1299,7 @@ function sendMovieCards(sender){
 								{
 									"type": "postback",
 									"title": "Add",
-									"payload": "favorites:" + tvshow
+									"payload": "favorites/" + tvshow
 								}
 							]
 						},
@@ -1408,7 +1408,7 @@ function sendMovieCardsGenre(sender){
 								{
 									"type": "postback",
 									"title": "Add",
-									"payload": "favorites:" + tvshow
+									"payload": "favorites/" + tvshow
 								}
 							]
 						},
@@ -1447,7 +1447,7 @@ function sendMovieCardsGenre(sender){
 							}
 					];
 					sendGenericMessage(sender, elements);
-					console.log(tvshow +  "THIS IS TVSHOW INSIDE SENDMOVIECARDS");
+					console.log(tvshow +  "THIS IS TVSHOW INSIDE SENDMOVIECARDSGENRE");
 				}
 				else{
 					console.log("Cannot get data for fb user with id",
@@ -1538,7 +1538,7 @@ function sendMovieCardsTv (sender){
 								{
 									"type": "postback",
 									"title": "Add",
-									"payload": "favorites:" + tvshow
+									"payload": "favorites/" + tvshow
 								}
 							]
 						},
@@ -1577,7 +1577,7 @@ function sendMovieCardsTv (sender){
 							}
 					];
 					sendGenericMessage(sender, elements);
-					console.log(tvshow +  "THIS IS TVSHOW INSIDE SENDMOVIECARDS");
+					console.log(tvshow +  "THIS IS TVSHOW INSIDE SENDMOVIECARDSTV");
 				}
 				else{
 					console.log("Cannot get data for fb user with id",
@@ -1670,7 +1670,7 @@ function sendMovieCardsYear(sender){
 								{
 									"type": "postback",
 									"title": "Add",
-									"payload": "favorites:" + tvshow
+									"payload": "favorites/" + tvshow
 								}
 							]
 						},
@@ -1698,7 +1698,7 @@ function sendMovieCardsYear(sender){
 							}
 					];
 					sendGenericMessage(sender, elements);
-					console.log(tvshow +  "THIS IS TVSHOW INSIDE SENDMOVIECARDS");
+					console.log(tvshow +  "THIS IS TVSHOW INSIDE SENDMOVIECARDSYEAR");
 				}
 				else{
 					console.log("Cannot get data for fb user with id",
