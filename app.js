@@ -1009,11 +1009,6 @@ function addToFavorites(senderID, tvshow, imagePath, category){
 
   Movie.count({user_id: senderID}, function(err, count) {
     console.log("Number of docs: " + count);
-    if(count == 0){
-      strFavorites = "It seems like your favorites list is empty.";
-      sendTextMessage(senderID, strFavorites);
-      moviequickreply(senderID);
-    }
     if(count > 9){
       strFavorites = "You can only have 10 favorites at a time.";
       sendTextMessage(senderID, strFavorites);
@@ -1047,44 +1042,53 @@ function addToFavorites(senderID, tvshow, imagePath, category){
 }
 
 function getFavorites(senderID){
-  Movie.find({user_id: senderID}, function(err, favList){
-    var favMap = {};
-    let elements = [];
-  	let buttons = [];
-  	let button;
-    let strFav = "Here are a list of your favorite movie and tv shows: ";
-
-
-    for(var ctr = 0; ctr < favList.length; ctr++){
-      var favTitle = favList[ctr].title;
-      var favPoster = favList[ctr].poster;
-
-      favTitle = favTitle.replace(/\w\S*/g, function(txt){
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-
-      let element = {
-        "title": favTitle,
-        "image_url": favPoster,
-        "buttons": [
-          {
-            "type": "postback",
-            "title": "Learn More",
-            "payload": "card/" + favTitle
-          },
-          {
-            "type": "postback",
-            "title": "Remove from Favorites",
-            "payload": "remove/" + favTitle
-          }
-        ]
-      };
-      elements.push(element);
+  Movie.count({user_id: senderID}, function(err, count){
+    if(count === 0){
+      let strFav = "It seems like your favorites list is empty.";
+      sendTextMessage(senderID, strFav);
+      moviequickreply(senderID);
     }
-    sendTextMessage(senderID, strFav);
-    sendGenericMessage(senderID, elements);
-    console.log("Success and Favorites");
+    else{
+      Movie.find({user_id: senderID}, function(err, favList){
+        var favMap = {};
+        let elements = [];
+      	let buttons = [];
+      	let button;
+        let strFav = "Here are a list of your favorite movie and tv shows: ";
 
-  });
+
+        for(var ctr = 0; ctr < favList.length; ctr++){
+          var favTitle = favList[ctr].title;
+          var favPoster = favList[ctr].poster;
+
+          favTitle = favTitle.replace(/\w\S*/g, function(txt){
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+
+          let element = {
+            "title": favTitle,
+            "image_url": favPoster,
+            "buttons": [
+              {
+                "type": "postback",
+                "title": "Learn More",
+                "payload": "card/" + favTitle
+              },
+              {
+                "type": "postback",
+                "title": "Remove from Favorites",
+                "payload": "remove/" + favTitle
+              }
+            ]
+          };
+          elements.push(element);
+        }
+        sendTextMessage(senderID, strFav);
+        sendGenericMessage(senderID, elements);
+        console.log("Success and Favorites");
+
+      });
+    }
+  })
 }
 
 function removeFavorites(senderID, tvshow){
