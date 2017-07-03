@@ -265,7 +265,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		break;
 
 		case "show-choices-tv":
-		sendMovieCardsTv(sender);	
+		sendMovieCardsTv(sender);
 		break;
 
 		case "create-reminder":
@@ -965,7 +965,7 @@ function addToFavorites(senderID, tvshow, imagePath, category){
     }
     else{
       Movie.count({user_id: senderID, title: tvshow}, function(err, ctr){
-        if(ctr == 0){
+        if(ctr == 1){
           strFavorites = `${tvshow} is already in your list.`;
           sendTextMessage(senderID, strFavorites);
         }
@@ -1473,7 +1473,7 @@ function sendMovieCardsGenre(sender){
 
 }
 function sendMovieCardsTv (sender){
-	
+
 		request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
 			qs: {
