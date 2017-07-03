@@ -3049,8 +3049,7 @@ function receivedAuthentication(event) {
 
 	// The 'ref' field is set in the 'Send to Messenger' plugin, in the 'data-ref'
 	// The developer can set this to an arbitrary value to associate the
-	// auth
-  entication callback with the 'Send to Messenger' click event. This is
+	// authentication callback with the 'Send to Messenger' click event. This is
 	// a way to do account linking when the user clicks the 'Send to Messenger'
 	// plugin.
 	var passThroughParam = event.optin.ref;
