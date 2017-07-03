@@ -711,7 +711,7 @@ if(pagenumber == 1){
   }
 
 			let ele = {
-								"title": "Select other genres",
+								"title": "Select Other Genres",
 								"image_url": 'http://i.imgur.com/TZ2LGfo.png',
 								"buttons": [
 									{
@@ -724,7 +724,7 @@ if(pagenumber == 1){
 				elements.push(ele);
 
 					let eleme = {
-								"title": `View more ${genre} tv series`,
+								"title": `View More ${genre} TV Series`,
 								"image_url": 'http://i.imgur.com/TZ2LGfo.png',
 								"buttons": [
 									{
@@ -737,7 +737,7 @@ if(pagenumber == 1){
 							elements.push(eleme);
 
 				let elem = {
-								"title": "Back to recommendation menu",
+								"title": "Back to Recommendation Menu",
 								"image_url": 'http://i.imgur.com/tPICPoU.png',
 								"buttons": [
 									{
@@ -850,7 +850,7 @@ function createYearList(sender, yearList, year){
   }
 
 			let ele = {
-								"title": `View more movies from year ${year}`,
+								"title": `View More Movies From Year ${year}`,
 								"image_url": 'http://i.imgur.com/TZ2LGfo.png',
 								"buttons": [
 									{
@@ -863,7 +863,7 @@ function createYearList(sender, yearList, year){
 				elements.push(ele);
 
 				let elem = {
-								"title": "Back to recommendation menu",
+								"title": "Back to Recommendation Menu",
 								"image_url": 'http://i.imgur.com/tPICPoU.png',
 								"buttons": [
 									{
@@ -933,7 +933,7 @@ function createMovieList(sender, movieList, genre){
   }
 
 			let ele = {
-								"title": "Select other genres",
+								"title": "Select Other Genres",
 								"image_url": 'http://i.imgur.com/TZ2LGfo.png',
 								"buttons": [
 									{
@@ -946,7 +946,7 @@ function createMovieList(sender, movieList, genre){
 				elements.push(ele);
 
 					let eleme = {
-								"title": `View more ${genre} movies`,
+								"title": `View More ${genre} Movies`,
 								"image_url": 'http://i.imgur.com/TZ2LGfo.png',
 								"buttons": [
 									{
@@ -959,7 +959,7 @@ function createMovieList(sender, movieList, genre){
 							elements.push(eleme);
 
 				let elem = {
-								"title": "Back to recommendation menu",
+								"title": "Back to Recommendation Menu",
 								"image_url": 'http://i.imgur.com/tPICPoU.png',
 								"buttons": [
 									{
@@ -1505,7 +1505,7 @@ function sendMovieCardsGenre(sender){
 							]
 						},
 						{
-								"title": "Select other genres",
+								"title": "Select Other Genres",
 								"image_url": 'http://i.imgur.com/TZ2LGfo.png',
 								"buttons": [
 									{
@@ -1516,7 +1516,7 @@ function sendMovieCardsGenre(sender){
 								]
 							},
 							{
-								"title": "Back to recommendation menu",
+								"title": "Back to Recommendation Menu",
 								"image_url": 'http://i.imgur.com/tPICPoU.png',
 								"buttons": [
 									{
@@ -1635,7 +1635,7 @@ function sendMovieCardsTv (sender){
 							]
 						},
 						{
-								"title": "Select other genres",
+								"title": "Select Other Genres",
 								"image_url": 'http://i.imgur.com/TZ2LGfo.png',
 								"buttons": [
 									{
@@ -1646,7 +1646,7 @@ function sendMovieCardsTv (sender){
 								]
 							},
 							{
-								"title": "Back to recommendation menu",
+								"title": "Back to Recommendation Menu",
 								"image_url": 'http://i.imgur.com/tPICPoU.png',
 								"buttons": [
 									{
