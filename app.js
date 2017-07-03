@@ -1194,7 +1194,9 @@ function createResponse (sender, intent, tvshow, category){
 			break;
 
     	case 'director':
-				if(Director == "N/A"){
+				if(Director == "N/A" && Writer == "N/A"){
+				let strDirector1 = `Sorry, it seems like the director(s) and writer(s) of ${Title} is not registered in our database`;	
+				}else if(Director == "N/A" && Writer != "N/A"){
 				let strDirector1 = `Sorry we couldn't identify who directed ${Title}, but it is written by ${Writer}`;
 						sendTextMessage(sender, strDirector1);
 				    moviequickreply(sender, category);
@@ -1245,7 +1247,7 @@ function createResponse (sender, intent, tvshow, category){
 
     }
   }else{
-    let str = `I'm still learning, please re-type if you have a typo`;
+    let str = `I'm sorry, I didn't understand that. You can access the menu if you are lost or head back to the main menu`;
           consufedquickreply(sender, str);
   }
 }
@@ -2044,11 +2046,6 @@ request({
 			"content_type": "text",
 			"title": "Back to Main Menu",
 			"payload":"Back to Main Menu"
-		},
-		{
-			"content_type": "text",
-			"title": "Re-type title",
-			"payload":"Re-type title"
 		}
 		];
 		sendQuickReply(sender, txtmessage, replies);
