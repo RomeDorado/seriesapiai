@@ -3039,6 +3039,7 @@ function receivedPostback(event) {
       }
     }, (error, data) => {
       if(data.length === 0) {
+				console.log(data.length + 'this is data kength');
         sendTextMessage(sender, "You've got no reminders set! Yay! :)");
       } else {
 				console.log(data);
