@@ -1856,7 +1856,7 @@ console.log("i was at director know");
 				}
     buttons.push(button);
     let element = {
-			"title": name,
+			"title": `Full Cast`,
 			"image_url": `http://i.imgur.com/cXWoKWP.png`,			
 			"buttons": buttons
 		};
