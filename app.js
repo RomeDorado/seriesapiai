@@ -2769,7 +2769,7 @@ function receivedPostback(event) {
   if(payload.includes("card")){
     let recTitle = payload.split("/")[1];
 		category = payload.split("/")[2];
-    tvshow = recTitle;
+    tvshow = recTitle.toLowerCase();
     let intents = "posters";
     payload = "card";
     omdb(senderID, intents, tvshow, category);//add new variable to distinguish genre etc.
@@ -2777,14 +2777,14 @@ function receivedPostback(event) {
 
   if(payload.includes("favorites")){
     let favTitle = payload.split("/")[1];
-    tvshow = favTitle;
+    tvshow = favTitle.toLowerCase();
     payload = "addfavorites";
     addToFavorites(senderID, tvshow, imagePath, category);
   }
 
   if(payload.includes("remove")){
     let remTitle = payload.split("/")[1];
-    tvshow = remTitle;
+    tvshow = remTitle.toLowerCase();
     payload = "remFavorites";
     removeFavorites(senderID, tvshow);
   }
