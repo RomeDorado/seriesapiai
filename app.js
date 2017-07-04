@@ -310,24 +310,23 @@ function createReminderAgenda(sender){
     const {sender, datetime, task} = job.attrs.data;
 
     // Get the FB User's timezone
-    getProfile(sender);
+    
       
 
   });
-
+				getProfile(sender);
 }
 
-function getProfile(id) {
+function getProfile(sender) {
 	console.log("im at get profile");		
 			request({
-				uri: `https://graph.facebook.com/v2.7/` + id,
-				qs: {
-					access_token: config.FB_PAGE_TOKEN
-				},
-				method: 'GET'
-			}, (error, response, body) => {
-				if(!error & response.statusCode === 200) {
-					agendaTwo(id, JSON.parse(body));
+			uri: 'https://graph.facebook.com/v2.7/' + sender,
+			qs: {
+				access_token: config.FB_PAGE_TOKEN
+			}
+		}, function(error, response, body) {
+			if(!error && response.statusCode == 200){
+					agendaTwo(sender, JSON.parse(body));
 				} else {
 					reject(error);
 				}
