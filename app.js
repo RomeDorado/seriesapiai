@@ -197,6 +197,7 @@ var imagePath = "";
 var year = "";
 var genre = "";
 var task = "watch movie";
+var responseText = "";
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
@@ -2216,7 +2217,7 @@ function handleCardMessages(messages, sender) {
 	sendGenericMessage(sender, elements);
 }
 
-var responseText = "";
+
 
 function handleApiAiResponse(sender, response) {
 	responseText = response.result.fulfillment.speech;
