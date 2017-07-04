@@ -1307,7 +1307,7 @@ function sendMovieCards(sender){
 							"buttons": [
 								{
 									"type": "postback",
-									"title": "Release Year and Rating",
+									"title": "Year and Rating",
 									"payload": "aboutreleaseyear"
 								}
 							]
@@ -1416,7 +1416,7 @@ function sendMovieCardsGenre(sender){
 							"buttons": [
 								{
 									"type": "postback",
-									"title": "Release Year and Rating",
+									"title": "Year and Rating",
 									"payload": "aboutreleaseyear"
 								}
 							]
@@ -1546,7 +1546,7 @@ function sendMovieCardsTv (sender){
 							"buttons": [
 								{
 									"type": "postback",
-									"title": "Release Year and Rating",
+									"title": "Year and Rating",
 									"payload": "aboutreleaseyear"
 								}
 							]
@@ -1678,7 +1678,7 @@ function sendMovieCardsYear(sender){
 							"buttons": [
 								{
 									"type": "postback",
-									"title": "Release Year and Rating",
+									"title": "Year and Rating",
 									"payload": "aboutreleaseyear"
 								}
 							]
