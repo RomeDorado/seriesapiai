@@ -448,7 +448,7 @@ function createBiography(sender, bio){
 		let button2 = {
 								"type":"postback",
                 "title":"Back to Main Menu",
-                "payload":"backMenu"
+                "payload":"searchAgain"
 				}
     buttons.push(button2);
 
@@ -467,11 +467,6 @@ function createBiography(sender, bio){
 	sendTextMessage(sender, strBiography + s);
     sendGenericMessage(sender, elements);
 	//let option = "Select other options";
-	setTimeout(function(){
-	Actorcards(sender);
-        },3000);
-
-
   //sendImageMessage(sender, imageURL);
 
 }
