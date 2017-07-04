@@ -1930,7 +1930,7 @@ function moviequickreply(sender, category, link){
 				if(user.first_name){
 					console.log("FB user: %s %s, %s",
 						user.first_name, user.last_name, user.gender);
-					if(category == 'genre' && link == ""){
+					if(category == 'genre'){
 					let elements = [
 						{
 							"title": "Select an option",
@@ -1949,7 +1949,7 @@ function moviequickreply(sender, category, link){
 						}
 					];
 					sendGenericMessage(sender, elements);
-					}else if(category == 'year' && link == ""){
+					}else if(category == 'year'){
 					let elements = [
 						{
 							"title": "Select an option",
@@ -1968,7 +1968,7 @@ function moviequickreply(sender, category, link){
 						}
 					];
 					sendGenericMessage(sender, elements);
-				}else if(category == 'tv' && link == "" ){
+				}else if(category == 'tv'){
 				let elements = [
 						{
 							"title": "Select an option",
