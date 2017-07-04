@@ -97,7 +97,7 @@ app.post('/webhook/', function (req, res) {
 	var data = req.body;
 	console.log(JSON.stringify(data));
 
-var task = "watch movie";
+
 
 	// Make sure this is a page subscription
 	if (data.object == 'page') {
@@ -201,7 +201,7 @@ var category = "";
 var imagePath = "";
 var year = "";
 var genre = "";
-
+var task = "watch movie";
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
