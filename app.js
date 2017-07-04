@@ -319,6 +319,7 @@ function createReminderAgenda(sender){
       
 
   });
+				console.log("datetime before" + date_time);
 				getProfile(sender, date_time, task);
 }
 
