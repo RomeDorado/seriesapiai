@@ -211,7 +211,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		`You know, I don't trust these stairs because they're always up to something. 🤔`
 			];
 		var random = Math.floor(Math.random()*textArray.length);
-		sendTextMessage(sender, textArray[randomNumber]);
+		sendTextMessage(sender, textArray[random]);
 		let str = `But series-ly though, I didn't quite understand that. You might wanna access the menu if you are lost, or head back to the main menu, alright?`;
 		consufedquickreply(sender, str);
 		break;
