@@ -1999,6 +1999,7 @@ function moviequickreply(sender, category, link){
             ]
 					}
 				];
+				sendGenericMessage(sender, elements);
 		}else{
 					let elements = [
 						{
@@ -2042,6 +2043,7 @@ function moviequickreply(sender, category, link){
             ]
 					}
 		  ];
+			sendGenericMessage(sender, elements);
 					}else{
 					
 				let elements = [
@@ -2063,6 +2065,30 @@ function moviequickreply(sender, category, link){
 					];
 					sendGenericMessage(sender, elements);
 				}//else
+		}else if (link!= null || link != undefined){
+			
+				let elements = [
+						{
+							"title": "Select an option",
+							"image_url": "http://i.imgur.com/cXWoKWP.png",
+							"buttons": [
+						{
+                "type":"web_url",
+                "title":"View Full List",
+								"url": link
+              },{
+                "type":"postback",
+                "title":"Show choices",
+								"payload":"Show_Choices"
+              },{
+                "type":"postback",
+                "title":"Back to Main Menu",
+                "payload":"searchAgain"
+              }
+            ]
+					}
+		  ];
+			sendGenericMessage(sender, elements);
 		}
 				else{
 					let elements = [
