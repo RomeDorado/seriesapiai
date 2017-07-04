@@ -1016,8 +1016,8 @@ function addToFavorites(senderID, tvshow, imagePath, category){
 
     }
     else{
-      Movie.count({user_id: senderID, title: tvshow}, function(err, ctr){
-        if(ctr == 1){
+      Movie.findOne({user_id: senderID, title: tvshow}, function(err, ctr){
+        if(ctr){
           strFavorites = `${tvshow} is already in your list.`;
           sendTextMessage(senderID, strFavorites);
 						moviequickreply(senderID);
