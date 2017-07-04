@@ -304,6 +304,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 }
 
 var date_time = "";
+var task = "";
 function createReminderAgenda(sender){
 	console.log("im at createreminderagenda");
 	
@@ -312,16 +313,17 @@ function createReminderAgenda(sender){
     const {sender, datetime, task} = job.attrs.data;
 
 		date_time= datetime;
+		task = task;
 
     // Get the FB User's timezone
     
       
 
   });
-				getProfile(sender, date_time);
+				getProfile(sender, date_time, task);
 }
 
-function getProfile(sender, datetime) {
+function getProfile(sender, datetime, task) {
 	console.log("im at get profile");		
 			request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
@@ -330,14 +332,14 @@ function getProfile(sender, datetime) {
 			}
 		}, function(error, response, body) {
 			if(!error && response.statusCode == 200){
-					agendaTwo(sender, JSON.parse(body), datetime);
+					agendaTwo(sender, JSON.parse(body), datetime,task);
 				} else {
 					reject(error);
 				}
 			});
 	}
 
-	function agendaTwo(sender, profile, datetime){
+	function agendaTwo(sender, profile, datetime, task){
 		    const {first_name, timezone} = profile;
 				console.log("this is the timezone" + timezone);
         // Calculating the timezone offset datetime
