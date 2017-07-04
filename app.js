@@ -1091,7 +1091,7 @@ function createResponse (sender, intent, tvshow, category){
 				if (longPlot[i] == undefined){
 					longPlot[i] = "";
 				}else{
-				s2 += longPlot[i] + ".a";
+				s2 += longPlot[i] + ".";
 				checker = false;
 				}
 			}
@@ -2221,7 +2221,7 @@ function handleApiAiResponse(sender, response) {
 
 	sendTypingOff(sender);
 
-	if (isDefined(messages) && (messages.length == 1 && messages[0].type != 0 || messages.length > 1)) {
+	if (isDefined(messages) && (messages.length == 1 && messages[0].type != 0 || messages.length > 1) && action != "input.unknown") {
 		let timeoutInterval = 1100;
 		let previousType ;
 		let cardTypes = [];
