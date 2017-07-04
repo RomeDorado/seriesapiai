@@ -3045,7 +3045,7 @@ function receivedPostback(event) {
 
  function showReminders(senderID){
 	console.log("Im at show reminders");
-	return agenda.define('showReminders', job => {
+	agenda.define('showReminders', job => {
     let {sender} = job.attrs.data;
     agenda.jobs({
       name: 'reminder',
@@ -3090,8 +3090,8 @@ function receivedPostback(event) {
  }
 
   agenda.define('reminder', job => {
-    const {senderd, first_name, task} = job.attrs.data;
-    sendTextMessage(senderd, `Hey ${first_name}! Reminding you to ${task}!`);
+    const {sender, first_name, task} = job.attrs.data;
+    sendTextMessage(sender, `Hey ${first_name}! Reminding you to ${task}!`);
   });
 
   function cancelReminder(sender){
