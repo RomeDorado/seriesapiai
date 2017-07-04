@@ -863,6 +863,7 @@ function createYearList(sender, yearList, year){
 
 
 				elements.push(elem);
+				sendTextMessage(sender, strYearList);
 		sendGenericMessage(sender, elements);
 		}
 
@@ -960,7 +961,7 @@ function createMovieList(sender, movieList, genre){
 
 				elements.push(elem);
 
-	//sendTextMessage(sender, strMovieList);
+	sendTextMessage(sender, strMovieList);
 
 		var messageData = {
 				recipient: {
