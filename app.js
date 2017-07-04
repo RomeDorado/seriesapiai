@@ -1169,6 +1169,7 @@ function createResponse (sender, intent, tvshow, category){
 
     }
   }else{
+		sendTextMessage(sender, responseText);
     let str = `I'm sorry, I didn't understand that. You can access the menu if you are lost or click the button below`;
           consufedquickreply(sender, str);
   }
@@ -2210,9 +2211,10 @@ function handleCardMessages(messages, sender) {
 	sendGenericMessage(sender, elements);
 }
 
+var responseText = "";
 
 function handleApiAiResponse(sender, response) {
-	let responseText = response.result.fulfillment.speech;
+	responseText = response.result.fulfillment.speech;
 	let responseData = response.result.fulfillment.data;
 	let messages = response.result.fulfillment.messages;
 	let action = response.result.action;
@@ -2221,7 +2223,7 @@ function handleApiAiResponse(sender, response) {
 
 	sendTypingOff(sender);
 
-	if (isDefined(messages) && (messages.length == 1 && messages[0].type != 0 || messages.length > 1) && action != "input.unknown") {
+	if (isDefined(messages) && (messages.length == 1 && messages[0].type != 0 || messages.length > 1) &&) {
 		let timeoutInterval = 1100;
 		let previousType ;
 		let cardTypes = [];
