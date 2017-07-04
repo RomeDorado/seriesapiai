@@ -97,7 +97,7 @@ app.post('/webhook/', function (req, res) {
 	var data = req.body;
 	console.log(JSON.stringify(data));
 
-
+var task = "watch movie";
 
 	// Make sure this is a page subscription
 	if (data.object == 'page') {
@@ -304,7 +304,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 }
 
 var date_time = "";
-var task = "";
+
 function createReminderAgenda(sender){
 	console.log("im at createreminderagenda");
 	
