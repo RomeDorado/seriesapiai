@@ -1832,7 +1832,7 @@ console.log("i was at director know");
 				}]
 		} = title;
 
-		sendTextMessage(sender, `If you want to know the full cast of ${tvshow}, click the link below: \n ${link}`);
+		//sendTextMessage(sender, `If you want to know the full cast of ${tvshow}, click the link below: \n ${link}`);
 		setTimeout(function(){
 				moviequickreply(sender, category, link);
 				},2000);
