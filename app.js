@@ -303,28 +303,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	}
 }
 
-var date_time = "";
-
-function createReminderAgenda(sender){
-	console.log("im at createreminderagenda");
-	agenda.define('createReminder', job => {
-    // Extract fbid, datetime and task from job
-    const {sender, datetime, task} = job.attrs.data;
-
-
-		date_time= datetime;
-		task = task;
-
-    // Get the FB User's timezone
-    
-      
-
-  });
-				
-				
-				console.log("datetime before" + date_time);
-				getProfile(sender, date_time, task);
-}
 
 function getProfile(sender, datetime, task) {
 	console.log("im at get profile");		
@@ -354,6 +332,7 @@ function getProfile(sender, datetime, task) {
         // If timeDiff is 0 or below, then use UTC_datetime or else use UTC_Offset. also convert to date.
         const scheduleTime = (timeDiff <= 0 ? moment.utc(datetime) : UTC_Offset).toDate();
         // Setup the job
+				console.log("the shedule time is " + scheduleTime);
         agenda.schedule(scheduleTime, 'reminder', {
           sender,
           first_name,
