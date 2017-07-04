@@ -307,7 +307,6 @@ var date_time = "";
 
 function createReminderAgenda(sender){
 	console.log("im at createreminderagenda");
-	
 	agenda.define('createReminder', job => {
     // Extract fbid, datetime and task from job
     const {sender, datetime, task} = job.attrs.data;
@@ -3058,6 +3057,7 @@ function receivedPostback(event) {
       if(data.length === 0) {
         sendTextMessage(sender, "You've got no reminders set! Yay! :)");
       } else {
+				console.log(data);
         data.forEach(item => {
           // Loop over and display each reminder
           let {_id, nextRunAt} = item.attrs;
