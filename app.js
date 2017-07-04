@@ -274,12 +274,13 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		var cont = contexts.map(function(obj) {
 				var contextObj = {};
 				if(obj.name === "remind"){
-
+					if (obj.parameters['datetime'] != "" && obj.parameters['time'] != "") {
 					if (obj.parameters['datetime'] != "") {
 					datetime = obj.parameters['datetime'];
 					} else {
 					datetime = obj.parameters['time'];
 				}
+			}
 				console.log(datetime + " this is the datetime");
 
 				agenda.now('createReminder', {
