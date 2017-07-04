@@ -1216,10 +1216,7 @@ function createResponse (sender, intent, tvshow, category){
       case 'cast':
 				let strCast = `${Title} stars ${Actors}`;
 				sendTextMessage(sender, strCast);
-				knowfullcast (sender, Title);
-				setTimeout(function(){
-				moviequickreply(sender, category);
-				},2000);
+				knowfullcast (sender, Title);				
 			break;
 
       case 'releaseyear':
@@ -1846,7 +1843,9 @@ console.log("i was at director know");
 		} = title;
 
 		sendTextMessage(sender, `If you want to know the full cast of ${tvshow}, click the link below: \n ${link}`);
-
+		setTimeout(function(){
+				moviequickreply(sender, category, link);
+				},2000);
 	}
 }
 
@@ -1917,7 +1916,7 @@ function moviequickreplyfave(sender){
 
 }
 
-function moviequickreply(sender, category){
+function moviequickreply(sender, category, link){
 	request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
 			qs: {
@@ -1931,6 +1930,32 @@ function moviequickreply(sender, category){
 					console.log("FB user: %s %s, %s",
 						user.first_name, user.last_name, user.gender);
 					if(category == 'genre'){
+						if(link != undefined || link != null){
+							let elements = [
+						{
+							"title": "Select an option",
+							"image_url": "http://i.imgur.com/cXWoKWP.png",
+							"buttons": [
+						{
+                "type":"web_url",
+                "title":"View Full List",
+								"url": link
+              },
+              {
+                "type":"postback",
+                "title":"Show choices",
+								"payload":"Show_Choices_Genre"
+              },{
+                "type":"postback",
+                "title":"Back to Main Menu",
+                "payload":"searchAgain"
+              }
+            ]
+						}
+					];
+					sendGenericMessage(sender, elements);
+
+						}else{
 					let elements = [
 						{
 							"title": "Select an option",
@@ -1949,7 +1974,32 @@ function moviequickreply(sender, category){
 						}
 					];
 					sendGenericMessage(sender, elements);
+			}//else
 					}else if(category == 'year'){
+						if(link != undefined || link != null){
+							let elements = [
+						{
+							"title": "Select an option",
+							"image_url": "http://i.imgur.com/cXWoKWP.png",
+							"buttons": [
+						{
+                "type":"web_url",
+                "title":"View Full List",
+								"url": link
+              },
+							{
+                "type":"postback",
+                "title":"Show choices",
+								"payload":"Show_Choices_Year"
+              },{
+                "type":"postback",
+                "title":"Back to Main Menu",
+                "payload":"searchAgain"
+              }
+            ]
+					}
+				];
+		}else{
 					let elements = [
 						{
 							"title": "Select an option",
@@ -1968,7 +2018,32 @@ function moviequickreply(sender, category){
 						}
 					];
 					sendGenericMessage(sender, elements);
+			}//else
 				}else if(category == 'tv' ){
+					if(link != undefined || link != null){
+							let elements = [
+						{
+							"title": "Select an option",
+							"image_url": "http://i.imgur.com/cXWoKWP.png",
+							"buttons": [
+						{
+                "type":"web_url",
+                "title":"View Full List",
+								"url": link
+              },{
+                "type":"postback",
+                "title":"Show choices",
+								"payload":"Show_Choices_Tv"
+              },{
+                "type":"postback",
+                "title":"Back to Main Menu",
+                "payload":"searchAgain"
+              }
+            ]
+					}
+		  ];
+					}else{
+					
 				let elements = [
 						{
 							"title": "Select an option",
@@ -1987,7 +2062,7 @@ function moviequickreply(sender, category){
 						}
 					];
 					sendGenericMessage(sender, elements);
-
+				}//else
 		}
 				else{
 					let elements = [
