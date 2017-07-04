@@ -288,7 +288,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				task: "watch movie"
 				});
 
-				createReminderAgenda(sender);
+				getProfile(sender, datetime, task);
 
 				}
 			return contextObj;
@@ -305,21 +305,22 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 var date_time = "";
 
-function createReminderAgenda(senderID){
+function createReminderAgenda(sender){
 	console.log("im at createreminderagenda");
-	agenda.define('createReminder', job);
+	agenda.define('createReminder', job => {
     // Extract fbid, datetime and task from job
-    let {sender, datetime, task} = job.attrs.data;
+    const {sender, datetime, task} = job.attrs.data;
 
 
 		date_time= datetime;
 		task = task;
 
     // Get the FB User's timezone
-    console.log("laman ng job" + job.attrs.data);
+    
       
 
-  
+  });
+				
 				
 				console.log("datetime before" + date_time);
 				getProfile(sender, date_time, task);
