@@ -1170,7 +1170,7 @@ function createResponse (sender, intent, tvshow, category){
     }
   }else{
 		sendTextMessage(sender, responseText);
-    let str = `I'm sorry, I didn't understand that. You can access the menu if you are lost or click the button below`;
+    let str = `But series-ly though, I didn't quite understand that. You might wanna access the menu if you are lost, or head back to the main menu, alright?`;
           consufedquickreply(sender, str);
   }
 }
