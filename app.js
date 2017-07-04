@@ -1184,7 +1184,16 @@ function createResponse (sender, intent, tvshow, category){
 
     }
   }else{
-		sendTextMessage(sender, responseText);
+		var textArray = [
+    `I wasn't originally going to get a brain transplant, but then I changed my mind. 😏`,
+    `I would like tell you a chemistry joke at this point, but I know I wouldn't get a reaction. 😓`,
+		`Have you ever tried to eat a clock? It's very time consuming. ⏱`,
+		`I'm reading a book about anti-gravity. It's impossible to put down. 📕`,
+		`Why don't programmers like nature? It has too many bugs. 🐜`,
+		`You know, I don't trust these stairs because they're always up to something. 🤔`
+			];
+		var random = Math.floor(Math.random()*textArray.length);
+		sendTextMessage(sender, textArray[random]);
     let str = `But series-ly though, I didn't quite understand that. You might wanna access the menu if you are lost, or head back to the main menu, alright?`;
           consufedquickreply(sender, str);
   }
