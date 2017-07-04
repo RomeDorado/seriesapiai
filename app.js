@@ -314,10 +314,10 @@ function createReminderAgenda(sender){
       
 
   });
-				getProfile(sender);
+				getProfile(sender, datetime);
 }
 
-function getProfile(sender) {
+function getProfile(sender, datetime) {
 	console.log("im at get profile");		
 			request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
@@ -326,14 +326,14 @@ function getProfile(sender) {
 			}
 		}, function(error, response, body) {
 			if(!error && response.statusCode == 200){
-					agendaTwo(sender, JSON.parse(body));
+					agendaTwo(sender, JSON.parse(body), datetime);
 				} else {
 					reject(error);
 				}
 			});
 	}
 
-	function agendaTwo(sender, profile){
+	function agendaTwo(sender, profile, datetime){
 		    const {first_name, timezone} = profile;
 				console.log("this is the timezone" + timezone);
         // Calculating the timezone offset datetime
