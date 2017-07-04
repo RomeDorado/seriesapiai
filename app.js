@@ -712,6 +712,7 @@ function createUpcomingList(senderID, upcomingList){
     imagePath = "https://image.tmdb.org/t/p/w500";
   }
   sendGenericMessage(senderID, elements);
+	moviequickreply(senderID);
 }
 
 function createYearList(sender, yearList, year){
