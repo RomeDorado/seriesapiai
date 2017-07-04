@@ -15,11 +15,6 @@ const {MONGO_URI} = require('./config');
 const mongoose = require('mongoose');
 const db = mongoose.connect(process.env.MONGO_URI);
 const Movie = require("./movieModel");
-const agenda = new Agenda({
-  db: {
-    address: MONGO_URI
-  }
-});
 
 
 // Messenger API parameters
@@ -91,7 +86,7 @@ app.get('/webhook/', function (req, res) {
  * https://developers.facebook.com/docs/messenger-platform/product-overview/setup#subscribe_app
  *
  */
-agenda.on('ready', () => {
+
 
 app.post('/webhook/', function (req, res) {
 	var data = req.body;
@@ -267,36 +262,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		case "show-choices-tv":
 		sendMovieCardsTv(sender);
 		break;
-
-		case "create-reminder":
-		console.log("create reminder log");
-		var datetime = '';
-		var cont = contexts.map(function(obj) {
-				var contextObj = {};
-				if(obj.name === "remind"){
-					
-					if (obj.parameters['datetime'] != "") {
-					datetime = obj.parameters['datetime'];
-					} else {
-					datetime = obj.parameters['time'];
-				}
-				console.log(datetime + " this is the datetime");
-
-				agenda.now('createReminder', {
-				sender,
-				datetime: datetime,
-				task: "watch movie"
-				});
-
-				getProfile(sender, datetime, task);
-
-				}
-			return contextObj;
-		});
-		sendTextMessage(sender, responseText);
-
-		break;
-
+	
 		default:
 			//unhandled action, just send back the text
 			sendTextMessage(sender, responseText);
@@ -304,43 +270,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 }
 
 
-function getProfile(sender, datetime, task) {
-	console.log("im at get profile");		
-	console.log("datetime is " + datetime);
-			request({
-			uri: 'https://graph.facebook.com/v2.7/' + sender,
-			qs: {
-				access_token: config.FB_PAGE_TOKEN
-			}
-		}, function(error, response, body) {
-			if(!error && response.statusCode == 200){
-					agendaTwo(sender, JSON.parse(body), datetime,task);
-				} else {
-					reject(error);
-				}
-			});
-	}
-
-	function agendaTwo(sender, profile, datetime, task){
-		    const {first_name, timezone} = profile;
-				console.log("this is the timezone" + timezone);
-        // Calculating the timezone offset datetime
-        const UTC_Offset = moment.utc(datetime).subtract(timezone, 'hours');
-        // Calculating the difference between now and the UTC_Offset datetime. If this is
-        // 0 or below then we can use the UTC_datetime directly OR else use UTC_Offset
-        const timeDiff = UTC_Offset.diff(moment.utc());
-        // If timeDiff is 0 or below, then use UTC_datetime or else use UTC_Offset. also convert to date.
-        const scheduleTime = (timeDiff <= 0 ? moment.utc(datetime) : UTC_Offset).toDate();
-        // Setup the job
-				console.log("the shedule time is " + scheduleTime);
-        agenda.schedule(scheduleTime, 'reminder', {
-          sender,
-          first_name,
-          task
-        });
-      
-    // Compute an offset from UTC before scheduling the task
-	}
 
 var check = false;
 
@@ -712,7 +641,7 @@ if(pagenumber == 1){
 
 					let eleme = {
 								"title": `View More ${genre} TV Series`,
-								"image_url": 'http://i.imgur.com/TZ2LGfo.png',
+								"image_url": 'http://i.imgur.com/vfj4Qlu.png',
 								"buttons": [
 									{
 										"type": "postback",
@@ -838,7 +767,7 @@ function createYearList(sender, yearList, year){
 
 			let ele = {
 								"title": `View More Movies From Year ${year}`,
-								"image_url": 'http://i.imgur.com/TZ2LGfo.png',
+								"image_url": 'http://i.imgur.com/vfj4Qlu.png',
 								"buttons": [
 									{
 										"type": "postback",
@@ -935,7 +864,7 @@ function createMovieList(sender, movieList, genre){
 
 					let eleme = {
 								"title": `View More ${genre} Movies`,
-								"image_url": 'http://i.imgur.com/TZ2LGfo.png',
+								"image_url": 'http://i.imgur.com/vfj4Qlu.png',
 								"buttons": [
 									{
 										"type": "postback",
@@ -2887,18 +2816,7 @@ function receivedPostback(event) {
 			omdb(senderID, intents, tvshow, category);
 		break;
 
-		case "watchlist" :
-
-		let sender = senderID;
-      	agenda.now('showReminders', {
-        sender: sender
-      	});
-
-		showReminders(senderID);
-
-		break;
-
-    case "recommendMovie":
+	  case "recommendMovie":
       sendToApiAi(senderID, "recommendMovie");
     break;
 
@@ -3027,75 +2945,6 @@ function receivedPostback(event) {
 }
 
 
- function showReminders(senderID){
-	console.log("Im at show reminders");
-	agenda.define('showReminders', job => {
-    let {sender} = job.attrs.data;
-    agenda.jobs({
-      name: 'reminder',
-      'data.sender': sender,
-      'nextRunAt': {
-        $exists: true,
-        $ne: null
-      }
-    }, (error, data) => {
-      if(data.length === 0) {
-				console.log(data.length + 'this is data kength');
-        sendTextMessage(sender, "You've got no reminders set! Yay! :)");
-      } else {
-				console.log(data);
-        data.forEach(item => {
-          // Loop over and display each reminder
-          let {_id, nextRunAt} = item.attrs;
-          let {task} = item.attrs.data;
-
-          let rightNowUTC = moment.utc();
-          let runDate = moment.utc(nextRunAt);
-          let timeToEvent = rightNowUTC.to(runDate);
-
-          let data = {
-            text: `${task ? task.charAt(0).toUpperCase() + task.slice(1) : 'Something'} is due ${timeToEvent}`,
-            buttons: [{
-              type: 'postback',
-              title: 'Cancel Reminder',
-              payload: `{
-                "schedule": "cancelReminder",
-                "sender": "${sender}",
-                "id": "${_id}"
-              }`
-            }]
-          }
-		  console.log(JSON.stringify(data) + "This is the data");
-          btn(senderID, data);
-
-        });
-      }
-    });
-  });
-
- }
-
-  agenda.define('reminder', job => {
-    const {sender, first_name, task} = job.attrs.data;
-    sendTextMessage(sender, `Hey ${first_name}! Reminding you to ${task}!`);
-  });
-
-  function cancelReminder(sender){
-
-  return agenda.define('cancelReminder', job => {
-    const {sender, id} = job.attrs.data;
-    agenda.cancel({
-      name: 'reminder',
-      _id: new ObjectID(id)
-    }, (error, numRemoved) => {
-      if(!error) {
-        sendTextMessage(sender, (numRemoved > 0 ? "Alright. I've canceled the reminder." : "I've already canceled this reminder. Don't worry, it won't bother you. :)"));
-      } else {
-        sendTextMessage(sender, "Uh Oh! Something's not right with our servers. Could you try again after a while?");
-      }
-    });
-  });
-  }
 
 /*
  * Message Read Event
@@ -3197,7 +3046,6 @@ function receivedAuthentication(event) {
  * https://developers.facebook.com/docs/graph-api/webhooks#setup
  *
  */
-});
 function verifyRequestSignature(req, res, buf) {
 	var signature = req.headers["x-hub-signature"];
 
