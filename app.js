@@ -1151,18 +1151,19 @@ function createResponse (sender, intent, tvshow, category){
 				var longPlot = [] = Plot.split(".");
 
 				for (var i=0; i <= 2; i++){
-				if (longPlot[i] == undefined || longPlot[i] == '.....' ){
+				if (longPlot[i] == undefined){
 					longPlot[i] = "";
 				}
 				s1 += longPlot[i] + ".";
 			}
 				if(longPlot.length > 3){
 				for (var i=3; i <= 7; i++){
-				if (longPlot[i] == undefined || longPlot[i] == '.....'){
+				if (longPlot[i] == undefined){
 					longPlot[i] = "";
-				}
+				}else{
 				s2 += longPlot[i] + ".";
 				checker = false;
+				}
 			}
 		}else{
 			checker = true;
@@ -1174,7 +1175,10 @@ function createResponse (sender, intent, tvshow, category){
 			moviequickreply(sender, category);
 		}else{
 			sendTextMessage(sender, s1);
-			sendTextMessage(sender, s2);
+			setTimeout(function() {
+			sendTextMessage(sender, s2);	
+			}, 1000);
+			
 				moviequickreply(sender, category);
 
 }				//if(checker == true){
