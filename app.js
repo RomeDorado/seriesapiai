@@ -324,6 +324,7 @@ function createReminderAgenda(sender){
 
 function getProfile(sender, datetime, task) {
 	console.log("im at get profile");		
+	console.log("datetime is " + datetime);
 			request({
 			uri: 'https://graph.facebook.com/v2.7/' + sender,
 			qs: {
