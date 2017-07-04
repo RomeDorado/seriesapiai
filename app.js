@@ -305,11 +305,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 var date_time = "";
 
-function createReminderAgenda(sender){
+function createReminderAgenda(senderID){
 	console.log("im at createreminderagenda");
-	agenda.define('createReminder', job => {
+	agenda.define('createReminder', job);
     // Extract fbid, datetime and task from job
-    const {sender, datetime, task} = job.attrs.data;
+    let {sender, datetime, task} = job.attrs.data;
 
 
 		date_time= datetime;
@@ -319,7 +319,7 @@ function createReminderAgenda(sender){
     console.log("laman ng job" + job.attrs.data);
       
 
-  });
+  
 				
 				console.log("datetime before" + date_time);
 				getProfile(sender, date_time, task);
