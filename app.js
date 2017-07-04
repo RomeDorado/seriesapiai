@@ -303,18 +303,22 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	}
 }
 
+var date_time = "";
 function createReminderAgenda(sender){
 	console.log("im at createreminderagenda");
+	
 	agenda.define('createReminder', job => {
     // Extract fbid, datetime and task from job
     const {sender, datetime, task} = job.attrs.data;
+
+		date_time= datetime;
 
     // Get the FB User's timezone
     
       
 
   });
-				getProfile(sender, datetime);
+				getProfile(sender, date_time);
 }
 
 function getProfile(sender, datetime) {
