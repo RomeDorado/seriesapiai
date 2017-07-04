@@ -200,6 +200,11 @@ var task = "watch movie";
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "input.unknown" :
+		sendTextMessage(sender, responseText);
+		let str = `But series-ly though, I didn't quite understand that. You might wanna access the menu if you are lost, or head back to the main menu, alright?`;
+		consufedquickreply(sender, str);
+		break;
 		case "know-a-series" :
 
 			var cont = contexts.map(function(obj) {
