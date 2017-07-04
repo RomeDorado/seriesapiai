@@ -1054,7 +1054,8 @@ function createResponse (sender, intent, tvshow, category){
       Poster,
       Released,
       Writer,
-      totalSeasons
+      totalSeasons,
+			imdbRating
     } = tvshow;
     imagePath = Poster;
 
@@ -1123,8 +1124,10 @@ function createResponse (sender, intent, tvshow, category){
 			setTimeout(function() {
 			sendTextMessage(sender, s2);	
 			}, 1000);
-			
-				moviequickreply(sender, category);
+			setTimeout(function() {
+			moviequickreply(sender, category);	
+			}, 2000);
+				
 
 }				//if(checker == true){
 
@@ -1160,7 +1163,7 @@ function createResponse (sender, intent, tvshow, category){
 			break;
 
       case 'releaseyear':
-				let strRelease = `${Title} was released on ${Released}`;
+				let strRelease = `${Title} was released on ${Released} and it has a rating of ${imdbRating} from IMDB`;
 				sendTextMessage(sender, strRelease);
 				moviequickreply(sender, category);
 			break;
@@ -1299,12 +1302,12 @@ function sendMovieCards(sender){
 							]
 						},
 						{
-							"title": "Know the Release Year",
+							"title": "Know the Release Year and Rating",
 							"image_url": "http://i.imgur.com/Gbd4YFV.png",
 							"buttons": [
 								{
 									"type": "postback",
-									"title": "Release Year",
+									"title": "Release Year and Rating",
 									"payload": "aboutreleaseyear"
 								}
 							]
@@ -1408,12 +1411,12 @@ function sendMovieCardsGenre(sender){
 							]
 						},
 						{
-							"title": "Know the Release Year",
+							"title": "Know the Release Year and Rating",
 							"image_url": "http://i.imgur.com/Gbd4YFV.png",
 							"buttons": [
 								{
 									"type": "postback",
-									"title": "Release Year",
+									"title": "Release Year and Rating",
 									"payload": "aboutreleaseyear"
 								}
 							]
@@ -1538,12 +1541,12 @@ function sendMovieCardsTv (sender){
 							]
 						},
 						{
-							"title": "Know the Release Year",
+							"title": "Know the Release Year and Rating",
 							"image_url": "http://i.imgur.com/Gbd4YFV.png",
 							"buttons": [
 								{
 									"type": "postback",
-									"title": "Release Year",
+									"title": "Release Year and Rating",
 									"payload": "aboutreleaseyear"
 								}
 							]
@@ -1670,12 +1673,12 @@ function sendMovieCardsYear(sender){
 							]
 						},
 						{
-							"title": "Know the Release Year",
+							"title": "Know the Release Year and Rating",
 							"image_url": "http://i.imgur.com/Gbd4YFV.png",
 							"buttons": [
 								{
 									"type": "postback",
-									"title": "Release Year",
+									"title": "Release Year and Rating",
 									"payload": "aboutreleaseyear"
 								}
 							]
