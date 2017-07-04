@@ -1091,7 +1091,7 @@ function createResponse (sender, intent, tvshow, category){
 				if (longPlot[i] == undefined){
 					longPlot[i] = "";
 				}else{
-				s2 += longPlot[i] + ".";
+				s2 += longPlot[i] + ".a";
 				checker = false;
 				}
 			}
