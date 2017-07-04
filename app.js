@@ -305,14 +305,37 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 function createReminderAgenda(sender){
 	console.log("im at createreminderagenda");
-	return agenda.define('createReminder', job => {
+	agenda.define('createReminder', job => {
     // Extract fbid, datetime and task from job
     const {sender, datetime, task} = job.attrs.data;
 
     // Get the FB User's timezone
-    getProfile(sender)
-      .then(profile => {
-        const {first_name, timezone} = profile;
+    getProfile(sender);
+      
+
+  });
+
+}
+
+function getProfile(id) {
+	console.log("im at get profile");		
+			request({
+				uri: `https://graph.facebook.com/v2.7/` + id,
+				qs: {
+					access_token: config.FB_PAGE_TOKEN
+				},
+				method: 'GET'
+			}, (error, response, body) => {
+				if(!error & response.statusCode === 200) {
+					agendaTwo(id, JSON.parse(body));
+				} else {
+					reject(error);
+				}
+			});
+	}
+
+	function agendaTwo(sender, profile){
+		    const {first_name, timezone} = profile;
 				console.log("this is the timezone" + timezone);
         // Calculating the timezone offset datetime
         const UTC_Offset = moment.utc(datetime).subtract(timezone, 'hours');
@@ -327,30 +350,8 @@ function createReminderAgenda(sender){
           first_name,
           task
         });
-      })
-      .catch(error => console.log(error));
+      
     // Compute an offset from UTC before scheduling the task
-  });
-
-}
-
-function getProfile(id) {
-	console.log("im at get profile");
-		return new Promise((resolve, reject) => {
-			request({
-				uri: `https://graph.facebook.com/v2.7/` + id,
-				qs: {
-					access_token: config.FB_PAGE_TOKEN
-				},
-				method: 'GET'
-			}, (error, response, body) => {
-				if(!error & response.statusCode === 200) {
-					resolve(JSON.parse(body));
-				} else {
-					reject(error);
-				}
-			});
-		});
 	}
 
 var check = false;
