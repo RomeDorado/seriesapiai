@@ -304,6 +304,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 }
 
 function createReminderAgenda(sender){
+	console.log("im at createreminderagenda");
 	return agenda.define('createReminder', job => {
     // Extract fbid, datetime and task from job
     const {sender, datetime, task} = job.attrs.data;
@@ -312,6 +313,7 @@ function createReminderAgenda(sender){
     getProfile(sender)
       .then(profile => {
         const {first_name, timezone} = profile;
+				console.log("this is the timezone" + timezone);
         // Calculating the timezone offset datetime
         const UTC_Offset = moment.utc(datetime).subtract(timezone, 'hours');
         // Calculating the difference between now and the UTC_Offset datetime. If this is
@@ -333,6 +335,7 @@ function createReminderAgenda(sender){
 }
 
 function getProfile(id) {
+	console.log("im at get profile");
 		return new Promise((resolve, reject) => {
 			request({
 				uri: `https://graph.facebook.com/v2.7/` + id,
