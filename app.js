@@ -1185,6 +1185,7 @@ function createResponse (sender, intent, tvshow, category){
     	case 'director':
 				if(Director == "N/A" && Writer == "N/A"){
 				let strDirector1 = `Sorry, it seems like the director(s) and writer(s) of ${Title} is not registered in our database`;	
+				sendTextMessage(sender, strDirector1);
 				}else if(Director == "N/A" && Writer != "N/A"){
 				let strDirector1 = `Sorry we couldn't identify who directed ${Title}, but it is written by ${Writer}`;
 						sendTextMessage(sender, strDirector1);
