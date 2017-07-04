@@ -1844,25 +1844,8 @@ console.log("i was at director know");
 			link
 				}]
 		} = title;
-
+		
 		sendTextMessage(sender, `If you want to know the full cast of ${tvshow}, click the link below: \n ${link}`);
-		let elements = [];
-    let buttons = [];
-    let button;
-    button = {
-					"type": "web_url",
-					"title": "View List",
-					"url": link
-				}
-    buttons.push(button);
-    let element = {
-			"title": `Full Cast`,
-			"image_url": `http://i.imgur.com/cXWoKWP.png`,			
-			"buttons": buttons
-		};
-		elements.push(element);
-
-    sendGenericMessage(sender, elements);
 
 	}
 }
