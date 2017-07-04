@@ -1151,14 +1151,14 @@ function createResponse (sender, intent, tvshow, category){
 				var longPlot = [] = Plot.split(".");
 
 				for (var i=0; i <= 2; i++){
-				if (longPlot[i] == undefined){
+				if (longPlot[i] == undefined || longPlot[i] == '.....' ){
 					longPlot[i] = "";
 				}
 				s1 += longPlot[i] + ".";
 			}
 				if(longPlot.length > 3){
 				for (var i=3; i <= 7; i++){
-				if (longPlot[i] == undefined){
+				if (longPlot[i] == undefined || longPlot[i] == '.....'){
 					longPlot[i] = "";
 				}
 				s2 += longPlot[i] + ".";
