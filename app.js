@@ -1018,8 +1018,11 @@ function getFavorites(senderID){
 			let str2 = "I got carried away again, sorry about that";
 			setTimeout(function() {
 			sendTextMessage(senderID, str2);	
-		}, 2000);
+		}, 1000);
 			let str3 = "You have nothing to see here! It's as empty as my wallet 💸"			
+			setTimeout(function() {
+			sendTextMessage(senderID, str3);		
+			}, 1500);			
 			setTimeout(function() {
 			moviequickreplyfave(senderID);	
 			}, 2000);
