@@ -360,7 +360,7 @@ function createBiography(sender, bio){
     profile_path
   } = bio;
 	if (biography == null){
-		sendTextMessage(sender, "I can't seem to find that actor/actress");
+		let str = "I can't seem to find that actor/actress";
 		consufedquickreply(sender, str);
 	}else{
   var s = "";
