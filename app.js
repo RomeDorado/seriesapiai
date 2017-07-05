@@ -342,6 +342,7 @@ function createPerson(sender, resultPerson){
 				method: "GET"
 			}, (error, response, body) => {
 				if(!error && response.statusCode === 200){
+					cosole.log(response);
 					createBiography(sender, JSON.parse(body));
 				}
 			});
