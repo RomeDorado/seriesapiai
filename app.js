@@ -973,7 +973,7 @@ request({
         if(ctr == 1){
 					let tvshow1 = tvshow.replace(/\w\S*/g, function(txt){
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-          strFavorites = `Hey ${user.first_name}! ${tvshow1} is already in your list.`;
+          strFavorites = `Hey ${user.first_name}! ${tvshow1} is already in your list ✋`;
           sendTextMessage(senderID, strFavorites);
 						moviequickreply(senderID);
 
@@ -1010,8 +1010,13 @@ request({
 function getFavorites(senderID){
   Movie.count({user_id: senderID}, function(err, count){
     if(count === 0){
-      let strFav = "It seems like your favorites list is empty.";
+      let strFav = "I gave you everything, but you left me with nothing 😭";
       sendTextMessage(senderID, strFav);
+			let str2 = "I got carried away again, sorry about that";
+			setTimeout(function() {
+			sendTextMessage(senderID, str2);	
+		}, 1000);
+			let str3 = "You have nothing to see here! It's as empty as my wallet 💸"			
       moviequickreplyfave(senderID);
     }
     else{
