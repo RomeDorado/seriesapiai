@@ -359,6 +359,10 @@ function createBiography(sender, bio){
 	imdb_id,
     profile_path
   } = bio;
+	if (biography == null){
+		sendTextMessage(sender, "I can't seem to find that actor/actress");
+		consufedquickreply(sender, str);
+	}else{
   var s = "";
   var imageURL = "http://image.tmdb.org/t/p/w185" + profile_path;
   var biog = [] = biography.split(".");
@@ -414,6 +418,7 @@ function createBiography(sender, bio){
 	//let option = "Select other options";
   //sendImageMessage(sender, imageURL);
 
+}
 }
 
 function omdb(sender, intent, tvshow, category){
