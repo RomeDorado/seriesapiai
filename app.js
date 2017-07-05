@@ -963,8 +963,8 @@ request({
   Movie.count({user_id: senderID}, function(err, count) {
     console.log("Number of docs: " + count);
     if(count > 9){
-      strFavorites = "You can only have 10 favorites at a time.";
-      sendTextMessage(senderID, strFavorites);
+      strFavorites = "️";
+      sendTextMessage(senderID, strFavorites);		
 				moviequickreply(senderID);
 
     }
@@ -1015,9 +1015,12 @@ function getFavorites(senderID){
 			let str2 = "I got carried away again, sorry about that";
 			setTimeout(function() {
 			sendTextMessage(senderID, str2);	
-		}, 1000);
+		}, 2000);
 			let str3 = "You have nothing to see here! It's as empty as my wallet 💸"			
-      moviequickreplyfave(senderID);
+			setTimeout(function() {
+			moviequickreplyfave(senderID);	
+			}, 2000);
+      
     }
     else{
       Movie.find({user_id: senderID}, function(err, favList){
@@ -1059,7 +1062,7 @@ function getFavorites(senderID){
 
       });
     }
-  })
+  });
 }
 
 function removeFavorites(senderID, tvshow){
