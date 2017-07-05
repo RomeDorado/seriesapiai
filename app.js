@@ -947,18 +947,9 @@ request({
 
 			if (user.first_name) {
 				console.log("FB user: %s %s, %s",
-					user.first_name, user.last_name, user.gender);
-					firstname = user.first_name;
+					user.first_name, user.last_name, user.gender);					
 				//sendTextMessage(userId, "Welcome " + user.first_name + '!');
-			} else {
-				console.log("Cannot get data for fb user with id",
-					userId);
-			}
-		} else {
-			console.error(response.error);
-		}
-
-	});
+			
 
 
 
@@ -982,7 +973,7 @@ request({
         if(ctr == 1){
 					let tvshow1 = tvshow.replace(/\w\S*/g, function(txt){
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-          strFavorites = `Hey ${firstname}! ${tvshow1} is already in your list.`;
+          strFavorites = `Hey ${user.first_name}! ${tvshow1} is already in your list.`;
           sendTextMessage(senderID, strFavorites);
 						moviequickreply(senderID);
 
@@ -1003,6 +994,17 @@ request({
       });
     }
   });
+
+} else {
+				console.log("Cannot get data for fb user with id",
+					userId);
+			}
+		} else {
+			console.error(response.error);
+		}
+
+	});
+
 }
 
 function getFavorites(senderID){
