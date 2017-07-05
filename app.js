@@ -963,8 +963,11 @@ request({
   Movie.count({user_id: senderID}, function(err, count) {
     console.log("Number of docs: " + count);
     if(count > 9){
-      strFavorites = "️";
-      sendTextMessage(senderID, strFavorites);		
+      strFavorites = "The sky is the limit! ☁️";
+      sendTextMessage(senderID, strFavorites);	
+			let str1 = "But when adding favorites, your limit is at 10"	
+			sendTextMessage(senderID, str1);
+			let str2 = `Sorry about that ${user.first_name} 😖`;	
 				moviequickreply(senderID);
 
     }
@@ -1062,7 +1065,7 @@ function getFavorites(senderID){
 
       });
     }
-  });
+  })
 }
 
 function removeFavorites(senderID, tvshow){
