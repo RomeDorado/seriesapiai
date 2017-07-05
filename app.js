@@ -966,9 +966,17 @@ request({
       strFavorites = "The sky is the limit! ☁️";
       sendTextMessage(senderID, strFavorites);	
 			let str1 = "But when adding favorites, your limit is at 10"	
-			sendTextMessage(senderID, str1);
+			setTimeout(function() {
+			sendTextMessage(senderID, str1);	
+			}, 1000);								
 			let str2 = `Sorry about that ${user.first_name} 😖`;	
-				moviequickreply(senderID);
+			setTimeout(function() {
+			sendTextMessage(senderID, str2);	
+			}, 1200);
+			setTimeout(function() {
+			moviequickreply(senderID);	
+			}, 1500);
+				
 
     }
     else{
@@ -1184,6 +1192,7 @@ function createResponse (sender, intent, tvshow, category){
 				if(Director == "N/A" && Writer == "N/A"){
 				let strDirector1 = `Sorry, it seems like the director(s) and writer(s) of ${Title} is not registered in our database`;	
 				sendTextMessage(sender, strDirector1);
+				moviequickreply(sender, category);
 				}else if(Director == "N/A" && Writer != "N/A"){
 				let strDirector1 = `Sorry we couldn't identify who directed ${Title}, but it is written by ${Writer}`;
 						sendTextMessage(sender, strDirector1);
