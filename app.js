@@ -306,27 +306,6 @@ function yearSearch(sender, year){
     }
   });
 }
-var firstname = "";
-
-request({
-		uri: 'https://graph.facebook.com/v2.7/' + sender,
-		qs: {
-			access_token: config.FB_PAGE_TOKEN
-		}
-
-	}, function (error, response, body) {
-		if (!error && response.statusCode == 200) {
-
-			var user = JSON.parse(body);
-
-
-			if (user.first_name) {
-			firstname = user.first_name;
-			}
-		}	
-	});
-	
-
 
 function personSearch(sender, person){
   request({
@@ -954,6 +933,35 @@ function createMovieList(sender, movieList, genre){
 
 
 function addToFavorites(senderID, tvshow, imagePath, category){
+var firstname = "";
+request({
+		uri: 'https://graph.facebook.com/v2.7/' + userId,
+		qs: {
+			access_token: config.FB_PAGE_TOKEN
+		}
+
+	}, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+
+			var user = JSON.parse(body);
+
+			if (user.first_name) {
+				console.log("FB user: %s %s, %s",
+					user.first_name, user.last_name, user.gender);
+					firstname = user.first_name;
+				//sendTextMessage(userId, "Welcome " + user.first_name + '!');
+			} else {
+				console.log("Cannot get data for fb user with id",
+					userId);
+			}
+		} else {
+			console.error(response.error);
+		}
+
+	});
+
+
+
   var addMovie = new Movie({
     user_id: senderID,
     title: tvshow.toLowerCase(),
