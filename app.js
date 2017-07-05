@@ -931,9 +931,9 @@ function createMovieList(sender, movieList, genre){
 
 
 
-
-function addToFavorites(senderID, tvshow, imagePath, category){
 var firstname = "";
+function addToFavorites(senderID, tvshow, imagePath, category){
+
 request({
 		uri: 'https://graph.facebook.com/v2.7/' + senderID,
 		qs: {
