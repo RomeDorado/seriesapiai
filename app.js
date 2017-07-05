@@ -306,6 +306,27 @@ function yearSearch(sender, year){
     }
   });
 }
+var firstname = "";
+
+request({
+		uri: 'https://graph.facebook.com/v2.7/' + sender,
+		qs: {
+			access_token: config.FB_PAGE_TOKEN
+		}
+
+	}, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+
+			var user = JSON.parse(body);
+
+
+			if (user.first_name) {
+			firstname = user.first_name;
+			}
+		}	
+	});
+	
+
 
 function personSearch(sender, person){
   request({
@@ -953,7 +974,7 @@ function addToFavorites(senderID, tvshow, imagePath, category){
         if(ctr == 1){
 					let tvshow1 = tvshow.replace(/\w\S*/g, function(txt){
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-          strFavorites = `${tvshow1} is already in your list.`;
+          strFavorites = `Hey ${firstname}! ${tvshow1} is already in your list.`;
           sendTextMessage(senderID, strFavorites);
 						moviequickreply(senderID);
 
@@ -964,7 +985,7 @@ function addToFavorites(senderID, tvshow, imagePath, category){
               console.log("Database error: " + err);
             }
             else{
-              strFavorites = "Added to Favorites!";
+              strFavorites = "Hoorah! We've added this to your Favorites! You can see your favorites list on the menu 🤙";
 
           sendTextMessage(senderID, strFavorites);
     		  moviequickreply(senderID, category);
